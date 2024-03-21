@@ -1,11 +1,31 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Sidebar from './components/Sidebar.vue';
 </script>
 
 <template>
-  <RouterView />
+  <div class="container">
+    <div class="side">
+      <Sidebar />
+    </div>
+    <div class="main">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
-<style scoped>
-
+<style>
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  .side {
+    background-color: rgb(226, 232, 240);
+    width: 20%;
+    height: 100%;
+  }
+  .main {
+    width: 80%;
+  }
 </style>
