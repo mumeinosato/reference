@@ -20,6 +20,7 @@
           <li class="sub-title">アルゴリズム</li>
           <li class="sub-title">数学</li>
         </ul>
+        <li class="main-title"><router-link to="/post">投降</router-link></li>
       </ul>
     </div>
   </div>

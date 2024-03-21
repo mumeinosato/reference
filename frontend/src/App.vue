@@ -22,10 +22,11 @@ import Sidebar from './components/Sidebar.vue';
   }
   .side {
     background-color: rgb(226, 232, 240);
-    width: 20%;
+    width: 200px;
     height: 100%;
   }
   .main {
     width: 80%;
+    margin: 20px;
   }
 </style>
