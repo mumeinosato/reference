@@ -4,11 +4,11 @@
         <div class="form-content">
             <div class="cont">
                 <label for="title">タイトル</label><br>
-                <input type="text" id="title" name="title">
+                <v-text-field v-model="title"></v-text-field>
             </div>
             <div class="cont">
                 <label for="content">内容</label><br>
-                <textarea id="content" name="content"></textarea>
+                <v-textarea v-model="content"></v-textarea>
             </div>
             <div class="cont">
                 <label for="language">言語</label><br>
@@ -16,13 +16,13 @@
             </div>
             <div class="cont">
                 <label for="type">投降先</label><br>
-                <v-select v-model="type" :items="['reference', 'techfull']"></v-select>
+                <v-select v-model="type" :items="['reference', 'techful']"></v-select>
             </div>
             <div class="cont" v-if="type == 'reference'">
                 <label for="tag">タグ</label><br>
-                <input type="text" id="tag" name="tag">
+                <v-text-field v-model="tag"></v-text-field>
             </div>
-            <div class="cont">
+            <div class="cont" v-if="type=='techful'">
                 <label for="group">種類</label><br>
                 <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math']"></v-select>
             </div>
@@ -49,14 +49,20 @@ export default {
     },
     methods: {
         async submit() {
-            let data = {
-                title: this.title,
-                content: this.content,
-                language: this.language,
-                type: this.type,
-                tag: this.tag,
-                group: this.group
-            };
+            if(this.type == 'reference'){
+                let lang;
+                if(this.language == 'c++'){
+                    lang = 1;
+                }else{
+                    lang = 2;
+                }
+                let data ={
+                    title: this.title,
+                    content: this.content,
+                    language: lang,
+                    tag: this.tag
+                }
+            }
             let res = await re_post(data);
             if(res){
                 alert('投稿しました');

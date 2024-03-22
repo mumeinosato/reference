@@ -36,14 +36,22 @@ export async function Post(title: string, content: string, language: number, typ
         try {
             const lang = parseInt(language.toString());
             const gr = parseInt(group.toString());
-            await prisma.tech.create({
+            await prisma.techful.create({
+                data: {
+                    title: title,
+                    content: content,
+                    language: lang,
+                    gruop: gr,
+                },
+            });
+            /*await prisma.tech.create({
                 data: {
                     title: title,
                     content: content,
                     language: lang,
                     group: gr,
                 },
-            });
+            });*/
             status = 0;
         }catch(e){
             status = 1;
@@ -51,7 +59,5 @@ export async function Post(title: string, content: string, language: number, typ
     }else{
         status = 1;
     }
-
-
     return status;
 }
