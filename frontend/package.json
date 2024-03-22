@@ -13,6 +13,7 @@
   "dependencies": {
     "@preline/overlay": "^2.0.2",
     "alpinejs": "^3.13.7",
+    "axios": "^1.6.8",
     "bootstrap": "^5.3.0",
     "bootstrap-vue": "^2.23.1",
     "node-sass": "^9.0.0",
@@ -20,7 +21,8 @@
     "prismjs": "^1.29.0",
     "tailwindcss": "^3.4.1",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.5.11"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",

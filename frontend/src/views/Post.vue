@@ -19,12 +19,13 @@
             </div>
             <div class="cont">
                 <label for="type">投降先</label><br>
+                <v-select v-model="type" :items="['reference', 'techfull']"></v-select>
                 <select id="type" name="type">
                     <option value="reference">リファレンス</option>
-                    <option value="tech-full-c++">TechFul</option>
+                    <option value="techfull">TechFul</option>
                 </select>
             </div>
-            <div class="cont">
+            <div class="cont" v-if="type == 'reference'">
                 <label for="tag">タグ</label><br>
                 <input type="text" id="tag" name="tag">
             </div>
@@ -37,11 +38,47 @@
                 </select>
             </div>
             <div class="cont btn-d">
-                <input type="submit" value="投降" class="btn">
+                <input type="submit" value="投降" class="btn" @click="submit">
             </div>
         </div>
     </form>
 </template>
+
+<script>
+import { re_post } from '../assets/script/post'
+
+export default {
+    data() {
+        return {
+            title: '',
+            content: '',
+            language: '',
+            type: '',
+            tag: '',
+            group: ''
+        };
+    },
+    methods: {
+        async submit() {
+            let data = {
+                title: this.title,
+                content: this.content,
+                language: this.language,
+                type: this.type,
+                tag: this.tag,
+                group: this.group
+            };
+            let res = await re_post(data);
+            if(res){
+                alert('投稿しました');
+            }else{
+                alert('投稿に失敗しました');
+            }
+        }
+    }
+}
+</script>
+
 
 <style scoped>
     form{

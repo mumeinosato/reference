@@ -10,9 +10,8 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.send('It works!');
 });
 
-app.get('/post', (req: express.Request, res: express.Response) => {
-    const { title, content, language, type, tag, group } = req.query;
-    const status = Post(title, content, language, type, tag, group);
+app.get('/post/:title/:content/:language/:type/:tag/:group', (req: express.Request, res: express.Response) => {
+    const status = Post(req.params.title, req.params.content, parseInt(req.params.language), parseInt(req.params.type), req.params.tag, req.params.group);
     res.send(status);
 });
 
