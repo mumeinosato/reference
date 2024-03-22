@@ -12,18 +12,11 @@
             </div>
             <div class="cont">
                 <label for="language">言語</label><br>
-                <select id="language" name="language">
-                    <option value="c++">C++</option>
-                    <option value="python">Python</option>
-                </select>
+                <v-select v-model="language" :items="['c++', 'python']"></v-select>
             </div>
             <div class="cont">
                 <label for="type">投降先</label><br>
                 <v-select v-model="type" :items="['reference', 'techfull']"></v-select>
-                <select id="type" name="type">
-                    <option value="reference">リファレンス</option>
-                    <option value="techfull">TechFul</option>
-                </select>
             </div>
             <div class="cont" v-if="type == 'reference'">
                 <label for="tag">タグ</label><br>
@@ -31,11 +24,7 @@
             </div>
             <div class="cont">
                 <label for="group">種類</label><br>
-                <select id="group" name="group">
-                    <option value="programming-basic">プログラミング基礎</option>
-                    <option value="algorithm">アルゴリズム</option>
-                    <option value="math">数学</option>
-                </select>
+                <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math']"></v-select>
             </div>
             <div class="cont btn-d">
                 <input type="submit" value="投降" class="btn" @click="submit">
