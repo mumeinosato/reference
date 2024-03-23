@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import { Post } from './logic/post';
 import { Size } from './logic/size';
+import { Data } from './logic/data';
 
 const app = express();
 app.use(cors());
@@ -28,6 +29,18 @@ app.get('/size/:language/:type/:group', (req: express.Request, res: express.Resp
     Size(parseInt(language),parseInt(type), parseInt(group))
         .then((resp) => {
             res.send(resp.toString());
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
+
+app.get('/data/:language/:type/:group/:num1', (req: express.Request, res: express.Response) => {
+    const { language, type, group, num1, num2 } = req.params;
+    Data(parseInt(language), parseInt(type), parseInt(group), parseInt(num1))
+        .then((resp) => {
+            res.send(resp);
         })
         .catch((error) => {
             console.error(error);
