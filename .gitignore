@@ -29,5 +29,6 @@ coverage
 .env
 dev-file
 migrations
+*.cpp
 
 *.tsbuildinfo

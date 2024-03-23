@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import { Post } from './logic/post';
+import { Size } from './logic/size';
 
 const app = express();
 app.use(cors());
@@ -10,9 +11,28 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.send('It works!');
 });
 
-app.get('/post/:title/:content/:language/:type/:tag/:group', (req: express.Request, res: express.Response) => {
-    const status = Post(req.params.title, req.params.content, parseInt(req.params.language), parseInt(req.params.type), req.params.tag, req.params.group);
-    res.send(status);
+app.get('/post/:title/:content/:language/:type/:group', (req: express.Request, res: express.Response) => {
+    const { title, content, language, type, group } = req.params;
+    Post(title, content, parseInt(language), parseInt(type), group)
+        .then((resp) => {
+            res.send(resp);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
+
+app.get('/size/:language/:type/:group', (req: express.Request, res: express.Response) => {
+    const { language, type, group } = req.params;
+    Size(parseInt(language),parseInt(type), parseInt(group))
+        .then((resp) => {
+            res.send(resp.toString());
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
 });
 
 app.listen(3000, () => {
