@@ -10,5 +10,5 @@ export async function post(title: string, content: string, language: number, typ
 }
 
 /*
-https://localhost:3000/post/test/print(0)/0/0/0
+https://localhost:3000/post/test/print(0)/2/1/2
 */

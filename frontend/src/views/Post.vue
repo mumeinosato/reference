@@ -1,34 +1,34 @@
 <template>
-  <form>
-    <div class="form-content">
-      <div class="cont">
-        <label for="title">タイトル</label><br />
-        <v-text-field v-model="title"></v-text-field>
-      </div>
-      <div class="cont">
-        <label for="content">内容</label><br />
-        <v-textarea v-model="content"></v-textarea>
-      </div>
-      <div class="cont">
-        <label for="language">言語</label><br />
-        <v-select v-model="language" :items="['c++', 'python']"></v-select>
-      </div>
-      <div class="cont">
-        <label for="type">投降先</label><br />
-        <v-select v-model="type" :items="['reference', 'techful']"></v-select>
-      </div>
-      <div class="cont">
-        <label for="group">種類</label><br />
-        <v-select
-          v-model="group"
-          :items="['programming-basic', 'algorithm', 'math']"
-        ></v-select>
-      </div>
-      <div class="cont btn-d">
-        <input type="submit" value="投降" class="btn" @click="submit">
-      </div>
-    </div>
-  </form>
+    <v-form>
+        <v-container>
+            <v-row>
+                <v-col>
+                    <v-text-field v-model="title" label="タイトル"></v-text-field>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-textarea v-model="content" label="内容"></v-textarea>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-select v-model="language" :items="['C++', 'Python']" label="言語"></v-select>
+                </v-col>
+                <v-col>
+                    <v-select v-model="type" :items="['Reference', 'TechFul']" label="投稿先"></v-select>
+                </v-col>
+                <v-col v-if="type == 'TechFul'">
+                    <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math']" label="種類"></v-select>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-btn @click="submit">投稿</v-btn>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-form>
 </template>
 
 <script>
@@ -39,27 +39,28 @@ export default {
     return {
       title: "",
       content: "",
-      language: "",
-      type: "",
+      language: "C++",
+      type: "Reference",
       group: "",
     };
   },
   methods: {
     async submit() {
       let res = false;
-      let lang = this.language == "c++" ? 1 : 2;
-      if (this.type == "reference") {
+      let lang = this.language == "C++" ? 1 : 2;
+      if (this.type == "Reference") {
         res = await re_post(this.title, this.content, lang);
         if (res) {
           alert("投稿しました");
         } else {
           alert("投稿に失敗しました");
         }
-      } else if (this.type == "techful") {
+      } else if (this.type == "TechFul") {
         let gr = 0;
-        if ((this.group = "programming-basic")) gr = 1;
-        else if ((this.group = "algorithm")) gr = 2;
-        else if ((this.group = "math")) gr = 3;
+        if(this.group === "programming-basic") gr = 1;
+        else if(this.group === "algorithm") gr = 2;
+        else if(this.group === "math") gr = 3;
+        console.log(gr);
         res = await te_post(this.title, this.content, lang, gr);
         if (res) {
           alert("投稿しました");
@@ -119,4 +120,5 @@ select {
   text-align: right;
   width: 60px;
 }
+
 </style>
