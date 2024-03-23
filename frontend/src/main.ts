@@ -1,5 +1,6 @@
 import './assets/style/main.css'
 import './assets/style/tailwindcss/output.css'
+import './assets/style/tailwindcss/tailwindcss.css'
 
 
 import { createApp } from 'vue'
