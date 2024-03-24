@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import { Post } from './logic/post';
 import { Size } from './logic/size';
 import { Data } from './logic/data';
-import { Test } from './logic/test';
 
 const app = express();
 app.use(cors());

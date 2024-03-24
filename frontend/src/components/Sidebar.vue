@@ -5,8 +5,8 @@
       <ul>
         <li class="main-title"><router-link to="/">リファレンス</router-link></li>
         <ul>
-          <li class="sub-title">C++</li>
-          <li class="sub-title">Python</li>
+          <li class="sub-title"><router-link to="/preview/cpp/reference/0/1">C++</router-link></li>
+          <li class="sub-title"><router-link to="/preview/python/reference/0/1">Python</router-link></li>
         </ul>
         <li class="main-title"><router-link to="/about">Tech Full(C++)</router-link></li>
         <ul>

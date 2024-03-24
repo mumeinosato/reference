@@ -48,6 +48,11 @@ export default {
       return content.replace(/<br>/g, "\n");
     },
   },
+  watch: {
+    $route() {
+      location.reload();
+    },
+  },
 };
 </script>
   
