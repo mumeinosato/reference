@@ -48,10 +48,16 @@ export default {
     async submit() {
       let res = false;
       let lang = this.language == "C++" ? 1 : 2;
+      if(this.title == "" || this.content == "") {
+        alert("タイトルと内容を入力してください");
+        return;
+      }
+      const cont = this.content.replace(/\n/g, '<br>');
       if (this.type == "Reference") {
-        res = await re_post(this.title, this.content, lang);
+        res = await re_post(this.title, cont, lang);
         if (res) {
           alert("投稿しました");
+          location.reload();
         } else {
           alert("投稿に失敗しました");
         }
@@ -60,10 +66,10 @@ export default {
         if(this.group === "programming-basic") gr = 1;
         else if(this.group === "algorithm") gr = 2;
         else if(this.group === "math") gr = 3;
-        console.log(gr);
-        res = await te_post(this.title, this.content, lang, gr);
+        res = await te_post(this.title, cont, lang, gr);
         if (res) {
           alert("投稿しました");
+          location.reload();
         } else {
           alert("投稿に失敗しました");
         }

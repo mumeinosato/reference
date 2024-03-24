@@ -3,7 +3,14 @@ import axios from 'axios';
 const API_URL = 'http://127.0.0.1:3000';
 
 export async function post(title: string, content: string, language: number, type: number, group: number): Promise<boolean> {
-    const response = await axios.get(`${API_URL}/post/${title}/${content}/${language}/${type}/${group}`);
+    const data = {
+        title: title,
+        content: content,
+        language: language,
+        type: type,
+        group: group
+    }
+    const response = await axios.post(`${API_URL}/post`, data);
     return response.data;
 }
 

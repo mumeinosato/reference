@@ -12,7 +12,7 @@
   export default {
     data() {
       return {
-        code: `console.log('Hello, Prism!');`
+        code: `console.log('Hello, Prism!');\n`
       };
     },
     mounted() {
