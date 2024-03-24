@@ -14,7 +14,7 @@ model Reference {
   @@map("references")
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  content   String @db.VarChar(5000)
   language  Int
 }
 
@@ -22,7 +22,7 @@ model Techful {
   @@map("tech")
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  content   String  @db.VarChar(5000)
   language  Int
   group     Int
 }

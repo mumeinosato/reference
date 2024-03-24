@@ -10,9 +10,9 @@
         </ul>
         <li class="main-title"><router-link to="/about">Tech Full(C++)</router-link></li>
         <ul>
-          <li class="sub-title">プログラミング基礎</li>
-          <li class="sub-title">アルゴリズム</li>
-          <li class="sub-title">数学</li>
+          <li class="sub-title"><router-link to="/preview/cpp/techful/1/1">プログラミング基礎</router-link></li>
+          <li class="sub-title"><router-link to="/preview/cpp/techful/2/1">アルゴリズム</router-link></li>
+          <li class="sub-title"><router-link to="/preview/cpp/techful/3/1">数学</router-link></li>
         </ul>
         <li class="main-title"><router-link to="/contact">Tech Full(Python)</router-link></li>
         <ul>

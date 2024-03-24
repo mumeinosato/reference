@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:3000';
 
-export async function post(title: string, content: string, language: number, type: number, group: number): Promise<boolean> {
+export async function post(title: string, content: string, language: number, type: number, group: number): Promise<any> {
     const data = {
         title: title,
         content: content,

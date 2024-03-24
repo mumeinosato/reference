@@ -1,6 +1,6 @@
 import { post } from './api';
 
-export async function re_post(title: string, content: string, language: number): Promise<boolean> {
+export async function re_post(title: string, content: string, language: number): Promise<any> {
     return await post(title, content, language, 0, 0)
 }
 

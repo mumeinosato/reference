@@ -55,11 +55,13 @@ export default {
       const cont = this.content.replace(/\n/g, '<br>');
       if (this.type == "Reference") {
         res = await re_post(this.title, cont, lang);
-        if (res) {
+        console.log(res);
+        if (res === true) {
           alert("投稿しました");
           location.reload();
         } else {
           alert("投稿に失敗しました");
+          console.log(res);
         }
       } else if (this.type == "TechFul") {
         let gr = 0;
@@ -67,11 +69,12 @@ export default {
         else if(this.group === "algorithm") gr = 2;
         else if(this.group === "math") gr = 3;
         res = await te_post(this.title, cont, lang, gr);
-        if (res) {
+        if (res === true) {
           alert("投稿しました");
           location.reload();
         } else {
           alert("投稿に失敗しました");
+          console.log(res);
         }
       }
     },

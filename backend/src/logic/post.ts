@@ -1,8 +1,8 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function Post(title: string, content: string, language: number, type: number, group: string): Promise<boolean> {
+export async function Post(title: string, content: string, language: number, type: number, group: string): Promise<any> {
     let status = 0;
 
     /*
@@ -17,25 +17,22 @@ export async function Post(title: string, content: string, language: number, typ
     1: TechFul
     */
 
-    if(type === 0) {
-        try{
+    try {
+        if (type === 0) {
             const lang = parseInt(language.toString());
-            await prisma.reference.create({
+            const result = await prisma.reference.create({
                 data: {
                     title: title,
                     content: content,
                     language: lang,
                 },
             });
+            console.log("Reference post created:", result);
             return true;
-        }catch(e){
-            return false;
-        }
-    }else if(type === 1) {
-        try {
+        } else if (type === 1) {
             const lang = parseInt(language.toString());
             const gr = parseInt(group.toString());
-            await prisma.techful.create({
+            const result = await prisma.techful.create({
                 data: {
                     title: title,
                     content: content,
@@ -43,11 +40,14 @@ export async function Post(title: string, content: string, language: number, typ
                     group: gr,
                 },
             });
+            console.log("TechFul post created:", result);
             return true;
-        }catch(e){
+        } else {
+            console.error("Invalid post type:", type);
             return false;
         }
-    }else{
+    } catch (e) {
+        console.error("Error creating post:", e);
         return false;
     }
 }
