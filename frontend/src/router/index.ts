@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Post from '../views/Post.vue'
-import Preview from '../views/Preview.vue'
+import View from '../views/View.vue'
 import Edit from '../views/Edit.vue'
 import List from '../views/List.vue'
 
@@ -19,9 +19,9 @@ const router = createRouter({
       component: Post
     },
     {
-      path: '/preview/:id/:type',
-      name: 'preview',
-      component: Preview
+      path: '/view/:id/:type',
+      name: 'view',
+      component: View
     },
     {
       path: '/edit/:id/:type',

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(item, index) in re" :key="index">
-      <p><router-link :to="{ name: 'preview', params: { id: item.id, type: type } }">{{ item.title }}</router-link></p>
+      <p><router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link></p>
     </div>
   </div>
 </template>
