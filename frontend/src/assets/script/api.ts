@@ -24,6 +24,17 @@ export async function list(language: number,type: number ,group: number): Promis
     return response.data;
 }
 
+export async function edit(id: number, title: string, content: string, type: number): Promise<any> {
+    const data = {
+        id: id,
+        title: title,
+        content: content,
+        type: type
+    }
+    const response = await axios.post(`${API_URL}/edit`, data);
+    return response.data;
+}
+
 /*
 https://localhost:3000/post/test/print(0)/2/1/2
 */

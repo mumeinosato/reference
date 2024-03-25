@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
+    <h1>{{ title }}<span><p><router-link :to="{ name: 'edit', params: { id: id, type: type } }">編集</router-link></p></span></h1>
     <!--<pre><code ref="code">{{ content }}</code></pre>-->
     <highlightjs :language="lang" :code="content"/>
   </div>
@@ -19,6 +19,8 @@ hljs.registerLanguage("python", python);
 export default {
   data() {
     return {
+      id: this.$route.params.id,
+      type: this.$route.params.type,
       title: "",
       content: "",
       lang: "",
@@ -37,3 +39,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p{
+  text-align: right;
+}
+</style>

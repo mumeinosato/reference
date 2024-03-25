@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { Post } from './logic/post';
+import { Edit } from './logic/edit';
 import { Data } from './logic/data';
 import { List } from './logic/list';
 
@@ -17,6 +18,18 @@ app.get('/', (req: express.Request, res: express.Response) => {
 app.post('/post', (req: express.Request, res: express.Response) => {
     const { title, content, language, type, group } = req.body;
     Post(title, content, parseInt(language), parseInt(type), group)
+        .then((resp) => {
+            res.send(resp);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
+
+app.post('/edit', (req: express.Request, res: express.Response) => {
+    const { id, title, content, type } = req.body;
+    Edit(parseInt(id), title, content, parseInt(type))
         .then((resp) => {
             res.send(resp);
         })
