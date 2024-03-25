@@ -14,13 +14,13 @@ export async function post(title: string, content: string, language: number, typ
     return response.data;
 }
 
-export async function size(language: number, type: number, group: number): Promise<number> {
-    const response = await axios.get(`${API_URL}/size/${language}/${type}/${group}`);
+export async function data(id: number, type: number): Promise<any> {
+    const response = await axios.get(`${API_URL}/data/${id}/${type}`);
     return response.data;
 }
 
-export async function data(language: number, type: number, group: number, num1: number): Promise<any> {
-    const response = await axios.get(`${API_URL}/data/${language}/${type}/${group}/${num1}`);
+export async function list(language: number,type: number ,group: number): Promise<any> {
+    const response = await axios.get(`${API_URL}/list/${language}/${type}/${group}`);
     return response.data;
 }
 

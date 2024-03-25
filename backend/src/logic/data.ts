@@ -2,40 +2,29 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function Data(language: number, type: number, group: number, num1: number): Promise<any> {
+export async function Data(id: number, type: number): Promise<any> {
+    const idn = parseInt(id.toString());
     if(type === 0){
-        //num1番目からnum2番目までのデータを取得
-        //title contentを返す
-        const lang = parseInt(language.toString());
-        const data = await prisma.reference.findMany({
+        const data = await prisma.reference.findUnique({
             where: {
-                language: lang,
+                id: idn,
             },
             select: {
                 title: true,
                 content: true,
             },
-            skip: (num1 - 1) * 50,
-            take: 50,
         });
         return data;
     }
     if(type === 1){
-        //num1番目からnum2番目までのデータを取得
-        //title contentを返す
-        const lang = parseInt(language.toString());
-        const gr = parseInt(group.toString());
-        const data = await prisma.techful.findMany({
+        const data = await prisma.techful.findUnique({
             where: {
-                language: lang,
-                group: gr,
+                id: idn,
             },
             select: {
                 title: true,
                 content: true,
             },
-            skip: (num1 - 1) * 50,
-            take: 50,
         });
         return data;
     }

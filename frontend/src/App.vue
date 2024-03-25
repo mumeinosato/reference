@@ -22,7 +22,7 @@ import Sidebar from './components/Sidebar.vue';
   }
   .side {
     background-color: rgb(226, 232, 240);
-    width: 200px;
+    width: 230px;
     height: 100%;
   }
   .main {

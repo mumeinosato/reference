@@ -3,8 +3,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { Post } from './logic/post';
-import { Size } from './logic/size';
 import { Data } from './logic/data';
+import { List } from './logic/list';
 
 const app = express();
 app.use(cors());
@@ -26,11 +26,11 @@ app.post('/post', (req: express.Request, res: express.Response) => {
         });
 });
 
-app.get('/size/:language/:type/:group', (req: express.Request, res: express.Response) => {
-    const { language, type, group } = req.params;
-    Size(parseInt(language),parseInt(type), parseInt(group))
+app.get('/data/:id/:type', (req: express.Request, res: express.Response) => {
+    const { id, type } = req.params;
+    Data(parseInt(id), parseInt(type))
         .then((resp) => {
-            res.send(resp.toString());
+            res.send(resp);
         })
         .catch((error) => {
             console.error(error);
@@ -38,9 +38,9 @@ app.get('/size/:language/:type/:group', (req: express.Request, res: express.Resp
         });
 });
 
-app.get('/data/:language/:type/:group/:num1', (req: express.Request, res: express.Response) => {
-    const { language, type, group, num1 } = req.params;
-    Data(parseInt(language), parseInt(type), parseInt(group), parseInt(num1))
+app.get('/list/:language/:type/:group', (req: express.Request, res: express.Response) => {
+    const { language, type, group } = req.params;
+    List(parseInt(language), parseInt(type), parseInt(group))
         .then((resp) => {
             res.send(resp);
         })

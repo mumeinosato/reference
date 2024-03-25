@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Post from '../views/Post.vue'
 import Preview from '../views/Preview.vue'
+import List from '../views/List.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,9 +18,14 @@ const router = createRouter({
       component: Post
     },
     {
-      path: '/preview/:lang/:type/:group/:num',
+      path: '/preview/:id/:type',
       name: 'preview',
       component: Preview
+    },
+    {
+      path: '/list/:lang/:type/:group',
+      name: 'list',
+      component: List
     }
   ]
 })
