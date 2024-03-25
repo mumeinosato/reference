@@ -19,4 +19,7 @@ RUN npm install && npm cache clean --force
 
 COPY --from=build /work/dist ./dist
 
+COPY prisma ./prisma
+RUN npx prisma generate
+
 CMD ["node", "dist/index.js"]
