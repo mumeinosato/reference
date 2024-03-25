@@ -40,8 +40,10 @@ export default {
       title: "",
       content: "",
       language: "C++",
-      type: "Reference",
-      group: "",
+      // type: "Reference",
+      type: "TechFul",
+      //group: "programming-basic",
+      group: "algorithm"
     };
   },
   methods: {

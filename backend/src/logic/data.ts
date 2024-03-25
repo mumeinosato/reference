@@ -12,6 +12,7 @@ export async function Data(id: number, type: number): Promise<any> {
             select: {
                 title: true,
                 content: true,
+                language: true,
             },
         });
         return data;

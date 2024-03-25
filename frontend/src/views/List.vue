@@ -7,8 +7,6 @@
 </template>
         
         <script>
-import Prism from "prismjs";
-import "prismjs/themes/prism.css"; // 必要に応じて適切なテーマをインポート
 import { list } from "../assets/script/api";
 
 export default {
@@ -36,8 +34,7 @@ export default {
 
 <style scoped>
 p{
-    margin: 10px;
-    
+    margin: 5px;
 }
 
 p:hover{
