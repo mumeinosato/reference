@@ -26,5 +26,4 @@ app.use(vuetify)
 
 app.mount('#app')
 
-window.Alpine = Alpine
 Alpine.start()

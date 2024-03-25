@@ -1,4 +1,4 @@
-FROM node:18:12 as build
+FROM node:18.12 as build
 
 WORKDIR /work
 
@@ -9,7 +9,7 @@ COPY src tsconfig.json ./
 
 RUN npm run build
 
-FROM node:18:12 as runner
+FROM node:18.12 as runner
 
 WORKDIR /work
 EXPOSE 3000
