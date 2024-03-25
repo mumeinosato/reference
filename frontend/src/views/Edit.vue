@@ -46,7 +46,7 @@ export default {
       res = await edit(this.$route.params.id, this.title, cont, this.$route.params.type);
       if(res === true) {
         alert("編集しました");
-        location.reload();
+        this.$router.push({ name: "preview", params: { id: this.$route.params.id, type: this.$route.params.type } });
       } else {
         alert("編集に失敗しました");
         console.log(res);
