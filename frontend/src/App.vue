@@ -18,15 +18,16 @@ import Sidebar from './components/Sidebar.vue';
   .container {
     display: flex;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    align-items: stretch;
   }
   .side {
     background-color: rgb(226, 232, 240);
     width: 230px;
-    height: 100%;
   }
   .main {
     width: 80%;
     margin: 20px;
+    height: fit-content;
   }
 </style>

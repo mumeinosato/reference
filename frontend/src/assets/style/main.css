@@ -1,11 +1,12 @@
 html {
   height: 100%;
+  overflow: scroll;
 }
 
 body {
-  height: 100%;
+  height: fit-content;
 }
 
 .app {
-  height: 100%;
+  height: fit-content;
 }/*# sourceMappingURL=main.css.map */
