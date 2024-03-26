@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <div v-for="(item, index) in re" :key="index">
       <p>
         <router-link
@@ -41,5 +41,11 @@ p {
 
 p:hover {
   background-color: rgb(226, 232, 240);
+}
+
+.box{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 </style>

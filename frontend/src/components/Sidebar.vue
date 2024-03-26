@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <h2 class="titile">サイドバー</h2>
+    <h2 class="titile"><router-link to="/">サイドバー</router-link></h2>
     <div class="content">
       <ul>
         <li class="main-title">リファレンス</li>

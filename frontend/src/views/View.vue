@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1>{{ title }}<span><p><router-link :to="{ name: 'edit', params: { id: id, type: type } }">編集</router-link></p></span></h1>
+    <h1>{{ title }}
+      <span>
+        <p>
+          <router-link :to="{ name: 'edit', params: { id: id, type: type } }">編集</router-link>
+        </p>
+      </span>
+    </h1>
     <!--<pre><code ref="code">{{ content }}</code></pre>-->
     <highlightjs :language="lang" :code="content"/>
   </div>
@@ -9,10 +15,10 @@
   <script>
 import { data } from "../assets/script/api";
 import hljs from 'highlight.js/lib/core';
+
 import cpp from "highlight.js/lib/languages/cpp";
 import python from "highlight.js/lib/languages/python";
 import 'highlight.js/styles/stackoverflow-light.css'
-
 hljs.registerLanguage("cpp", cpp);
 hljs.registerLanguage("python", python);
 
