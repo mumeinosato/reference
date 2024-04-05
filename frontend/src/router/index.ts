@@ -4,6 +4,7 @@ import Post from '../views/Post.vue'
 import View from '../views/View.vue'
 import Edit from '../views/Edit.vue'
 import List from '../views/List.vue'
+import Login from '../views/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/list/:lang/:type/:group',
       name: 'list',
       component: List
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })

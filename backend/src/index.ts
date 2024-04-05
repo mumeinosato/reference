@@ -6,6 +6,7 @@ import { Post } from './logic/post';
 import { Edit } from './logic/edit';
 import { Data } from './logic/data';
 import { List } from './logic/list';
+import { Login } from './logic/login';
 
 const app = express();
 app.use(cors());
@@ -54,6 +55,18 @@ app.get('/data/:id/:type', (req: express.Request, res: express.Response) => {
 app.get('/list/:language/:type/:group', (req: express.Request, res: express.Response) => {
     const { language, type, group } = req.params;
     List(parseInt(language), parseInt(type), parseInt(group))
+        .then((resp) => {
+            res.send(resp);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
+
+app.get('/login/:user/:pass', (req: express.Request, res: express.Response) => {
+    const { user, pass } = req.params;
+    Login(user, pass)
         .then((resp) => {
             res.send(resp);
         })

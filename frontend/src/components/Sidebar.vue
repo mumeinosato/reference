@@ -21,6 +21,12 @@
           <li class="sub-title"><router-link to="/list/pytnon/techful/3">数学</router-link></li>
         </ul>
         <li class="main-title"><router-link to="/post">投降</router-link></li>
+        <li class="main-title">
+          <hr>
+        </li>
+        <li class="main-title">
+          <v-btn flat>ログイン</v-btn>
+        </li>
       </ul>
     </div>
   </div>

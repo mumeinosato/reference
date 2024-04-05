@@ -35,6 +35,11 @@ export async function edit(id: number, title: string, content: string, type: num
     return response.data;
 }
 
+export async function login(user: string, pass: string): Promise<any> {
+    const response = await axios.get(`${API_URL}/login/${user}/${pass}`);
+    return response.data; 
+}
+
 /*
 https://localhost:3000/post/test/print(0)/2/1/2
 */
