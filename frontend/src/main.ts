@@ -4,6 +4,8 @@ import './assets/style/tailwindcss/tailwindcss.css'
 
 
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import { createPersistedState } from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
 
@@ -22,9 +24,13 @@ const vuetify = createVuetify({
     directives,
 })
 
+const pinia = createPinia()
+pinia.use(createPersistedState())
+
 app.use(router)
 app.use(vuetify)
 app.use(hijsVuePlugin)
+app.use(pinia)
 
 app.mount('#app')
 

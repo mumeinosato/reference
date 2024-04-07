@@ -24,13 +24,41 @@
         <li class="main-title">
           <hr>
         </li>
-        <li class="main-title">
-          <v-btn flat>ログイン</v-btn>
+        <li class="main-title" v-if="this.login === false">
+          <v-btn flat><router-link to="/login">ログイン</router-link></v-btn>
+        </li>
+        <li class="main-title" v-else>
+          <v-btn flat @click="logout">ログアウト</v-btn>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
+<script>
+import { useStore } from "../assets/script/store"
+
+export default{
+  data() {
+    return {
+      login: false
+    }
+  },
+  methods: {
+    logout() {
+      const store = useStore();
+      store.setLogin(false);
+      alert("ログアウトしました");
+      this.$router.go("/");
+    }
+  },
+  async mounted() {
+    const store = useStore();
+    this.login = store.getLogin();
+  }
+}
+</script>
+
 
 <style>
   .sidebar{

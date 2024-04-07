@@ -22,9 +22,11 @@
 
 
 <script>
-import { login } from "../assets/script/api";
+import { useStore } from "../assets/script/store"
+import { login } from "../assets/script/api"
+import { ref } from "vue"
 
-export default{
+export default {
     data() {
         return {
             user: "",
@@ -32,17 +34,27 @@ export default{
         };
     },
     methods: {
-        submit() {
+        async submit() {
             if(this.user == "" || this.password == "") {
                 alert("ユーザー名とパスワードを入力してください");
                 return;
             }
-            const re = login(this.user, this.password);
-            if(re){
+            const re = await login(this.user, this.password);
+            const store = useStore();
+            if(re === true){
+                store.setLogin(true);
                 alert("ログイン成功");
+                this.$router.go("/");
             }else{
                 alert("ログイン失敗");
+                store.setLogin(false);
             }
+        }
+    },
+    mounted() {
+        const store = useStore();
+        if(store.getLogin() === true){
+            this.$router.push("/");
         }
     }
 }

@@ -35,7 +35,7 @@ export async function edit(id: number, title: string, content: string, type: num
     return response.data;
 }
 
-export async function login(user: string, pass: string): Promise<any> {
+export async function login(user: string, pass: string): Promise<boolean> {
     const response = await axios.get(`${API_URL}/login/${user}/${pass}`);
     return response.data; 
 }
