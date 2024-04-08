@@ -9,12 +9,22 @@ export const useStore = defineStore(
 
         const NameState = ref('');
 
+        const UserState = ref('');
+
         const setLogin = (value: boolean) => {
             LoginState.value = value;
         }
 
         const getLogin = () => {
             return LoginState.value;
+        }
+
+        const setUser = (value: string) => {
+            UserState.value = value;
+        }
+
+        const getUser = () => {
+            return UserState.value;
         }
 
         const setName = (value: string) => {
@@ -25,7 +35,7 @@ export const useStore = defineStore(
             return NameState.value;
         }
 
-        return { LoginState, setLogin, getLogin, NameState, setName, getName} 
+        return { LoginState, setLogin, getLogin, NameState, setName, getName, UserState, setUser, getUser} 
     },
     {
         persist: {

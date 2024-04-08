@@ -25,6 +25,7 @@ model Techful {
   content   String  @db.VarChar(5000)
   language  Int
   group     Int
+  list      Int @default(0)
 }
 
 model User {

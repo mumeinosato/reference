@@ -5,9 +5,10 @@ import bodyParser from 'body-parser';
 import { Post } from './logic/post';
 import { Edit } from './logic/edit';
 import { Data } from './logic/data';
-import { List } from './logic/list';
+import { List, Edit_list } from './logic/list';
 import { Login } from './logic/login';
 import { b_Write, b_Read } from './logic/board';
+
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.get('/', (req: express.Request, res: express.Response) => {
     res.send('It works!');
 });
+
 
 app.post('/post', (req: express.Request, res: express.Response) => {
     const { title, content, language, type, group } = req.body;
@@ -79,6 +81,18 @@ app.get('/data/:id/:type', (req: express.Request, res: express.Response) => {
 app.get('/list/:language/:type/:group', (req: express.Request, res: express.Response) => {
     const { language, type, group } = req.params;
     List(parseInt(language), parseInt(type), parseInt(group))
+        .then((resp) => {
+            res.send(resp);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
+
+app.post('/edit_list/:id/:list', (req: express.Request, res: express.Response) => {
+    const { id, list } = req.params;
+    Edit_list(parseInt(id), parseInt(list))
         .then((resp) => {
             res.send(resp);
         })

@@ -26,8 +26,28 @@ export async function List(language: number, type: number, group: number): Promi
             select: {
                 id: true,
                 title: true,
+                list: true,
             },
         });
         return data;
+    }
+}
+
+export async function Edit_list(id: number, list: number): Promise<boolean>{
+    const idn = parseInt(id.toString());
+    const listn = parseInt(list.toString());
+    try {
+        const data = await prisma.techful.update({
+            where: {
+                id: idn,
+            },
+            data: {
+                list: listn,
+            },
+        });
+        return true;
+    } catch (e) {
+        console.error("Error updating data:", e);
+        return false;
     }
 }

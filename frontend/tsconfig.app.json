@@ -8,7 +8,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "vuedraggable": [
+        "src/types/vuedraggable"
+      ]
     }
   }
 }

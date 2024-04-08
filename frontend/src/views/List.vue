@@ -13,8 +13,12 @@
         
         <script>
 import { list } from "../assets/script/api";
+import draggable from 'vuedraggable';
 
 export default {
+  components: {
+    draggable,
+  },
   data() {
     return {
       re: [], // データを保持する配列
@@ -25,6 +29,8 @@ export default {
     let lang = this.$route.params.lang == "cpp" ? 1 : 2;
     this.type = this.$route.params.type == "reference" ? 0 : 1;
     this.re = await list(lang, this.type, this.$route.params.group);
+
+    this.re.sort((a, b) => a.list - b.list);
   },
   watch: {
     $route() {
@@ -43,7 +49,7 @@ p:hover {
   background-color: rgb(226, 232, 240);
 }
 
-.box{
+.box {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

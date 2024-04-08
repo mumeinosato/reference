@@ -30,5 +30,6 @@ coverage
 dev-file
 migrations
 *.cpp
+dev.ts
 
 *.tsbuildinfo

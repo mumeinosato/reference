@@ -24,6 +24,15 @@ export async function list(language: number,type: number ,group: number): Promis
     return response.data;
 }
 
+export async function edit_list(id: number, list: number): Promise<boolean> {
+    const data = {
+        id: id,
+        list: list
+    }
+    const response = await axios.post(`${API_URL}/edit_list`, data);
+    return response.data;
+}
+
 export async function edit(id: number, title: string, content: string, type: number): Promise<any> {
     const data = {
         id: id,
@@ -47,6 +56,11 @@ export async function bwrite(name: string, user: string, content: string): Promi
         content: content
     }
     const response = await axios.post(`${API_URL}/bwrite`, data);
+    return response.data;
+}
+
+export async function bread(name: string): Promise<any> {
+    const response = await axios.get(`${API_URL}/bread/`);
     return response.data;
 }
 

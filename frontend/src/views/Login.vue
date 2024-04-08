@@ -43,7 +43,7 @@ export default {
             const store = useStore();
             if(re === true){
                 store.setLogin(true);
-                store.setName(this.user);
+                store.setUser(this.user);
                 alert("ログイン成功");
                 this.$router.go("/");
             }else{

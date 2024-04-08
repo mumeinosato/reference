@@ -34,10 +34,33 @@ export default {
   async mounted() {
     const store = useStore();
     const login  = store.getLogin();
+    this.name = store.getName();
+    console.log(store.getUser());
     if(login === false){
       this.$router.push("/");
     }
   },
+  methods: {
+    async submit() {
+        let res = false;
+        if(this.name == "" || this.content == "") {
+            alert("表示名と内容を入力してください");
+            return;
+        }
+        const cont = this.content.replace(/\n/g, '<br>');
+        const store = useStore();
+        const user = store.getUser();
+        store.setName(this.name);
+        res = await bwrite(this.name, user, cont);
+        if(res === true) {
+            alert("投稿しました");
+            this.$router.push("/");
+        } else {
+            alert("投稿に失敗しました");
+            console.log(res);
+        }
+    }
+  }
 };
 </script>
 
