@@ -40,6 +40,16 @@ export async function login(user: string, pass: string): Promise<boolean> {
     return response.data; 
 }
 
+export async function bwrite(name: string, user: string, content: string): Promise<boolean> {
+    const data = {
+        name: name,
+        user: user,
+        content: content
+    }
+    const response = await axios.post(`${API_URL}/bwrite`, data);
+    return response.data;
+}
+
 /*
 https://localhost:3000/post/test/print(0)/2/1/2
 */

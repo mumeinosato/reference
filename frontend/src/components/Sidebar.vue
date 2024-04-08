@@ -48,6 +48,7 @@ export default{
     logout() {
       const store = useStore();
       store.setLogin(false);
+      store.setName("");
       alert("ログアウトしました");
       this.$router.go("/");
     }

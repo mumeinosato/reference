@@ -22,6 +22,7 @@
 
 <script>
 import { edit, data } from "../assets/script/api";
+import { useStore } from "../assets/script/store"
 
 export default {
   data() {
@@ -31,6 +32,11 @@ export default {
     };
   },
   async mounted() {
+    const store = useStore();
+    const login  = store.getLogin();
+    if(login === false){
+      this.$router.push({ name: "view", params: { id: this.$route.params.id, type: this.$route.params.type } });
+    }
     const re = await data(this.$route.params.id, this.$route.params.type);
     this.title = re.title;
     this.content = re.content.replace(/<br>/g, "\n");

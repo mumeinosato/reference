@@ -2,7 +2,7 @@
   <div>
     <h1>{{ title }}
       <span>
-        <p>
+        <p v-if="login === true">
           <router-link :to="{ name: 'edit', params: { id: id, type: type } }">編集</router-link>
         </p>
       </span>
@@ -13,6 +13,7 @@
 </template>
   
   <script>
+  import { useStore } from "../assets/script/store"
 import { data } from "../assets/script/api";
 import hljs from 'highlight.js/lib/core';
 
@@ -30,6 +31,7 @@ export default {
       title: "",
       content: "",
       lang: "",
+      login: false
     };
   },
   async mounted() {
@@ -37,6 +39,8 @@ export default {
     this.title = re.title;
     this.content = re.content.replace(/<br>/g, "\n");
     this.lang = re.language === 1 ? "cpp" : "python";
+    const store = useStore();
+    this.login = store.getLogin();
   },
   watch: {
     $route() {

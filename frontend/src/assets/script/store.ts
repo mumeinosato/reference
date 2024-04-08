@@ -3,9 +3,11 @@ import { ref } from "vue";
 import CryptoJS from "crypto-js";
 
 export const useStore = defineStore(
-    'login',
+    'main',
     () => {
         const LoginState = ref(false);
+
+        const NameState = ref('');
 
         const setLogin = (value: boolean) => {
             LoginState.value = value;
@@ -15,7 +17,15 @@ export const useStore = defineStore(
             return LoginState.value;
         }
 
-        return { LoginState, setLogin, getLogin } 
+        const setName = (value: string) => {
+            NameState.value = value;
+        }
+
+        const getName = () => {
+            return NameState.value;
+        }
+
+        return { LoginState, setLogin, getLogin, NameState, setName, getName} 
     },
     {
         persist: {

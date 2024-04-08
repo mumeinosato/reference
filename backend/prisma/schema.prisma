@@ -33,3 +33,12 @@ model User {
   username  String
   password  String
 }
+
+model Board {
+  @@map("board")
+  id        Int      @id @default(autoincrement())
+  user       String
+  displayname String
+  content   String
+  createat  DateTime @default(now())
+}
