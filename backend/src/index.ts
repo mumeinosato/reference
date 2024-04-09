@@ -90,8 +90,8 @@ app.get('/list/:language/:type/:group', (req: express.Request, res: express.Resp
         });
 });
 
-app.post('/edit_list/:id/:list', (req: express.Request, res: express.Response) => {
-    const { id, list } = req.params;
+app.post('/edit_list', (req: express.Request, res: express.Response) => {
+    const { id, list } = req.body;
     Edit_list(parseInt(id), parseInt(list))
         .then((resp) => {
             res.send(resp);

@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+    <draggable :list="re" @change="update">
     <div v-for="(item, index) in re" :key="index">
       <p>
         <router-link
@@ -8,11 +9,12 @@
         >
       </p>
     </div>
+  </draggable>
   </div>
 </template>
         
         <script>
-import { list } from "../assets/script/api";
+import { list, edit_list } from "../assets/script/api";
 import { VueDraggableNext } from 'vue-draggable-next'
 
 export default {
@@ -31,6 +33,14 @@ export default {
     this.re = await list(lang, this.type, this.$route.params.group);
 
     this.re.sort((a, b) => a.list - b.list);
+  },
+  methods: {
+    async update(){
+      for (let i = 0; i < this.re.length; i++) {
+        const item = this.re[i];
+        await edit_list(item.id, i + 1); // i + 1 は 1-indexed な list の値を表す
+      }
+    }
   },
   watch: {
     $route() {
