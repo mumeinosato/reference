@@ -51,7 +51,14 @@ export default {
   },
   async mounted() {
     let lang = this.$route.params.lang == "cpp" ? 1 : 2;
-    this.type = this.$route.params.type == "reference" ? 0 : 1;
+    //this.type = this.$route.params.type == "reference" ? 0 : 1;
+    if(this.$route.params.type == "reference"){
+      this.type = 0;
+    }else if(this.$route.params.type == "techful"){
+      this.type = 1;
+    }else if(this.$route.params.type == "aoj"){
+      this.type = 2;
+    }
     this.re = await list(lang, this.type, this.$route.params.group);
 
     this.re.sort((a, b) => a.list - b.list);

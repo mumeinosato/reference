@@ -30,6 +30,15 @@ export async function List(language: number, type: number, group: number): Promi
             },
         });
         return data;
+    } else if (ty === 2) {
+        const data = await prisma.aoj.findMany({
+            select: {
+                id: true,
+                title: true,
+                list: true,
+            },
+        });
+        return data;
     }
 }
 
@@ -52,10 +61,24 @@ export async function Edit_list(id: number, list: number, type: number): Promise
             console.error("Error updating data:", e);
             return false;
         }
-        return false;
     }else if (ty === 1){
         try {
             const data = await prisma.techful.update({
+                where: {
+                    id: idn,
+                },
+                data: {
+                    list: listn,
+                },
+            });
+            return true;
+        } catch (e) {
+            console.error("Error updating data:", e);
+            return false;
+        }
+    }else if(ty === 2){
+        try {
+            const data = await prisma.aoj.update({
                 where: {
                     id: idn,
                 },

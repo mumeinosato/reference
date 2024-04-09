@@ -29,12 +29,11 @@ model Techful {
   list      Int @default(0)
 }
 
-model AOJ {
+model Aoj {
   @@map("aoj")
   id        Int      @id @default(autoincrement())
   title     String
   content   String  @db.VarChar(5000)
-  group     Int
   list      Int @default(0)
 }
 
@@ -52,4 +51,16 @@ model Board {
   displayname String
   content   String
   createat  DateTime @default(now())
+}
+
+model ProUp {
+  @@map("proup")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  language  Int
+  user     String
+  input     String @db.VarChar(5000)
+  output    String @db.VarChar(5000)
+  public    Int @default(0)
 }

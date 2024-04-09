@@ -8,18 +8,19 @@
           <li class="sub-title"><router-link to="/list/cpp/reference/1">C++</router-link></li>
           <li class="sub-title"><router-link to="/list/python/reference/1">Python</router-link></li>
         </ul>
-        <li class="main-title">Tech Full(C++)</li>
+        <li class="main-title">TechFUL(C++)</li>
         <ul>
           <li class="sub-title"><router-link to="/list/cpp/techful/1">プログラミング基礎</router-link></li>
           <li class="sub-title"><router-link to="/list/cpp/techful/2">アルゴリズム</router-link></li>
           <li class="sub-title"><router-link to="/list/cpp/techful/3">数学</router-link></li>
         </ul>
-        <li class="main-title">Tech Full(Python)</li>
+        <li class="main-title">TechFUL(Python)</li>
         <ul>
           <li class="sub-title"><router-link to="/list/python/techful/1">プログラミング基礎</router-link></li>
           <li class="sub-title"><router-link to="/list/python/techful/2">アルゴリズム</router-link></li>
           <li class="sub-title"><router-link to="/list/pytnon/techful/3">数学</router-link></li>
         </ul>
+        <li class="main-title"><router-link to="/list/cpp/aoj/0">AOJ</router-link></li>
         <li class="main-title"><router-link to="/post">投稿</router-link></li>
         <li class="main-title">
           <hr>

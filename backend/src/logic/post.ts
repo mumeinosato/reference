@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { create } from "domain";
+import { connect } from "http2";
 
 const prisma = new PrismaClient();
 
@@ -27,6 +29,14 @@ export async function Post(title: string, content: string, language: number, typ
                     language: lang,
                 },
             });
+            await prisma.reference.update({
+                where: {
+                    id: result.id,
+                },
+                data: {
+                    list: result.id,
+                },
+            });
             console.log("Reference post created:", result);
             return true;
         } else if (type === 1) {
@@ -40,7 +50,32 @@ export async function Post(title: string, content: string, language: number, typ
                     group: gr,
                 },
             });
+            await prisma.techful.update({
+                where: {
+                    id: result.id,
+                },
+                data: {
+                    list: result.id,
+                },
+            });
             console.log("TechFul post created:", result);
+            return true;
+        } else if (type === 2) {
+            const result = await prisma.aoj.create({
+                data: {
+                    title: title,
+                    content: content,
+                },
+            });
+            await prisma.aoj.update({
+                where: {
+                    id: result.id,
+                },
+                data: {
+                    list: result.id,
+                },
+            });
+            console.log("AOJ post created:", result);
             return true;
         } else {
             console.error("Invalid post type:", type);

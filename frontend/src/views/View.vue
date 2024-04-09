@@ -38,7 +38,16 @@ export default {
     const re = await data(this.$route.params.id, this.$route.params.type);
     this.title = re.title;
     this.content = re.content.replace(/<br>/g, "\n");
-    this.lang = re.language === 1 ? "cpp" : "python";
+    //this.lang = re.language === 1 ? "cpp" : "python";
+
+    if(this.$route.params.type == "reference"){
+      this.lang = 0;
+    }else if(this.$route.params.type == "techful"){
+      this.lang = 1;
+    }else if(this.$route.params.type == "aoj"){
+      this.lang = 2;
+    }
+    
     const store = useStore();
     this.login = store.getLogin();
   },

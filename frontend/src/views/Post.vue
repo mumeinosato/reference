@@ -12,11 +12,11 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col>
+                <v-col v-if="type !== 'AOJ'">
                     <v-select v-model="language" :items="['C++', 'Python']" label="言語"></v-select>
                 </v-col>
                 <v-col>
-                    <v-select v-model="type" :items="['Reference', 'TechFul']" label="投稿先"></v-select>
+                    <v-select v-model="type" :items="['Reference', 'TechFul', 'AOJ']" label="投稿先"></v-select>
                 </v-col>
                 <v-col v-if="type == 'TechFul'">
                     <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math']" label="種類"></v-select>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { re_post, te_post } from "../assets/script/post";
+import { re_post, te_post, aoj_post } from "../assets/script/post";
 
 export default {
   data() {
@@ -71,6 +71,15 @@ export default {
         else if(this.group === "algorithm") gr = 2;
         else if(this.group === "math") gr = 3;
         res = await te_post(this.title, cont, lang, gr);
+        if (res === true) {
+          alert("投稿しました");
+          location.reload();
+        } else {
+          alert("投稿に失敗しました");
+          console.log(res);
+        }
+      }else if (this.type == "AOJ") {
+        res = await aoj_post(this.title, cont);
         if (res === true) {
           alert("投稿しました");
           location.reload();

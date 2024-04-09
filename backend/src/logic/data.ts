@@ -29,4 +29,16 @@ export async function Data(id: number, type: number): Promise<any> {
         });
         return data;
     }
+    if(type === 2){
+        const data = await prisma.aoj.findUnique({
+            where: {
+                id: idn,
+            },
+            select: {
+                title: true,
+                content: true,
+            },
+        });
+        return data;
+    }
 }

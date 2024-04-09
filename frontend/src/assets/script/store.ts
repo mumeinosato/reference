@@ -39,7 +39,6 @@ export const useStore = defineStore(
     },
     {
         persist: {
-            storage: sessionStorage,
             serializer: {
                 deserialize: (value: string) => {
                     const decrypted = CryptoJS.AES.decrypt(value, 'user')
