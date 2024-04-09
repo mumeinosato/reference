@@ -33,21 +33,42 @@ export async function List(language: number, type: number, group: number): Promi
     }
 }
 
-export async function Edit_list(id: number, list: number): Promise<boolean>{
+export async function Edit_list(id: number, list: number, type: number): Promise<boolean>{
     const idn = parseInt(id.toString());
     const listn = parseInt(list.toString());
-    try {
-        const data = await prisma.techful.update({
-            where: {
-                id: idn,
-            },
-            data: {
-                list: listn,
-            },
-        });
-        return true;
-    } catch (e) {
-        console.error("Error updating data:", e);
+    const ty = parseInt(type.toString());
+    if (ty === 0){
+        /*try {
+            const data = await prisma.reference.update({
+                where: {
+                    id: idn,
+                },
+                data: {
+                    list: listn,
+                },
+            });
+            return true;
+        } catch (e) {
+            console.error("Error updating data:", e);
+            return false;
+        }*/
+        return false;
+    }else if (ty === 1){
+        try {
+            const data = await prisma.techful.update({
+                where: {
+                    id: idn,
+                },
+                data: {
+                    list: listn,
+                },
+            });
+            return true;
+        } catch (e) {
+            console.error("Error updating data:", e);
+            return false;
+        }
+    }else{
         return false;
     }
 }

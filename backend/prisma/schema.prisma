@@ -16,6 +16,7 @@ model Reference {
   title     String
   content   String @db.VarChar(5000)
   language  Int
+  list      Int @default(0)
 }
 
 model Techful {

@@ -20,7 +20,7 @@
           <li class="sub-title"><router-link to="/list/python/techful/2">アルゴリズム</router-link></li>
           <li class="sub-title"><router-link to="/list/pytnon/techful/3">数学</router-link></li>
         </ul>
-        <li class="main-title"><router-link to="/post">投降</router-link></li>
+        <li class="main-title"><router-link to="/post">投稿</router-link></li>
         <li class="main-title">
           <hr>
         </li>

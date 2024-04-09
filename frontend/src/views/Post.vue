@@ -42,8 +42,8 @@ export default {
       language: "C++",
       // type: "Reference",
       type: "TechFul",
-      //group: "programming-basic",
-      group: "algorithm"
+      group: "programming-basic",
+      //group: "algorithm"
     };
   },
   methods: {

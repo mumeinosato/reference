@@ -25,10 +25,11 @@ export async function list(language: number,type: number ,group: number): Promis
     return response.data;
 }
 
-export async function edit_list(id: number, list: number): Promise<boolean> {
+export async function edit_list(id: number, list: number, type: number): Promise<boolean> {
     const data = {
         id: id,
-        list: list
+        list: list,
+        type: type
     }
     const response = await axios.post(`${API_URL}/edit_list`, data);
     return response.data;

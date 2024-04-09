@@ -63,7 +63,7 @@ export default {
     async update() {
       for (let i = 0; i < this.re.length; i++) {
         const item = this.re[i];
-        await edit_list(item.id, i + 1); 
+        await edit_list(item.id, i + 1, this.type); 
       }
     }
   },
