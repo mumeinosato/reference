@@ -13,11 +13,11 @@
         
         <script>
 import { list } from "../assets/script/api";
-import draggable from 'vuedraggable';
+import { VueDraggableNext } from 'vue-draggable-next'
 
 export default {
   components: {
-    draggable,
+    draggable: VueDraggableNext,
   },
   data() {
     return {

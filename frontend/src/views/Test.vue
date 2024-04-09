@@ -1,48 +1,39 @@
 <template>
-    <div class="hello">
-        <draggable v-model="data" group="people" item-key="id" handle=".handle">
-            <template #item="{element}">
-                <div class="drag-item">
-                    <span class="handle">ここを押せば動かせます。</span>
-                    {{ element.id }}
-                </div>
-            </template>
-        </draggable>
-    </div>
+  <div class="flex m-10">
+    <draggable class="dragArea list-group w-full" :list="list" @change="log">
+      <div
+        class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+        v-for="element in list"
+        :key="element.name"
+      >
+        {{ element.name }}
+      </div>
+    </draggable>
+  </div>
 </template>
-
 <script>
-import draggable from "vuedraggable";
-
-export default {
+  import { defineComponent } from 'vue'
+  import { VueDraggableNext } from 'vue-draggable-next'
+  export default defineComponent({
     components: {
-        draggable,
+      draggable: VueDraggableNext,
     },
     data() {
-        return {
-            data: [
-                {
-                    id: 1,
-                    content: "テスト1",
-                },
-                {
-                    id: 2,
-                    content: "テスト2",
-                },
-                {
-                    id: 3,
-                    content: "テスト3",
-                },
-            ],
-        };
+      return {
+        enabled: true,
+        list: [
+          { name: 'John', id: 1 },
+          { name: 'Joao', id: 2 },
+          { name: 'Jean', id: 3 },
+          { name: 'Gerard', id: 4 },
+        ],
+        dragging: false,
+      }
     },
-};
+    methods: {
+      log(event) {
+        console.log(event)
+      },
+    },
+  })
 </script>
-
-<style scoped>
-.drag-item {
-    background: rgb(233, 249, 255);
-    margin: 10px 0;
-}
-</style>
-
