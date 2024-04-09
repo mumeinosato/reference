@@ -28,6 +28,15 @@ model Techful {
   list      Int @default(0)
 }
 
+model AOJ {
+  @@map("aoj")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  group     Int
+  list      Int @default(0)
+}
+
 model User {
   @@map("user")
   id        Int      @id @default(autoincrement())

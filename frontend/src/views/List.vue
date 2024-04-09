@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { list, edit_list, edit, login } from "../assets/script/api";
+import { list, edit_list } from "../assets/script/api";
 import { VueDraggableNext } from 'vue-draggable-next'
 import { useStore } from "../assets/script/store"
 
@@ -63,7 +63,7 @@ export default {
     async update() {
       for (let i = 0; i < this.re.length; i++) {
         const item = this.re[i];
-        await edit_list(item.id, i + 1); // i + 1 は 1-indexed な list の値を表す
+        await edit_list(item.id, i + 1); 
       }
     }
   },

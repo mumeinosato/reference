@@ -8,7 +8,7 @@ import Sidebar from './components/Sidebar.vue';
     <div class="side">
       <Sidebar />
     </div>
-    <div class="main">
+    <div class="main" ref="mainContent">
       <RouterView />
     </div>
   </div>
@@ -20,6 +20,7 @@ import Sidebar from './components/Sidebar.vue';
     width: 100%;
     min-height: 100vh;
     align-items: stretch;
+    overflow-x: hidden;
   }
   .side {
     background-color: rgb(226, 232, 240);
@@ -29,5 +30,6 @@ import Sidebar from './components/Sidebar.vue';
     width: 80%;
     margin: 20px;
     height: fit-content;
+    overflow-y: auto;
   }
 </style>
