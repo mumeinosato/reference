@@ -38,7 +38,7 @@ export async function Edit_list(id: number, list: number, type: number): Promise
     const listn = parseInt(list.toString());
     const ty = parseInt(type.toString());
     if (ty === 0){
-        /*try {
+        try {
             const data = await prisma.reference.update({
                 where: {
                     id: idn,
@@ -51,7 +51,7 @@ export async function Edit_list(id: number, list: number, type: number): Promise
         } catch (e) {
             console.error("Error updating data:", e);
             return false;
-        }*/
+        }
         return false;
     }else if (ty === 1){
         try {
