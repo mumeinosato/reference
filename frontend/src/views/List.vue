@@ -1,26 +1,37 @@
 <template>
-  <div>
-    <div>
-      <div class="toggle_button">
-      <input id="toggle" class="toggle_input" type='checkbox' />
-      <label for="toggle" class="toggle_label"/>
-  </div>
+  <div v-if="login === true">
+    <div class="toggle_button">
+      <input id="toggle" class="toggle_input" type='checkbox' v-model="edit"/>
+      <label for="toggle" class="toggle_label" />
     </div>
-  <div class="box">
-    <draggable :list="re" @change="update">
-    <div v-for="(item, index) in re" :key="index">
-      <p>
-        <router-link
-          :to="{ name: 'view', params: { id: item.id, type: type } }"
-          >{{ item.title }}</router-link
-        >
-      </p>
-    </div>
-  </draggable>
+    <div class="box" v-show="edit === true">
+      <draggable :list="re" @change="update">
+        <div v-for="(item, index) in re" :key="index">
+          <p>
+            <router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>
+          </p>
+        </div>
+      </draggable>
+    </div>  
+    <div class="box" v-show="edit === false">
+        <div v-for="(item, index) in re" :key="index">
+          <p>
+            <router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>
+          </p>
+        </div>
+    </div> 
   </div>
-</div>
+  <div v-else>
+    <div class="box">
+        <div v-for="(item, index) in re" :key="index">
+          <p>
+            <router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>
+          </p>
+        </div>
+    </div>
+  </div>
 </template>
-        
+
 <script>
 import { list, edit_list, edit, login } from "../assets/script/api";
 import { VueDraggableNext } from 'vue-draggable-next'
@@ -49,7 +60,7 @@ export default {
     this.login = store.getLogin();
   },
   methods: {
-    async update(){
+    async update() {
       for (let i = 0; i < this.re.length; i++) {
         const item = this.re[i];
         await edit_list(item.id, i + 1); // i + 1 は 1-indexed な list の値を表す
@@ -93,8 +104,8 @@ p:hover {
 }
 
 .toggle_label {
-  width: 75px;
-  height: 35px;
+  width: 55px;
+  height: 25px;
   background: #ccc;
   position: relative;
   display: inline-block;
@@ -106,8 +117,8 @@ p:hover {
 .toggle_label:after {
   content: "";
   position: absolute;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   border-radius: 100%;
   left: 0;
   top: 0;
@@ -117,11 +128,11 @@ p:hover {
   transition: 0.4s;
 }
 
-.toggle_input:checked + .toggle_label {
+.toggle_input:checked+.toggle_label {
   background-color: #4BD865;
 }
 
-.toggle_input:checked + .toggle_label:after {
+.toggle_input:checked+.toggle_label:after {
   left: 40px;
 }
 
@@ -129,8 +140,8 @@ p:hover {
   position: absolute;
   right: 0;
   width: 75px;
-  height: 35px;
+  height: 30px;
   margin: auto;
   margin-bottom: 50px;
 }
-</style>
+</style>style
