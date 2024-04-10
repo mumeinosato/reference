@@ -8,9 +8,10 @@
       </span>
     </h1>
     <!--<pre><code ref="code">{{ content }}</code></pre>-->
-    <div ref="code" contenteditabl @keydown="keydown">
+    <div id="v_code" ref="code" @keydown.ctrl.a="selectText">
       <highlightjs :language="lang" :code="content"/>
     </div>
+    <p @click="copy">{{ clip }}</p>
   </div>
 </template>
   
@@ -33,40 +34,32 @@ export default {
       title: "",
       content: "",
       lang: "",
-      login: false
+      login: false,
+      clip: "コピー"
     };
   },
   async mounted() {
     const re = await data(this.$route.params.id, this.$route.params.type);
     this.title = re.title;
     this.content = re.content.replace(/<br>/g, "\n");
-    //this.lang = re.language === 1 ? "cpp" : "python";
-
-    if(this.$route.params.type == "reference"){
-      this.lang = 0;
-    }else if(this.$route.params.type == "techful"){
-      this.lang = 1;
-    }else if(this.$route.params.type == "aoj"){
-      this.lang = 2;
-    }
+    this.lang = re.language === 1 ? "cpp" : "python";
     
     const store = useStore();
     this.login = store.getLogin();
   },
-  methoods: {
-    keydown(e) {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'a'){
-        e.preventDefault();
-
-        const editdiv = this.$refs.code;
-
-        const range = document.createRange();
-        range.selectNodeContents(editdiv);
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-    }
+  methods: {
+    selectText() {
+      const range = document.createRange();
+      range.selectNodeContents(this.$refs.code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    },
+    copy() {
+      console.log('copy');
+      navigator.clipboard.writeText(this.content);
+      this.clip = "コピーしました";
+    },
   },
   watch: {
     $route() {
