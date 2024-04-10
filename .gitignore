@@ -31,5 +31,6 @@ dev-file
 migrations
 *.cpp
 dev.ts
+api_url.ts
 
 *.tsbuildinfo

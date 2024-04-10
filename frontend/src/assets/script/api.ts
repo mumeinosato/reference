@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { getApiUrl } from './api_url';
 
-const API_URL = 'http://127.0.0.1:3000';
+const API_URL = getApiUrl();
 //const API_URL = 'http://localhost:3000';
 
 export async function post(title: string, content: string, language: number, type: number, group: number): Promise<any> {
