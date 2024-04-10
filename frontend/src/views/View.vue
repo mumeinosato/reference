@@ -8,7 +8,9 @@
       </span>
     </h1>
     <!--<pre><code ref="code">{{ content }}</code></pre>-->
-    <highlightjs :language="lang" :code="content"/>
+    <div ref="code" contenteditabl @keydown="keydown">
+      <highlightjs :language="lang" :code="content"/>
+    </div>
   </div>
 </template>
   
@@ -50,6 +52,21 @@ export default {
     
     const store = useStore();
     this.login = store.getLogin();
+  },
+  methoods: {
+    keydown(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'a'){
+        e.preventDefault();
+
+        const editdiv = this.$refs.code;
+
+        const range = document.createRange();
+        range.selectNodeContents(editdiv);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
   },
   watch: {
     $route() {
