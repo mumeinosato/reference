@@ -8,6 +8,8 @@ services:
       - .:/usr/src/app
     depends_on:
       - backend
+    environment:
+      - BASE_URL=/
 
   backend:
     build: ./backend
