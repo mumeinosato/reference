@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="login === true">
     <h1>{{ title }}
       <span>
         <p v-if="login === true">
@@ -12,6 +13,10 @@
       <highlightjs :language="lang" :code="content"/>
     </div>
     <p @click="copy">{{ clip }}</p>
+  </div>
+  <div v-else>
+    <p>ログインしないと見れないよ</p>
+  </div>
   </div>
 </template>
   
@@ -46,6 +51,7 @@ export default {
     
     const store = useStore();
     this.login = store.getLogin();
+
   },
   methods: {
     selectText() {
