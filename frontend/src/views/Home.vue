@@ -15,7 +15,7 @@
                 <p class="username">{{ post.displayname }}</p>
                 <p class="postInfo">{{ formatDateTime(post.createat) }}</p>
               </div>
-              <p class="cont">{{ post.content }}</p>
+              <p class="cont" style="white-space: pre-line;">{{ replaceContent(post.content) }}</p>
             </div>
           </article>
         </div>
@@ -37,7 +37,7 @@ export default{
   data() {
     return {
       login: false,
-      boardPosts: [] 
+      boardPosts: [],
     }
   },
   async mounted() {
@@ -55,6 +55,9 @@ export default{
       } catch (error) {
         console.error("Error fetching board posts:", error);
       }
+    },
+    replaceContent(content) {
+      return content.replace(/<br>/g, "\n");
     },
     formatDateTime(dateTime) {
       const date = new Date(dateTime);
