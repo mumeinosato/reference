@@ -11,8 +11,6 @@ COPY . .
 
 RUN npm audit fix
 
-ENV BASE_URL=/
-
 RUN npm run build
 
 EXPOSE 8080
