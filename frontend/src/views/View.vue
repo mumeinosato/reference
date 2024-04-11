@@ -52,6 +52,7 @@ export default {
     const store = useStore();
     this.login = store.getLogin();
 
+    console.log(this.$route.params.id);
   },
   methods: {
     selectText() {

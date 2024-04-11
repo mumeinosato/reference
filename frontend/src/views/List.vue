@@ -65,6 +65,7 @@ export default {
 
     const store = useStore();
     this.login = store.getLogin();
+
   },
   methods: {
     async update() {
