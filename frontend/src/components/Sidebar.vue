@@ -5,7 +5,7 @@
       <ul>
         <li class="main-title">リファレンス</li>
         <ul>
-          <li class="sub-title"><router-link to="/list/cpp/reference/1">C++</router-link></li>
+          <li class="sub-title"><router-link :to="{ name : 'list', params: { lang: 'cpp', type: 'reference', type: 'reference'}}">C++</router-link></li>
           <li class="sub-title"><router-link to="/list/python/reference/1">Python</router-link></li>
         </ul>
         <li class="main-title">TechFUL(C++)</li>
