@@ -23,12 +23,14 @@ const router = createRouter({
     {
       path: '/view/:id/:type',
       name: 'view',
-      component: View
+      component: View,
+      props: route => ({ id: route.params.id, type: route.params.type })
     },
     {
       path: '/edit/:id/:type',
       name: 'edit',
-      component: Edit
+      component: Edit,
+      props: route => ({ id: route.params.id, type: route.params.type })
     },
     {
       path: '/list/:lang/:type/:group',
