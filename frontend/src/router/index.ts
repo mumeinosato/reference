@@ -24,19 +24,18 @@ const router = createRouter({
       path: '/view/:id/:type',
       name: 'view',
       component: View,
-      props: route => ({ id: route.params.id, type: route.params.type })
-    },
+      props: true
     {
       path: '/edit/:id/:type',
       name: 'edit',
       component: Edit,
-      props: route => ({ id: route.params.id, type: route.params.type })
+      props: true
     },
     {
       path: '/list/:lang/:type/:group',
       name: 'list',
       component: List,
-      props: route => ({ lang: route.params.lang, type: route.params.type, group: route.params.group })
+      props: true
     },
     {
       path: '/login',
