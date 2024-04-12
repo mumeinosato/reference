@@ -50,7 +50,7 @@ export default {
     };
   },
   async mounted() {
-    consloe.log('mounted');
+    console.log('mounted');
     let lang = this.$route.params.lang == "cpp" ? 1 : 2;
     //this.type = this.$route.params.type == "reference" ? 0 : 1;
     if(this.$route.params.type == "reference"){
