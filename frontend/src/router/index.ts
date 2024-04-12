@@ -25,6 +25,7 @@ const router = createRouter({
       name: 'view',
       component: View,
       props: true
+    },
     {
       path: '/edit/:id/:type',
       name: 'edit',
