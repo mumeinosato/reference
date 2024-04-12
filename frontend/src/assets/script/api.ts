@@ -3,7 +3,7 @@ import { getApiUrl } from './api_url';
 
 
 //const API_URL = 'http://localhost:3000';
-const API_URL = getApiUrl();
+//const API_URL = getApiUrl();
 
 export async function post(title: string, content: string, language: number, type: number, group: number): Promise<any> {
     const data = {
@@ -13,16 +13,19 @@ export async function post(title: string, content: string, language: number, typ
         type: type,
         group: group
     }
+    const API_URL = await getApiUrl();
     const response = await axios.post(`${API_URL}/post`, data);
     return response.data;
 }
 
 export async function data(id: number, type: number): Promise<any> {
+    const API_URL = await getApiUrl();
     const response = await axios.get(`${API_URL}/data/${id}/${type}`);
     return response.data;
 }
 
 export async function list(language: number,type: number ,group: number): Promise<any> {
+    const API_URL = await getApiUrl();
     const response = await axios.get(`${API_URL}/list/${language}/${type}/${group}`);
     console.log(`${API_URL}/list/${language}/${type}/${group}`);
     console.log(response.data);
@@ -30,6 +33,7 @@ export async function list(language: number,type: number ,group: number): Promis
 }
 
 export async function edit_list(id: number, list: number, type: number): Promise<boolean> {
+    const API_URL = await getApiUrl();
     const data = {
         id: id,
         list: list,
@@ -40,6 +44,7 @@ export async function edit_list(id: number, list: number, type: number): Promise
 }
 
 export async function edit(id: number, title: string, content: string, type: number): Promise<any> {
+    const API_URL = await getApiUrl();
     const data = {
         id: id,
         title: title,
@@ -51,11 +56,13 @@ export async function edit(id: number, title: string, content: string, type: num
 }
 
 export async function login(user: string, pass: string): Promise<boolean> {
+    const API_URL = await getApiUrl();
     const response = await axios.get(`${API_URL}/login/${user}/${pass}`);
     return response.data; 
 }
 
 export async function bwrite(name: string, user: string, content: string): Promise<boolean> {
+    const API_URL = await getApiUrl();
     const data = {
         name: name,
         user: user,
@@ -66,6 +73,7 @@ export async function bwrite(name: string, user: string, content: string): Promi
 }
 
 export async function bread(name: string): Promise<any> {
+    const API_URL = await getApiUrl();
     const response = await axios.get(`${API_URL}/bread/`);
     return response.data;
 }
