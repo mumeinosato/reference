@@ -33,7 +33,8 @@ const router = createRouter({
     {
       path: '/list/:lang/:type/:group',
       name: 'list',
-      component: List
+      component: List,
+      props: route => ({ lang: route.params.lang, type: route.params.type, group: route.params.group })
     },
     {
       path: '/login',

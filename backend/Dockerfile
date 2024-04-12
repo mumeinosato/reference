@@ -20,6 +20,9 @@ RUN npm install && npm cache clean --force
 COPY --from=build /work/dist ./dist
 
 COPY prisma ./prisma
+
+ENV DATABASE_URL=
+
 RUN npx prisma generate
 
 CMD ["node", "dist/index.js"]
