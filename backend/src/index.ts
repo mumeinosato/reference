@@ -2,12 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import { Post } from './logic/post';
-import { Edit } from './logic/edit';
-import { Data } from './logic/data';
-import { List, Edit_list } from './logic/list';
-import { Login } from './logic/login';
-import { b_Write, b_Read } from './logic/board';
+import { Post } from './logic/SQL/post';
+import { Edit } from './logic/SQL/edit';
+import { Data } from './logic/SQL/data';
+import { List, Edit_list } from './logic/SQL/list';
+import { Login } from './logic/SQL/login';
+import { b_Write, b_Read } from './logic/SQL/board';
 
 
 const app = express();
