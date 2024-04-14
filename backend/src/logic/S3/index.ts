@@ -23,8 +23,14 @@ const metaData = {
     'example': 5678
 };
 
-export function s3Upload() {
-    
+export function s3Upload(filepath: string) {
+    s3client.fPutObject(bucket, destfile, filepath, metaData, (err: Error | null) => {
+        if (err) {
+            console.error('Error:', err);
+        } else {
+            console.log('File ' + sourcefile + ' uploaded as object ' + destfile + ' in bucket ' + bucket);
+        }
+    });
 }
 
 /*s3client.fPutObject(bucket, destfile, sourcefile, metaData, (err: Error | null) => {
