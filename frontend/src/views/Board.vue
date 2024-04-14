@@ -35,7 +35,6 @@ export default {
     const store = useStore();
     const login  = store.getLogin();
     this.name = store.getName();
-    console.log(store.getUser());
     if(login === false){
       this.$router.push("/");
     }

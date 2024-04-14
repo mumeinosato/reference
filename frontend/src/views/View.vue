@@ -52,7 +52,6 @@ export default {
     const store = useStore();
     this.login = store.getLogin();
 
-    console.log(this.$route.params.id);
   },
   methods: {
     selectText() {
@@ -63,7 +62,6 @@ export default {
       selection.addRange(range);
     },
     copy() {
-      console.log('copy');
       navigator.clipboard.writeText(this.content);
       this.clip = "コピーしました";
     },
