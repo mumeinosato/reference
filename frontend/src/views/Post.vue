@@ -57,7 +57,6 @@ export default {
       const cont = this.content.replace(/\n/g, '<br>');
       if (this.type == "Reference") {
         res = await re_post(this.title, cont, lang);
-        console.log(res);
         if (res === true) {
           alert("投稿しました");
           location.reload();
