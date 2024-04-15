@@ -21,7 +21,7 @@
           <li class="sub-title"><router-link to="/list/pytnon/techful/3">数学</router-link></li>
         </ul>
         <li class="main-title"><router-link to="/list/cpp/aoj/0">AOJ</router-link></li>
-        <li class="main-title"><router-link to="/post">投稿</router-link></li>
+        <li class="main-title" v-if="this.login === true"><router-link to="/post">投稿</router-link></li>
         <li class="main-title">
           <hr>
         </li>
