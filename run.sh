@@ -1,3 +1,7 @@
+cd reference
+docker-compose down
+cd ..
+
 rm -rf reference
 git clone https://github.com/mumeinosato/reference.git
 
