@@ -23,10 +23,14 @@
         <li class="main-title"><router-link to="/list/sql/techful/4">データベース</router-link></li>
         <li class="main-title"><router-link to="/list/python/techful/5">人工知能基礎</router-link></li>
         <li class="main-title"><router-link to="/list/cpp/aoj/0">AOJ</router-link></li>
+<<<<<<< HEAD
         <li class="main-title">
           <hr>
         </li>
         <li class="main-title"><router-link to="/post">投稿</router-link></li>
+=======
+        <li class="main-title" v-if="this.login === true"><router-link to="/post">投稿</router-link></li>
+>>>>>>> 333969d0bcb0e91916620204b30cf6e626613b0e
         <li class="main-title">
           <hr>
         </li>
