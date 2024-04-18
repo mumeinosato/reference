@@ -12,14 +12,14 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col v-if="type !== 'AOJ'">
+                <v-col v-if="type === 'Reference' || group === 'programming-basic' || group === 'algorithm' || group === 'math'">
                     <v-select v-model="language" :items="['C++', 'Python']" label="言語"></v-select>
                 </v-col>
                 <v-col>
                     <v-select v-model="type" :items="['Reference', 'TechFul', 'AOJ']" label="投稿先"></v-select>
                 </v-col>
                 <v-col v-if="type == 'TechFul'">
-                    <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math']" label="種類"></v-select>
+                    <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math', 'database', 'ai-basic']" label="種類"></v-select>
                 </v-col>
             </v-row>
             <v-row>
@@ -69,6 +69,10 @@ export default {
         if(this.group === "programming-basic") gr = 1;
         else if(this.group === "algorithm") gr = 2;
         else if(this.group === "math") gr = 3;
+        else if(this.group === "database") gr = 4;
+        else if(this.group === "ai-basic") gr = 5;
+        if(gr == 4) lang = 3;
+        else if(gr == 5) lang = 2;
         res = await te_post(this.title, cont, lang, gr);
         if (res === true) {
           alert("投稿しました");

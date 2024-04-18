@@ -4,22 +4,29 @@
       <p>書くことがないから掲示板にしとく</p>
     </div>
     <div v-if="login">
-      <div class="btnv">
-        <router-link to="/board" class="btn">書き込む</router-link>
+      <div class="bbox">
+        <div class="btnv">
+          <router-link to="/board" class="btn">書き込む</router-link>
+        </div>
+        <div class="btnv">
+          <router-link to="/issue" class="btn">問題を報告</router-link>
+        </div>
       </div>
-        <section v-for="(post, index) in boardPosts" :key="index">
-          <div class="boardWrapper">
+      <section v-for="(post, index) in boardPosts" :key="index">
+        <div class="boardWrapper">
           <article>
             <div class="wrapper">
               <div class="nameArea">
                 <p class="username">{{ post.displayname }}</p>
                 <p class="postInfo">{{ formatDateTime(post.createat) }}</p>
               </div>
-              <p class="cont" style="white-space: pre-line;">{{ replaceContent(post.content) }}</p>
+              <p class="cont" style="white-space: pre-line">
+                {{ replaceContent(post.content) }}
+              </p>
             </div>
           </article>
         </div>
-        </section>
+      </section>
     </div>
     <div v-else>
       <div>
@@ -30,15 +37,15 @@
 </template>  
 
 <script>
-import { useStore } from "../assets/script/store"
-import { bread } from "../assets/script/api"
+import { useStore } from "../assets/script/store";
+import { bread } from "../assets/script/api";
 
-export default{
+export default {
   data() {
     return {
       login: false,
       boardPosts: [],
-    }
+    };
   },
   async mounted() {
     const store = useStore();
@@ -62,14 +69,14 @@ export default{
     formatDateTime(dateTime) {
       const date = new Date(dateTime);
       const year = date.getFullYear();
-      const month = ('0' + (date.getMonth() + 1)).slice(-2);
-      const day = ('0' + date.getDate()).slice(-2);
-      const hours = ('0' + date.getHours()).slice(-2);
-      const minutes = ('0' + date.getMinutes()).slice(-2);
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const day = ("0" + date.getDate()).slice(-2);
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
       return `${year}年${month}月${day}日 ${hours}:${minutes}`;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -99,13 +106,13 @@ export default{
   font-weight: 700;
 }
 
-.cont{
+.cont {
   font-size: 13.76px;
   font-weight: 22px;
   margin-top: 10px;
 }
 
-.btn{
+.btn {
   background-color: rgb(55, 161, 229);
   color: white;
   margin-top: 20px;
@@ -114,7 +121,12 @@ export default{
   border-radius: 10px;
 }
 
-.btnv{
-  margin-top: 10px
+.btnv {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.bbox {
+  display: flex;
 }
 </style>

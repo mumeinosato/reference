@@ -6,6 +6,8 @@ import Edit from '../views/Edit.vue'
 import List from '../views/List.vue'
 import Login from '../views/Login.vue'
 import Board from '../views/Board.vue'
+import Issue from '../views/github/Issue.vue'
+import Post_issue from '../views/github/Post_issue.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +46,16 @@ const router = createRouter({
       path: '/board',
       name: 'board',
       component: Board
+    },
+    {
+      path: '/issue',
+      name: 'issue',
+      component: Issue
+    },
+    {
+      path: '/post_issue',
+      name: 'post_issue',
+      component: Post_issue
     }
   ]
 })

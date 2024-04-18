@@ -27,9 +27,11 @@ import hljs from 'highlight.js/lib/core';
 
 import cpp from "highlight.js/lib/languages/cpp";
 import python from "highlight.js/lib/languages/python";
+import sql from "highlight.js/lib/languages/sql";
 import 'highlight.js/styles/stackoverflow-light.css'
 hljs.registerLanguage("cpp", cpp);
 hljs.registerLanguage("python", python);
+hljs.registerLanguage("sql", sql);
 
 export default {
   data() {
@@ -47,7 +49,13 @@ export default {
     const re = await data(this.$route.params.id, this.$route.params.type);
     this.title = re.title;
     this.content = re.content.replace(/<br>/g, "\n");
-    this.lang = re.language === 1 ? "cpp" : "python";
+    if(re.language === 1){
+      this.lang = "cpp";
+    }else if(re.language === 2){
+      this.lang = "python";
+    }else if(re.language === 3){
+      this.lang = "sql";
+    }
     
     const store = useStore();
     this.login = store.getLogin();

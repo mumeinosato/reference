@@ -50,7 +50,14 @@ export default {
     };
   },
   async mounted() {
-    let lang = this.$route.params.lang == "cpp" ? 1 : 2;
+    let lang = 0;
+    if (this.$route.params.lang == "cpp") {
+      lang = 1;
+    } else if (this.$route.params.lang == "python") {
+      lang = 2;
+    } else if (this.$route.params.lang == "sql") {
+      lang = 3;
+    }
     //this.type = this.$route.params.type == "reference" ? 0 : 1;
     if(this.$route.params.type == "reference"){
       this.type = 0;
