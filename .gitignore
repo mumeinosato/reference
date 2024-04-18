@@ -32,5 +32,6 @@ migrations
 *.cpp
 dev.ts
 api_url.ts
+token.ts
 
 *.tsbuildinfo

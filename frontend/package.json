@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
+    "@octokit/rest": "^20.1.0",
     "@preline/overlay": "^2.0.2",
     "@types/crypto-js": "^4.2.2",
     "@types/highlight.js": "^10.1.0",
