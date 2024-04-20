@@ -14,6 +14,8 @@ FROM node:18.12 as runner
 WORKDIR /work
 EXPOSE 3000
 
+RUN mkdir -p /work/temp
+
 COPY package*.json ./
 RUN npm install && npm cache clean --force
 

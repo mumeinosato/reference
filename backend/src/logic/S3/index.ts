@@ -24,7 +24,7 @@ const metaData = {
 };
 
 export async function s3Upload(file: string) {
-    const filepath = 'src/cache/' + file;
+    const filepath = 'temp/' + file;
     s3client.fPutObject(bucket, file, filepath, metaData, (err: Error | null) => {
         if (err) {
             console.error('Error:', err);
@@ -35,7 +35,7 @@ export async function s3Upload(file: string) {
 
 export function s3Download(file: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        const filepath = 'src/cache/' + file;
+        const filepath = 'temp/' + file;
         s3client.fGetObject(bucket, file, filepath, function (err) {
             if (err) {
                 console.error('Error:', err);

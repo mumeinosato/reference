@@ -22,13 +22,13 @@ export async function run_script(id: number, input: string): Promise<any> {
     let code_name = '';
 
     if (language === 1) {
-        code_path = `src/cache/${uuid}.cpp`;
+        code_path = `temp/${uuid}.cpp`;
         code_name = `${uuid}.cpp`;
     } else if (language === 2) {
-        code_path = `src/cache/${uuid}.py`;
+        code_path = `temp/${uuid}.py`;
         code_name = `${uuid}.py`;
     }
-    const input_path = `src/cache/${uuid}.txt`;
+    const input_path = `temp/${uuid}.txt`;
     const input_name = `${uuid}.txt`;
 
     try {
@@ -70,7 +70,7 @@ export async function run_script(id: number, input: string): Promise<any> {
         return false;
     }
 
-    const out_path = `src/cache/output_${uuid}.txt`;
+    const out_path = `temp/output_${uuid}.txt`;
     const out_name = `output_${uuid}.txt`;
 
     if (response.data.success === true) {
