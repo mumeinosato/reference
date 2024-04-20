@@ -46,6 +46,7 @@ def run_code():
                     f.write(output_data.decode())
                 
                 bucket.upload_file(output_file, output_file)
+                return True
 
         else:
             return False
