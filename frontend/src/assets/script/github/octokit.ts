@@ -14,3 +14,18 @@ export async function getIssues() {
     });
     return response.data;
 }
+
+export async function createIssue(title: string, body: string, label:string){
+    try{
+        await octokit.rest.issues.create({
+            owner: 'mumeinosato',
+            repo: 'reference',
+            title: title,
+            body: body,
+            labels: [label],
+        });
+        return true;
+    }catch(e){
+        return false;
+    }
+}

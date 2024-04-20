@@ -38,14 +38,14 @@
 
 <script>
 import { useStore } from "../../assets/script/store";
-import { bwrite } from "../../assets/script/api";
+import { createIssue } from "../../assets/script/github/octokit";
 
 export default {
   data() {
     return {
       title: "",
       content: "",
-        label: "bug",
+      label: "bug",
     };
   },
   async mounted() {
@@ -58,22 +58,12 @@ export default {
   },
   methods: {
     async submit() {
-      let res = false;
-      if (this.name == "" || this.content == "") {
-        alert("表示名と内容を入力してください");
-        return;
-      }
-      const cont = this.content.replace(/\n/g, "<br>");
-      const store = useStore();
-      const user = store.getUser();
-      store.setName(this.name);
-      res = await bwrite(this.name, user, cont);
-      if (res === true) {
+      const re = await createIssue(this.title, this.content, this.label);
+      if (re === true) {
         alert("投稿しました");
-        this.$router.push("/");
-      } else {
+        this.$router.push("/issue");
+      }else{
         alert("投稿に失敗しました");
-        console.log(res);
       }
     },
   },
