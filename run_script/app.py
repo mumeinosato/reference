@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
 import boto3
@@ -48,10 +48,10 @@ def run_code():
                     f.write(output_data.decode())
                 
                 bucket.upload_file(output_file, output_file)
-                return True
+                return jsonify({"success": True, "message": "Compilation and execution successful."}), 200
 
         else:
-            return False
+            return jsonify({"success": False, "message": "Compilation failed."}), 500
         
 if __name__ == '__main__':
     app.run()
