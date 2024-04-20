@@ -61,7 +61,32 @@ def run_code():
             delete_file(user_input)
             delete_file(out_script)
             return jsonify({"success": False, "message": "Compilation failed."}), 500
+        
+    elif language == 'python':
+        try:
+            execute_process = subprocess.Popen(['python3', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
+            with open(user_input, 'r') as f:
+                input_data = f.read()
+
+                output_data, _ = execute_process.communicate(input_data.encode())
+
+                output_file = 'output_' + user_input
+
+                with open(output_file, 'w') as f:
+                    f.write(output_data.decode())
+                
+                bucket.upload_file(output_file, output_file)
+
+                delete_file(code)
+                delete_file(user_input)
+                delete_file(output_file)
+
+                return jsonify({"success": True, "message": "Execution successful."}), 200
+        except Exception as e:
+            delete_file(code)
+            delete_file(user_input)
+            return jsonify({"success": False, "message": str(e)}), 500
 
 
 def delete_file(file_path):
