@@ -51,3 +51,5 @@ def run_code():
         else:
             return False
         
+if __name__ == '__main__':
+    app.run()
