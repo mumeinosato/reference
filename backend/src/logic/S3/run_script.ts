@@ -38,6 +38,8 @@ export async function run_script(id: number, input: string): Promise<any> {
         await s3Upload(input_name);
     } catch (e) {
         console.error("Error writing temp file:", e);
+        fs.unlinkSync(code_path)
+        fs.unlinkSync(input_path)
         return false;
     }
 
@@ -67,6 +69,8 @@ export async function run_script(id: number, input: string): Promise<any> {
        response = await axios.post(`${script_server_url}/run`, post);
     } catch (e) {
         console.error("Error running script:", e);
+        fs.unlinkSync(code_path)
+        fs.unlinkSync(input_path)
         return false;
     }
 
