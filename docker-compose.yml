@@ -22,3 +22,4 @@ services:
       - "5000:5000"
     volumes:
       - .:/usr/src/app
+    command: flask run --host=0.0.0.0
