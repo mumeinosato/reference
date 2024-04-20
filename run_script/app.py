@@ -24,9 +24,11 @@ def run_code():
 
     bucket = s3.Bucket('reference')
     bucket.download_file(code, code)
-    bucket.downkiad_file(user_input, user_input)
+    bucket.download_file(user_input, user_input)
 
-    out_script = code.partition('.')
+
+    file_name, file_extension= os.path.splitext(code)
+    out_script  = file_name + '.out'
 
     if language == 'cpp':
         compile_process = subprocess.Popen(['g++', '-o', out_script, code])
