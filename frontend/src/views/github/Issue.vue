@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="btnv">
+          <router-link to="/post_issue" class="btn">問題を報告</router-link>
+      </div>
     <div v-for="issue in issues" :key="issue.id">
       <div class="boardWrapper">
         <article>
@@ -85,5 +88,19 @@ export default {
     border-radius: 24px;
     font-size: 12px;
     margin-left: 5px;
+}
+
+.btn {
+  background-color: rgb(55, 161, 229);
+  color: white;
+  margin-top: 20px;
+  padding: 5px;
+  border: rgb(55, 161, 229);
+  border-radius: 10px;
+}
+
+.btnv {
+  margin-top: 10px;
+  margin-right: 10px;
 }
 </style>
