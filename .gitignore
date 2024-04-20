@@ -33,5 +33,6 @@ migrations
 dev.ts
 api_url.ts
 token.ts
+cache/*
 
 *.tsbuildinfo

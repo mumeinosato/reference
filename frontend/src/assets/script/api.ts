@@ -68,6 +68,15 @@ export async function bread(name: string): Promise<any> {
     return response.data;
 }
 
+export async function run_script(id: number, input: string): Promise<any> {
+    const data = {
+        id: id,
+        input: input
+    }
+    const response = await axios.post(`${API_URL}/run`, data);
+    return response.data;
+}
+
 /*
 https://localhost:3000/post/test/print(0)/2/1/2
 */

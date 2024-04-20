@@ -15,6 +15,10 @@ def run_code():
     language = data.get('language')
     user_input = data.get('input')
 
+    print(code)
+    print(language)
+    print(user_input)
+
     s3 = boto3.resource(
         's3',
         endpoint_url=os.getenv('ENDPOINT_URL'),

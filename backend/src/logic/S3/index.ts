@@ -23,21 +23,24 @@ const metaData = {
     'example': 5678
 };
 
-export function s3Upload(filepath: string) {
-    s3client.fPutObject(bucket, destfile, filepath, metaData, (err: Error | null) => {
+export async function s3Upload(file: string) {
+    const filepath = 'src/cache/' + file;
+    s3client.fPutObject(bucket, file, filepath, metaData, (err: Error | null) => {
         if (err) {
             console.error('Error:', err);
         } else {
-            console.log('File ' + sourcefile + ' uploaded as object ' + destfile + ' in bucket ' + bucket);
+            console.log('File ' + filepath + ' uploaded as object ' + file + ' in bucket ' + bucket);
         }
     });
 }
 
-/*s3client.fPutObject(bucket, destfile, sourcefile, metaData, (err: Error | null) => {
-    if (err) {
-      console.error('Error:', err);
-    } else {
-      console.log('File ' + sourcefile + ' uploaded as object ' + destfile + ' in bucket ' + bucket);
-    }
-});
-*/
+export async function s3Download(file: string) {
+    const filepath = 'src/cache/' + file;
+    s3client.fGetObject(bucket, file, filepath, function (err) {
+        if (err){
+            console.error('Error:', err);
+        }else {
+            console.log('File ' + file + ' downloaded as ' + filepath);
+        }
+    })
+}

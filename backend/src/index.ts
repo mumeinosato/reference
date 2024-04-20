@@ -9,6 +9,7 @@ import { List, Edit_list } from './logic/SQL/list';
 import { Login } from './logic/SQL/login';
 import { b_Write, b_Read } from './logic/SQL/board';
 
+import { run_script } from './logic/S3/run_script';
 
 const app = express();
 app.use(cors());
@@ -22,6 +23,19 @@ app.get('/', (req: express.Request, res: express.Response) => {
 app.post('/post', (req: express.Request, res: express.Response) => {
     const { title, content, language, type, group } = req.body;
     Post(title, content, parseInt(language), parseInt(type), group)
+        .then((resp) => {
+            res.send(resp);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('An error occurred');
+        });
+});
+
+
+app.post('/run', (req: express.Request, res: express.Response) => {
+    const { id, input } = req.body;
+    run_script(id, input)
         .then((resp) => {
             res.send(resp);
         })
