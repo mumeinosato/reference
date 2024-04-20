@@ -48,10 +48,25 @@ def run_code():
                     f.write(output_data.decode())
                 
                 bucket.upload_file(output_file, output_file)
+
+                delete_file(code)
+                delete_file(user_input)
+                delete_file(out_script)
+                delete_file(output_file)
+
                 return jsonify({"success": True, "message": "Compilation and execution successful."}), 200
 
         else:
+            delete_file(code)
+            delete_file(user_input)
+            delete_file(out_script)
             return jsonify({"success": False, "message": "Compilation failed."}), 500
-        
+
+
+
+def delete_file(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
 if __name__ == '__main__':
     app.run()
