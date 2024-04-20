@@ -79,6 +79,10 @@ export async function run_script(id: number, input: string): Promise<any> {
         try {
             output = fs.readFileSync(out_path, 'utf-8');
             const out = output.replace(/\n/g, '<br>');
+
+            fs.unlinkSync(code_path)
+            fs.unlinkSync(input_path)
+            fs.unlinkSync(out_path)
             return out;
         } catch (e) {
             console.error("Error reading output file:", e);

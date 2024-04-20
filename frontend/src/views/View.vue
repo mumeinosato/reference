@@ -17,15 +17,15 @@
     </div>
     <p @click="copy">{{ clip }}</p>
     <div v-if="type === 1">
-      <div>
+      <div class="in">
         <textarea v-model="input" rows="5" cols="50" class="input"></textarea>
-      </div>
-      <div>
-        <v-btn @click="run" class="btn">実行</v-btn>
+        <div>
+          <v-btn @click="run" class="btn">実行</v-btn>
+        </div>
       </div>
       <hr>
-      <div>
-        <textarea rows="5" cols="50" class="output" readonly></textarea>
+      <div class="out">
+        <textarea v-model="output" rows="5" cols="50" class="output" readonly></textarea>
       </div>
     </div>
     <!--</div>
@@ -60,6 +60,7 @@ export default {
       clip: "コピー",
       type: 0,
       input: "",
+      output: "",
     };
   },
   async mounted() {
@@ -94,6 +95,11 @@ export default {
     async run() {
       const input = this.input.replace(/\n/g, "<br>");
       const res = await run_script(this.$route.params.id, input);
+      if (res === false) {
+        this.output = "実行に失敗しました";
+        return;
+      }
+      this.output = res.replace(/<br>/g, "\n");
     },
   },
   watch: {
@@ -125,5 +131,15 @@ p {
   border: 1px solid rgb(51, 122, 183);
   border-radius: 3px;
   color: rgb(255, 255, 255);
+}
+
+.in{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

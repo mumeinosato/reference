@@ -29,18 +29,20 @@ export async function s3Upload(file: string) {
         if (err) {
             console.error('Error:', err);
         } else {
-            console.log('File ' + filepath + ' uploaded as object ' + file + ' in bucket ' + bucket);
         }
     });
 }
 
-export async function s3Download(file: string) {
-    const filepath = 'src/cache/' + file;
-    s3client.fGetObject(bucket, file, filepath, function (err) {
-        if (err){
-            console.error('Error:', err);
-        }else {
-            console.log('File ' + file + ' downloaded as ' + filepath);
-        }
-    })
+export function s3Download(file: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        const filepath = 'src/cache/' + file;
+        s3client.fGetObject(bucket, file, filepath, function (err) {
+            if (err) {
+                console.error('Error:', err);
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
 }
