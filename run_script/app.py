@@ -28,21 +28,24 @@ def run_code():
 
     out_script = code.partition('.')
 
-    compile_process = subprocess.Popen(['g++', '-o', out_script, code])
-    compile_process.communicate()
+    if language == 'cpp':
+        compile_process = subprocess.Popen(['g++', '-o', out_script, code])
+        compile_process.communicate()
 
-    if compile_process.returncode == 0:
-        execute_process = subprocess.Popen(['./' + out_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        if compile_process.returncode == 0:
+            execute_process = subprocess.Popen(['./' + out_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
-        with open(user_input, 'r') as f:
-            input_data = f.read()
+            with open(user_input, 'r') as f:
+                input_data = f.read()
 
-            output_data, _ = execute_process.communicate(input_data.encode())
+                output_data, _ = execute_process.communicate(input_data.encode())
 
-            output_file = 'output_' + user_input
+                output_file = 'output_' + user_input
 
-            with open(output_file, 'w') as f:
-                f.write(output_data.decode())
+                with open(output_file, 'w') as f:
+                    f.write(output_data.decode())
+                
+                bucket.upload_file(output_file, output_file)
 
-    else:
-        return False
+        else:
+            return False

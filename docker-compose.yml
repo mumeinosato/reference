@@ -16,3 +16,9 @@ services:
     volumes:
       - .:/usr/src/app
 
+  script:
+    build: ./run_script
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/usr/src/app
