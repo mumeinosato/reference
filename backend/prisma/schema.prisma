@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Reference {
+  @@map("references")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String @db.VarChar(5000)
+  language  Int
+  list      Int @default(0)
+}
+
+model Techful {
+  @@map("tech")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  language  Int
+  group     Int
+  list      Int @default(0)
+}
+
+model Aoj {
+  @@map("aoj")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  list      Int @default(0)
+}
+
+model User {
+  @@map("user")
+  id        Int      @id @default(autoincrement())
+  username  String
+  password  String
+}
+
+model Board {
+  @@map("board")
+  id        Int      @id @default(autoincrement())
+  user       String
+  displayname String
+  content   String
+  createat  DateTime @default(now())
+}
+
+model ProUp {
+  @@map("proup")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  language  Int
+  user     String
+  input     String @db.VarChar(5000)
+  output    String @db.VarChar(5000)
+  public    Int @default(0)
+}
