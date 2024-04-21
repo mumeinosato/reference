@@ -36,9 +36,19 @@ def run_code():
 
     if language == 'cpp':
         compile_process = subprocess.Popen(['g++', '-o', out_script, code])
-        compile_process.communicate()
+        _, compile_error = compile_process.communicate()
 
-        if compile_process.returncode == 0:
+        if compile_process.returncode != 0:
+            error_file = 'error_' + user_input
+            with open(error_file, 'w') as f:
+                f.write(compile_error.decode())
+                bucket.upload_file(error_file, 'output_' + user_input)
+                delete_file(error_file)
+                delete_file(code)
+                delete_file(user_input)
+                return jsonify({"success": True, "message": "Compilation failed."}), 500
+
+        elif compile_process.returncode == 0:
             execute_process = subprocess.Popen(['./' + out_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
             with open(user_input, 'r') as f:
@@ -73,13 +83,24 @@ def run_code():
             with open(user_input, 'r') as f:
                 input_data = f.read()
 
-                output_data, _ = execute_process.communicate(input_data.encode())
+                output_data, error_data = execute_process.communicate(input_data.encode())
 
                 output_file = 'output_' + user_input
 
                 with open(output_file, 'w') as f:
                     f.write(output_data.decode())
                 
+                if error_data:
+                    error_file = 'error_' + user_input
+                    with open(error_file, 'w') as f:
+                        f.write(error_data.decode())
+                        bucket.upload_file(error_file, output_file)
+                        delete_file(error_file)
+                        delete_file(code)
+                        delete_file(user_input)
+                        delete_file(output_file)
+                        return jsonify({"success": True, "message": "Execution failed."}), 500
+
                 bucket.upload_file(output_file, output_file)
 
                 delete_file(code)
