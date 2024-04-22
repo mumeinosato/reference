@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs-extra';
-import axios from 'axios';
+import { HttpService } from '@nestjs/axios';
 import { config } from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 
