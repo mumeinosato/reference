@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ListService } from './reference/list/list.service';
@@ -14,7 +15,7 @@ import { ScriptController } from './script/script.controller';
 import { RunService } from './script/run/run.service';
 
 @Module({
-  imports: [],
+  imports: [HttpModule],
   controllers: [
     AppController,
     ReferenceController,
