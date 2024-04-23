@@ -1,4 +1,4 @@
-FROM node:18.12 as build
+FROM node:18.12 
 
 WORKDIR /work
 
@@ -7,17 +7,12 @@ RUN npm install
 
 RUN npm install
 
-FROM node:18.12 as runner
+COPY . .
+RUN npm run build
 
-WORKDIR /work
 EXPOSE 3000
 
 RUN mkdir -p /work/temp
-
-COPY package*.json ./
-RUN npm install && npm cache clean --force
-
-COPY --from=build /work/dist ./dist
 
 ENV DATABASE_URL=
 ENV SCRIPT_SERVER_URL=
