@@ -1,14 +1,24 @@
-FROM node:18.12
+FROM node:18.12 as build
 
-WORKDIR /app
+WORKDIR /work
 
 COPY package*.json ./
+RUN npm install
 
 RUN npm install
 
-COPY . .
+FROM node:18.12 as runner
 
-RUN npm run build
+WORKDIR /work
+EXPOSE 3000
+
+RUN mkdir -p /work/temp
+
+COPY package*.json ./
+RUN npm install && npm cache clean --force
+
+COPY --from=build /work/dist ./dist
+COPY prisma ./prisma
 
 ENV DATABASE_URL=
 ENV SCRIPT_SERVER_URL=
@@ -18,7 +28,5 @@ ENV USESSL=
 ENV ACCESSKEY=
 ENV SECRETKEY=
 
-RUN npx prisma generate
-EXPOSE 3000
-RUN mkdir -p /app/temp
-CMD ["npm", "start"]
+
+CMD ["node", "dist/main.js"]

@@ -3,11 +3,9 @@ import * as fs from 'fs-extra';
 import { HttpService } from '@nestjs/axios';
 import { config } from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
-import { last, lastValueFrom } from 'rxjs';
 
 import { s3Upload, s3Download } from '../minio';
 import { DataService } from 'src/reference/data/data.service';
-import { Axios, AxiosResponse } from 'axios';
 
 config();
 const script_server_url =
@@ -17,7 +15,7 @@ const script_server_url =
 export class RunService {
   constructor(
     private readonly dataService: DataService,
-    private httpService: HttpService
+    private httpService: HttpService,
   ) {}
 
   async runScript(id: number, input: string): Promise<any> {
@@ -58,21 +56,24 @@ export class RunService {
 
     if (language === 1) {
       post = {
-        "code": code_name,
-        "language": 'cpp',
-        "input": input_name,
+        code: code_name,
+        language: 'cpp',
+        input: input_name,
       };
     } else if (language === 2) {
       post = {
-        "code": code_name,
-        "language": 'python',
-        "input": input_name,
+        code: code_name,
+        language: 'python',
+        input: input_name,
       };
     }
 
+    let response = null;
+
     try {
-      //response = await axios.post(`${script_server_url}/run`, post);
-      var response = await this.httpService.post(`${script_server_url}/run`, post).toPromise();
+      response = await this.httpService
+        .post(`${script_server_url}/run`, post)
+        .toPromise();
     } catch (e) {
       console.error('Error running script:', e);
       fs.unlinkSync(code_path);
