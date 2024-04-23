@@ -14,7 +14,5 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . .
-RUN chmod 400 app.py
-RUN find . -type f -not -name 'app.py' -exec chmod 0 {} +
 
 CMD ["flask", "run"]
