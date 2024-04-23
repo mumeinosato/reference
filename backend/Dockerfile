@@ -20,5 +20,5 @@ ENV SECRETKEY=
 
 RUN npx prisma generate
 EXPOSE 3000
-RUN npm run build mkdir -p /app/temp
+RUN mkdir -p /app/temp
 CMD ["npm", "start"]
