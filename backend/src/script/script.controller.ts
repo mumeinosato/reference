@@ -1,7 +1,7 @@
 import { Controller, Body, Post } from '@nestjs/common';
 import { RunService } from 'src/script/run/run.service';
 
-@Controller('script')
+@Controller('api/script')
 export class ScriptController {
   constructor(private readonly runService: RunService) {}
 

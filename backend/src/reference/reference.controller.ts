@@ -4,7 +4,7 @@ import { DataService } from 'src/reference/data/data.service';
 import { PostService } from 'src/reference/post/post.service';
 import { EditService } from 'src/reference/edit/edit.service';
 
-@Controller('reference')
+@Controller('api/reference')
 export class ReferenceController {
   constructor(
     private readonly listService: ListService,
