@@ -6,6 +6,8 @@ services:
       - "80:80"
     volumes:
       - .:/usr/src/app
+    networks:
+      - reference
     depends_on:
       - backend
 
@@ -15,8 +17,11 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
+    networks:
+      - reference
     depends_on:
       - script
+      - redis
 
   script:
     build: ./run_script
@@ -30,3 +35,6 @@ services:
     image: "redis"
     ports:
       - "6379:6379"
+
+networks:
+  reference:
