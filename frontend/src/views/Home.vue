@@ -53,9 +53,6 @@ export default {
     if (this.login) {
       await this.fetchBoardPosts();
     }
-
-    const ipAddress = window.location.host;
-    console.log("Accessed IP:", ipAddress);
   },
   methods: {
     async fetchBoardPosts() {
