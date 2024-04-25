@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { LoginService } from './login/login.service';
 
-@Controller('api/user')
+@Controller('user')
 export class UserController {
   constructor(private readonly loginService: LoginService) {}
 

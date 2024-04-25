@@ -13,17 +13,17 @@ export async function post(title: string, content: string, language: number, typ
         type: type,
         group: group
     }
-    const response = await axios.post(`${API_URL}/api/reference/post`, data);
+    const response = await axios.post(`${API_URL}/reference/post`, data);
     return response.data;
 }
 
 export async function data(id: number, type: number): Promise<any> {
-    const response = await axios.get(`${API_URL}/api/reference/data/${id}/${type}`);
+    const response = await axios.get(`${API_URL}/reference/data/${id}/${type}`);
     return response.data;
 }
 
 export async function list(language: number,type: number ,group: number): Promise<any> {
-    const response = await axios.get(`${API_URL}/api/reference/list/${language}/${type}/${group}`);
+    const response = await axios.get(`${API_URL}/reference/list/${language}/${type}/${group}`);
     return response.data;
 }
 
@@ -33,7 +33,7 @@ export async function edit_list(id: number, list: number, type: number): Promise
         list: list,
         type: type
     }
-    const response = await axios.post(`${API_URL}/api/reference/edit_list`, data);
+    const response = await axios.post(`${API_URL}/reference/edit_list`, data);
     return response.data;
 }
 
@@ -44,12 +44,12 @@ export async function edit(id: number, title: string, content: string, type: num
         content: content,
         type: type
     }
-    const response = await axios.post(`${API_URL}/api/reference/edit`, data);
+    const response = await axios.post(`${API_URL}/reference/edit`, data);
     return response.data;
 }
 
 export async function login(user: string, pass: string): Promise<boolean> {
-    const response = await axios.get(`${API_URL}/api/user/login/${user}/${pass}`);
+    const response = await axios.get(`${API_URL}/user/login/${user}/${pass}`);
     return response.data; 
 }
 
@@ -59,12 +59,12 @@ export async function bwrite(name: string, user: string, content: string): Promi
         user: user,
         content: content
     }
-    const response = await axios.post(`${API_URL}/api/board/bwrite`, data);
+    const response = await axios.post(`${API_URL}/board/bwrite`, data);
     return response.data;
 }
 
 export async function bread(name: string): Promise<any> {
-    const response = await axios.get(`${API_URL}/api/board/bread`);
+    const response = await axios.get(`${API_URL}/board/bread`);
     return response.data;
 }
 
@@ -73,7 +73,7 @@ export async function run_script(id: number, input: string): Promise<any> {
         id: id,
         input: input
     }
-    const response = await axios.post(`${API_URL}/api/script/run`, data);
+    const response = await axios.post(`${API_URL}/script/run`, data);
     return response.data;
 }
 
