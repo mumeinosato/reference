@@ -1,32 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { Redis } from 'ioredis';
+//import { Redis } from 'ioredis';
 import { config } from 'dotenv';
 
 const prisma = new PrismaClient();
 config();
 @Injectable()
 export class ListService {
-  private redis: Redis;
+  //private redis: Redis;
 
-  constructor() {
+  /*constructor() {
     this.redis = new Redis({
       host: process.env.REDIS_HOST,
       port: parseInt(process.env.REDIS_PORT),
     });
-  }
+  }*/
 
   async List(language: number, type: number, group: number): Promise<any> {
     const lang = parseInt(language.toString());
     const gr = parseInt(group.toString());
     const ty = parseInt(type.toString());
 
-    const cacheKey = `list_${lang}_${ty}_${gr}`;
-    const cacheData = await this.redis.get(cacheKey);
+    //const cacheKey = `list_${lang}_${ty}_${gr}`;
+    //const cacheData = await this.redis.get(cacheKey);
 
-    if (cacheData) {
+    /*if (cacheData) {
       return JSON.parse(cacheData);
-    }
+    }*/
 
     let data;
 
@@ -63,7 +63,7 @@ export class ListService {
       });
     }
 
-    await this.redis.set(cacheKey, JSON.stringify(data));
+    //await this.redis.set(cacheKey, JSON.stringify(data));
     return data;
   }
 
@@ -104,8 +104,8 @@ export class ListService {
         return false;
       }
 
-      const cacheKey = `list_${idn}_${ty}_${listn}`;
-      await this.redis.del(cacheKey);
+      //const cacheKey = `list_${idn}_${ty}_${listn}`;
+      //await this.redis.del(cacheKey);
       return true;
     } catch (e) {
       console.log(e);

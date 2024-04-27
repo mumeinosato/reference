@@ -48,9 +48,14 @@ export async function edit(id: number, title: string, content: string, type: num
     return response.data;
 }
 
-export async function login(user: string, pass: string): Promise<boolean> {
+export async function login(user: string, pass: string): Promise<number> {
     const response = await axios.get(`${API_URL}/user/login/${user}/${pass}`);
     return response.data; 
+}
+
+export async function register(user: string, pass: string): Promise<number> {
+    const response = await axios.get(`${API_URL}/user/register/${user}/${pass}`);
+    return response.data;
 }
 
 export async function bwrite(name: string, user: string, content: string): Promise<boolean> {

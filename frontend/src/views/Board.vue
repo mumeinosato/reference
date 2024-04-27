@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { useStore } from "../assets/script/store"
 import { bwrite } from "../assets/script/api"
 
 export default {
@@ -33,11 +32,7 @@ export default {
   },
   async mounted() {
     const store = useStore();
-    const login  = store.getLogin();
     this.name = store.getName();
-    if(login === false){
-      this.$router.push("/");
-    }
   },
   methods: {
     async submit() {

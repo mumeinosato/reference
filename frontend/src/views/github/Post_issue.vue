@@ -50,11 +50,7 @@ export default {
   },
   async mounted() {
     const store = useStore();
-    const login = store.getLogin();
     this.name = store.getName();
-    if (login === false) {
-      this.$router.push("/");
-    }
   },
   methods: {
     async submit() {

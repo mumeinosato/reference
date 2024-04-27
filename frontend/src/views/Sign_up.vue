@@ -13,45 +13,50 @@
             </v-row>
             <v-row>
                 <v-col>
-                    <v-btn @click="submit">ログイン</v-btn>
+                    <v-text-field v-model="re_password" label="パスワードの確認" type="password"></v-text-field>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-btn @click="submit">登録</v-btn>
                 </v-col>
             </v-row>
         </v-container>
     </v-form>
 </template>
 
-
 <script>
 import { useStore } from "../assets/script/store"
-import { login } from "../assets/script/api"
+import { register } from "../assets/script/api"
 
 export default {
     data() {
         return {
             user: "",
-            password: ""
+            password: "",
+            re_password: ""
         };
     },
     methods: {
         async submit() {
-            if(this.user == "" || this.password == "") {
+            if(this.user == "" || this.password == "" || this.re_password == "") {
                 alert("ユーザー名とパスワードを入力してください");
                 return;
             }
-            const re = await login(this.user, this.password);
+            if(this.password != this.re_password) {
+                alert("パスワードが一致しません");
+                return;
+            }
+            const re = await register(this.user, this.password);
             const store = useStore();
             if(re === 0){
-                store.setLogin(true);
-                store.setUser(this.user);
-                alert("ログイン成功");
-                this.$router.go("/");
+                alert("登録しました");
+                this.$router.push("/login");
             }else if(re === 1){
-                alert("パスワードが設定されていません");
-                this.$router.push("/sign_up");
-                store.setLogin(false);
+                alert("パスワードがすでに設定されています");
+                this.$router.push("/login");
             }else{
-                alert("ログイン失敗");
-                store.setLogin(false);
+                alert("エラーが発生しました");
             }
         }
     },
@@ -61,14 +66,14 @@ export default {
             this.$router.push("/");
         }
     }
-}
+};
 </script>
+
 
 <style scoped>
 form {
     border: 1px solid #000;
     border-radius: 10px;
 }
-
 
 </style>

@@ -18,13 +18,13 @@
         <ul>
           <li class="sub-title"><router-link to="/list/python/techful/1">プログラミング基礎</router-link></li>
           <li class="sub-title"><router-link to="/list/python/techful/2">アルゴリズム</router-link></li>
-          <li class="sub-title"><router-link to="/list/pytnon/techful/3">数学</router-link></li>
+          <li class="sub-title"><router-link to="/list/python/techful/3">数学</router-link></li>
         </ul>
         <li class="main-title"><router-link to="/list/sql/techful/4">データベース</router-link></li>
         <li class="main-title"><router-link to="/list/python/techful/5">人工知能基礎</router-link></li>
         <li class="main-title"><router-link to="/list/cpp/aoj/0">AOJ</router-link></li>
         <li class="main-title">
-          <hr>
+          <hr v-if="this.login === true">
         </li>
         <li class="main-title" v-if="this.login === true"><router-link to="/post">投稿</router-link></li>
         <li class="main-title">
