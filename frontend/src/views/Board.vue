@@ -22,6 +22,7 @@
 
 <script>
 import { bwrite } from "../assets/script/api"
+import { useStore } from "../assets/script/store";
 
 export default {
   data() {
