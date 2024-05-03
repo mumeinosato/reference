@@ -13,9 +13,10 @@ import { UserController } from './user/user.controller';
 import { LoginService } from './user/login/login.service';
 import { ScriptController } from './script/script.controller';
 import { RunService } from './script/run/run.service';
+import { PostModule } from './reference/post/post.module';
 
 @Module({
-  imports: [HttpModule],
+  imports: [HttpModule, PostModule],
   controllers: [
     AppController,
     ReferenceController,

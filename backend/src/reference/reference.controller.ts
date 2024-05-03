@@ -2,6 +2,11 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ListService } from 'src/reference/list/list.service';
 import { DataService } from 'src/reference/data/data.service';
 import { PostService } from 'src/reference/post/post.service';
+import {
+  ReferencePost,
+  TechFulPost,
+  AOJPost,
+} from 'src/reference/post/post.models';
 import { EditService } from 'src/reference/edit/edit.service';
 
 @Controller('reference')
@@ -54,7 +59,22 @@ export class ReferenceController {
     @Body('group') group: string,
   ): Promise<any> {
     try {
-      return this.postService.Post(title, content, language, type, group);
+      let post;
+      switch (type) {
+        case 0:
+          post = new ReferencePost(title, content, language);
+          break;
+        case 1:
+          post = new TechFulPost(title, content, language, group);
+          break;
+        case 2:
+          post = new AOJPost(title, content);
+          break;
+        default:
+          throw new Error('Invalid type');
+      }
+      const result = await this.postService.Post(post);
+      return result;
     } catch (error) {
       console.error(error);
       throw error;
