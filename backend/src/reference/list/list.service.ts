@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 //import { Redis } from 'ioredis';
 import { config } from 'dotenv';
+import { List } from './list.models';
 
 const prisma = new PrismaClient();
 config();
@@ -16,55 +17,14 @@ export class ListService {
     });
   }*/
 
-  async List(language: number, type: number, group: number): Promise<any> {
-    const lang = parseInt(language.toString());
-    const gr = parseInt(group.toString());
-    const ty = parseInt(type.toString());
-
-    //const cacheKey = `list_${lang}_${ty}_${gr}`;
-    //const cacheData = await this.redis.get(cacheKey);
-
-    /*if (cacheData) {
-      return JSON.parse(cacheData);
-    }*/
-
-    let data;
-
-    if (ty === 0) {
-      data = await prisma.reference.findMany({
-        where: {
-          language: lang,
-        },
-        select: {
-          id: true,
-          title: true,
-          list: true,
-        },
-      });
-    } else if (ty === 1) {
-      data = await prisma.techful.findMany({
-        where: {
-          language: lang,
-          group: gr,
-        },
-        select: {
-          id: true,
-          title: true,
-          list: true,
-        },
-      });
-    } else if (ty === 2) {
-      data = await prisma.aoj.findMany({
-        select: {
-          id: true,
-          title: true,
-          list: true,
-        },
-      });
+  async List(list: List): Promise<any> {
+    try {
+      await list.create();
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
     }
-
-    //await this.redis.set(cacheKey, JSON.stringify(data));
-    return data;
   }
 
   async Edit_list(id: number, list: number, type: number): Promise<boolean> {

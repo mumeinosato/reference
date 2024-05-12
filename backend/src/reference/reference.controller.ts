@@ -1,5 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ListService } from 'src/reference/list/list.service';
+import {
+  ReferenceList,
+  TechFulList,
+  AOJList,
+} from 'src/reference/list/list.models';
 import { DataService } from 'src/reference/data/data.service';
 import { PostService } from 'src/reference/post/post.service';
 import {
@@ -20,11 +25,39 @@ export class ReferenceController {
 
   @Get('/list/:language/:type/:group')
   async getList(
-    @Param('language') language: number,
-    @Param('type') type: number,
-    @Param('group') group: number,
+    @Param('language') language: string,
+    @Param('type') type: string,
+    @Param('group') group: string,
   ): Promise<any> {
-    return this.listService.List(language, type, group);
+    try {
+      const lang = parseInt(language);
+      const ty = parseInt(type);
+      const gr = parseInt(group);
+
+      if (isNaN(lang) || isNaN(ty) || isNaN(gr)) {
+        throw new Error('Invalid parameter');
+      }
+
+      let list;
+      switch (ty) {
+        case 0:
+          list = new ReferenceList(lang, ty, gr);
+          break;
+        case 1:
+          list = new TechFulList(lang, ty, gr);
+          break;
+        case 2:
+          list = new AOJList(lang, ty, gr);
+          break;
+        default:
+          throw new Error('Invalid type');
+      }
+      const result = await list.create();
+      return result;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   @Post('/edit_list')
