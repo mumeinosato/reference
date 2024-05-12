@@ -55,4 +55,65 @@ class AOJList extends List {
   }
 }
 
-export { List, ReferenceList, TechFulList, AOJList };
+abstract class Edit_list {
+  constructor(
+    protected id: number,
+    protected list: number,
+    protected type: number,
+  ) {}
+
+  abstract create(): Promise<boolean>;
+}
+
+class ReferenceList_edit extends Edit_list {
+  async create(): Promise<boolean> {
+    await prisma.reference.update({
+      where: {
+        id: this.id,
+      },
+      data: {
+        list: this.list,
+      },
+    });
+    return true;
+  }
+}
+
+class TechFulList_edit extends Edit_list {
+  async create(): Promise<boolean> {
+    await prisma.techful.update({
+      where: {
+        id: this.id,
+      },
+      data: {
+        list: this.list,
+      },
+    });
+    return true;
+  }
+}
+
+class AOJList_edit extends Edit_list {
+  async create(): Promise<boolean> {
+    await prisma.aoj.update({
+      where: {
+        id: this.id,
+      },
+      data: {
+        list: this.list,
+      },
+    });
+    return true;
+  }
+}
+
+export {
+  List,
+  ReferenceList,
+  TechFulList,
+  AOJList,
+  Edit_list,
+  ReferenceList_edit,
+  TechFulList_edit,
+  AOJList_edit,
+};

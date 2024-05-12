@@ -4,6 +4,9 @@ import {
   ReferenceList,
   TechFulList,
   AOJList,
+  ReferenceList_edit,
+  TechFulList_edit,
+  AOJList_edit,
 } from 'src/reference/list/list.models';
 import { DataService } from 'src/reference/data/data.service';
 import { PostService } from 'src/reference/post/post.service';
@@ -62,11 +65,38 @@ export class ReferenceController {
 
   @Post('/edit_list')
   async editList(
-    @Body('id') id: number,
-    @Body('list') list: number,
-    @Body('type') type: number,
+    @Body('id') id: string,
+    @Body('list') list: string,
+    @Body('type') type: string,
   ): Promise<boolean> {
-    return this.listService.Edit_list(id, list, type);
+    try {
+      const idn = parseInt(id);
+      const listn = parseInt(list);
+      const typen = parseInt(type);
+
+      if (isNaN(idn) || isNaN(listn) || isNaN(typen)) {
+        throw new Error('Invalid parameter');
+      }
+
+      let edit_list;
+      switch (typen) {
+        case 0:
+          edit_list = new ReferenceList_edit(idn, listn, typen);
+          break;
+        case 1:
+          edit_list = new TechFulList_edit(idn, listn, typen);
+          break;
+        case 2:
+          edit_list = new AOJList_edit(idn, listn, typen);
+          break;
+        default:
+          throw new Error('Invalid type');
+      }
+      return this.listService.Edit_list(edit_list);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   @Get('/data/:id/:type')
