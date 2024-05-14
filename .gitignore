@@ -50,6 +50,7 @@ cache/*
 *.sublime-workspace
 old_backend
 nest.txt
+temp/*
 
 *.tsbuildinfo
 

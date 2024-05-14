@@ -34,7 +34,7 @@ export function s3Download(file: string): Promise<void> {
     const filepath = 'temp/' + file;
     s3client.fGetObject(bucket, file, filepath, function (err) {
       if (err) {
-        console.error('Error:', err);
+        console.error('Error downloading file:', err);
         reject(err);
       } else {
         resolve();

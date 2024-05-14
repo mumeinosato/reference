@@ -1,5 +1,6 @@
 import { Controller, Body, Post } from '@nestjs/common';
 import { RunService } from 'src/script/run/run.service';
+import { SqlRun } from './run/run.models';
 
 @Controller('script')
 export class ScriptController {
@@ -10,6 +11,13 @@ export class ScriptController {
     @Body('id') id: number,
     @Body('input') input: string,
   ): Promise<any> {
-    return this.runService.runScript(id, input);
+    try {
+      const sqlRun = new SqlRun(id, input);
+      const result = await sqlRun.create();
+      return result;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   }
 }

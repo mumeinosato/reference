@@ -11,13 +11,12 @@ app = Flask(__name__)
 @app.route('/run', methods=['POST'])
 def run_code():
     data = request.get_json()
-    code = data.get('code')
+    uuid = data.get('uuid')
     language = data.get('language')
-    user_input = data.get('input')
 
-    print(code)
-    print(language)
-    print(user_input)
+    extention = '.cpp' if language == 'cpp' else '.py'
+    code = uuid + extention
+    user_input = uuid + '.txt'
 
     s3 = boto3.resource(
         's3',
