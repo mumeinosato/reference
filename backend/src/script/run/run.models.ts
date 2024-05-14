@@ -12,8 +12,9 @@ const script_server_url =
 
 abstract class Run {
   input: string;
-  content?: string;
+  code?: string;
   id?: number;
+  luanguage?: number;
 
   constructor(input: string) {
     this.input = input;
@@ -92,4 +93,74 @@ class SqlRun extends Run {
   }
 }
 
-export { Run, SqlRun };
+class CustomRun extends Run {
+  code?: string;
+  luanguage?: number;
+
+  private httpService: HttpService = new HttpService();
+
+  constructor(code: string, language: number, input: string) {
+    super(input);
+    this.code = code;
+    this.luanguage = language;
+  }
+
+  async create(): Promise<any> {
+    try {
+      const content = this.code.replace(/<br>/g, '\n');
+      const inputContent = this.input.replace(/<br>/g, '\n');
+      const language = parseInt(this.luanguage.toString());
+      const uuid = uuidv4();
+
+      let codeExtention = '';
+      let codePath = '';
+
+      if (language === 1) {
+        codeExtention = 'cpp';
+        codePath = `temp/${uuid}.${codeExtention}`;
+      } else if (language === 2) {
+        codeExtention = 'py';
+        codePath = `temp/${uuid}.${codeExtention}`;
+      } else {
+        throw new Error('Invalid language');
+      }
+
+      const inputPath = `temp/${uuid}.txt`;
+
+      fs.writeFileSync(codePath, content);
+      await s3Upload(`${uuid}.${codeExtention}`);
+      fs.writeFileSync(inputPath, inputContent);
+      await s3Upload(`${uuid}.txt`);
+
+      const post = {
+        uuid: uuid,
+        language: language === 1 ? 'cpp' : 'python',
+      };
+
+      const response = await this.httpService
+        .post(`${script_server_url}/run`, post)
+        .toPromise();
+
+      if (response.data.success) {
+        const outputName = `output_${uuid}.txt`;
+        await s3Download(outputName);
+        const output = fs
+          .readFileSync(`temp/${outputName}`, 'utf-8')
+          .replace(/\n/g, '<br>');
+        fs.unlinkSync(codePath);
+        fs.unlinkSync(inputPath);
+        fs.unlinkSync(`temp/${outputName}`);
+        return output;
+      } else {
+        fs.unlinkSync(codePath);
+        fs.unlinkSync(inputPath);
+        throw new Error(response.data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+}
+
+export { Run, SqlRun, CustomRun };
