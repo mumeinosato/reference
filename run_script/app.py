@@ -34,18 +34,23 @@ def run_code():
     out_script  = file_name + '.out'
 
     if language == 'cpp':
-        compile_process = subprocess.Popen(['g++', '-o', out_script, code])
+        compile_process = subprocess.Popen(['g++', '-o', out_script, code], stderr=subprocess.PIPE)
         _, compile_error = compile_process.communicate()
 
         if compile_process.returncode != 0:
             error_file = 'error_' + user_input
             with open(error_file, 'w') as f:
-                f.write(compile_error.decode())
-                bucket.upload_file(error_file, 'output_' + user_input)
-                delete_file(error_file)
-                delete_file(code)
-                delete_file(user_input)
-                return jsonify({"success": True, "message": "Compilation failed."}), 500
+                if compile_error:
+                    f.write(compile_error.decode())
+                else:
+                    f.write("Unknown compilation error.")
+
+            bucket.upload_file(error_file, 'output_' + user_input)
+    
+            delete_file(error_file)
+            delete_file(code)
+            delete_file(user_input)
+            return jsonify({"success": True, "message": "Compilation failed."}), 200
 
         elif compile_process.returncode == 0:
             execute_process = subprocess.Popen(['./' + out_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -77,7 +82,7 @@ def run_code():
         
     elif language == 'python':
         try:
-            execute_process = subprocess.Popen(['python3', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            execute_process = subprocess.Popen(['python3', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             with open(user_input, 'r') as f:
                 input_data = f.read()
@@ -98,7 +103,7 @@ def run_code():
                         delete_file(code)
                         delete_file(user_input)
                         delete_file(output_file)
-                        return jsonify({"success": True, "message": "Execution failed."}), 500
+                        return jsonify({"success": True, "message": "Execution failed."}), 200
 
                 bucket.upload_file(output_file, output_file)
 

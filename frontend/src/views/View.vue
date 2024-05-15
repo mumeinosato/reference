@@ -118,12 +118,14 @@ p {
 .input {
   border: 1px solid rgb(204, 204, 204);
   border-radius: 1px;
+  width: 70%;
 }
 
 .output {
   border: 1px solid rgb(204, 204, 204);
   border-radius: 1px;
   background-color: rgb(238, 238, 238);
+  width: 70%;
 }
 
 .btn{
