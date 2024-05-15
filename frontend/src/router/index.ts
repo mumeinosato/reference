@@ -35,7 +35,7 @@ const router = createRouter({
       path: '/edit/:id/:type',
       name: 'edit',
       component: Edit,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, disableBack: true}
     },
     {
       path: '/list/:lang/:type/:group',
@@ -77,7 +77,9 @@ router.beforeEach((to, from, next) => {
   const store = useStore()
   if(to.meta.requiresAuth && !store.getLogin()){
     next('/login')
-  } else {
+  } else if(to.meta.disableBack && from.meta.disableBack){
+    next(false)
+  }else{
     next()
   }
 });
