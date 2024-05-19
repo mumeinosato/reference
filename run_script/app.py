@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import boto3
 import subprocess
+import time
 
 load_dotenv()
 
@@ -34,7 +35,7 @@ def run_code():
     out_script  = file_name + '.out'
 
     if language == 'cpp':
-        compile_process = subprocess.Popen(['g++', '-o', out_script, code], stderr=subprocess.PIPE)
+        compile_process = subprocess.Popen(['g++', '-o', out_script, code, '-O3'], stderr=subprocess.PIPE)
         _, compile_error = compile_process.communicate()
 
         if compile_process.returncode != 0:
@@ -50,9 +51,10 @@ def run_code():
             delete_file(error_file)
             delete_file(code)
             delete_file(user_input)
-            return jsonify({"success": True, "message": "Compilation failed."}), 200
+            return jsonify({"success": True, "message": "Compilation and execution successful.", "time": 0}), 200
 
         elif compile_process.returncode == 0:
+            start = time.process_time()
             execute_process = subprocess.Popen(['./' + out_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
             with open(user_input, 'r') as f:
@@ -72,7 +74,9 @@ def run_code():
                 delete_file(out_script)
                 delete_file(output_file)
 
-                return jsonify({"success": True, "message": "Compilation and execution successful."}), 200
+                end = time.process_time()
+                execution_time = end - start
+                return jsonify({"success": True, "message": "Compilation and execution successful.", "time": execution_time}), 200
 
         else:
             delete_file(code)
@@ -82,6 +86,7 @@ def run_code():
         
     elif language == 'python':
         try:
+            start = time.process_time()
             execute_process = subprocess.Popen(['python3', code], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
             with open(user_input, 'r') as f:
@@ -103,15 +108,18 @@ def run_code():
                         delete_file(code)
                         delete_file(user_input)
                         delete_file(output_file)
-                        return jsonify({"success": True, "message": "Execution failed."}), 200
+                        end = time.perf_counter()
+                        execution_time = end - start
+                        return jsonify({"success": True, "message": "Execution failed.", "time": execution_time}), 200
 
                 bucket.upload_file(output_file, output_file)
 
                 delete_file(code)
                 delete_file(user_input)
                 delete_file(output_file)
-
-                return jsonify({"success": True, "message": "Execution successful."}), 200
+                end = time.process_time()
+                execution_time = end - start
+                return jsonify({"success": True, "message": "Execution successful.", "time": execution_time}), 200
         except Exception as e:
             delete_file(code)
             delete_file(user_input)

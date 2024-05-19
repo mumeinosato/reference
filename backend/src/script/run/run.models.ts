@@ -80,7 +80,11 @@ class SqlRun extends Run {
         fs.unlinkSync(codePath);
         fs.unlinkSync(inputPath);
         fs.unlinkSync(`temp/${outputName}`);
-        return output;
+        return {
+          output: output,
+          success: true,
+          time: response.data.time,
+        };
       } else {
         fs.unlinkSync(codePath);
         fs.unlinkSync(inputPath);
@@ -150,7 +154,11 @@ class CustomRun extends Run {
         fs.unlinkSync(codePath);
         fs.unlinkSync(inputPath);
         fs.unlinkSync(`temp/${outputName}`);
-        return output;
+        return {
+          output: output,
+          success: true,
+          time: response.data.time,
+        };
       } else {
         fs.unlinkSync(codePath);
         fs.unlinkSync(inputPath);

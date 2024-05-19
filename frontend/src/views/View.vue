@@ -99,7 +99,7 @@ export default {
         this.output = "実行に失敗しました";
         return;
       }
-      this.output = res.replace(/<br>/g, "\n");
+      this.output = "Time: " + (res.time * 1000).toFixed(2) + "ms\n" + res.output.replace(/<br>/g, "\n");
     },
   },
   watch: {
