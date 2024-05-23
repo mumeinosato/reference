@@ -35,7 +35,32 @@ export const useStore = defineStore(
             return NameState.value;
         }
 
-        return { LoginState, setLogin, getLogin, NameState, setName, getName, UserState, setUser, getUser} 
+        const Language = ref('C++');
+        const setLanguage = (value: string) => {
+            Language.value = value;
+        }
+        const getLanguage = () => {
+            return Language.value;
+        }
+
+        const Type = ref('TechFul');
+        const setType = (value: string) => {
+            Type.value = value;
+        }
+        const getType = () => {
+            return Type.value;
+        }
+
+        const Group = ref('programming-basic');
+        const setGroup = (value: string) => {
+            Group.value = value;
+        }
+        const getGroup = () => {
+            return Group.value;
+        }
+
+
+        return { LoginState, setLogin, getLogin, NameState, setName, getName, UserState, setUser, getUser, Language, setLanguage, getLanguage, Type, setType, getType, Group, setGroup, getGroup} 
     },
     {
         persist: {

@@ -8,9 +8,9 @@
         <div class="btnv">
           <router-link to="/board" class="btn">書き込む</router-link>
         </div>
-        <div class="btnv">
+        <!--<div class="btnv">
           <router-link to="/issue" class="btn">問題を報告</router-link>
-        </div>
+        </div>-->
       </div>
       <section v-for="(post, index) in boardPosts" :key="index">
         <div class="boardWrapper">

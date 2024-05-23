@@ -33,6 +33,7 @@
 
 <script>
 import { re_post, te_post, aoj_post } from "../assets/script/post";
+import { useStore } from "../assets/script/store";
 
 export default {
   data() {
@@ -46,6 +47,12 @@ export default {
       //group: "algorithm"
     };
   },
+  async mounted() {
+    const store = useStore();
+    this.language = store.getLanguage();
+    this.type = store.getType();
+    this.group = store.getGroup();
+  },
   methods: {
     async submit() {
       let res = false;
@@ -55,9 +62,12 @@ export default {
         return;
       }
       const cont = this.content.replace(/\n/g, '<br>');
+      const store = useStore();
       if (this.type == "Reference") {
         res = await re_post(this.title, cont, lang);
         if (res === true) {
+          store.setLanguage(this.language);
+          store.setType(this.type);
           alert("投稿しました");
           location.reload();
         } else {
@@ -75,6 +85,9 @@ export default {
         else if(gr == 5) lang = 2;
         res = await te_post(this.title, cont, lang, gr);
         if (res === true) {
+          store.setLanguage(this.language);
+          store.setType(this.type);
+          store.setGroup(this.group);
           alert("投稿しました");
           location.reload();
         } else {
@@ -84,6 +97,8 @@ export default {
       }else if (this.type == "AOJ") {
         res = await aoj_post(this.title, cont);
         if (res === true) {
+          store.setLanguage(this.language);
+          store.setType(this.type);
           alert("投稿しました");
           location.reload();
         } else {
