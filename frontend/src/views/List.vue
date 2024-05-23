@@ -148,7 +148,7 @@ p:hover {
 }
 
 .toggle_input:checked+.toggle_label:after {
-  left: 40px;
+  left: 31px;
 }
 
 .toggle_button {
