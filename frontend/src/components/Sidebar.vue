@@ -3,11 +3,11 @@
     <h2 class="titile"><router-link to="/">サイドバー</router-link></h2>
     <div class="content">
       <ul>
-        <li class="main-title">リファレンス</li>
-        <ul>
+        <li class="main-title"><a href="https://example.com">リファレンス</a></li>
+        <!--<ul>
           <li class="sub-title"><router-link to="/list/cpp/reference/1">C++</router-link></li>
           <li class="sub-title"><router-link to="/list/python/reference/1">Python</router-link></li>
-        </ul>
+        </ul>-->
         <li class="main-title">TechFUL(C++)</li>
         <ul>
           <li class="sub-title"><router-link to="/list/cpp/techful/1">プログラミング基礎</router-link></li>
@@ -24,8 +24,9 @@
         <li class="main-title"><router-link to="/list/python/techful/5">人工知能基礎</router-link></li>
         <li class="main-title"><router-link to="/list/cpp/aoj/0">AOJ</router-link></li>
         <li class="main-title">
-          <hr v-if="this.login === true">
+          <hr>
         </li>
+        <li class="main-title"><router-link to="/about">コードテスト</router-link></li>
         <li class="main-title" v-if="this.login === true"><router-link to="/post">投稿</router-link></li>
         <li class="main-title">
           <hr>
