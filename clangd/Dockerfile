@@ -7,10 +7,11 @@ WORKDIR /work
 COPY package*.json ./
 RUN npm install
 
-COPY main.ts .
+COPY tsconfig.json ./
+COPY src ./src
 RUN npm install -g typescript 
-RUN tsc main.ts 
+RUN tsc
 
 EXPOSE 3030
 
-CMD ["node", "main.js"]
+CMD ["node", "dist/main.js"]
