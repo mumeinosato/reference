@@ -26,7 +26,7 @@
         <li class="main-title">
           <hr>
         </li>
-        <li class="main-title"><router-link to="/about">コードテスト</router-link></li>
+        <li class="main-title"><router-link to="/code">コードテスト</router-link></li>
         <li class="main-title" v-if="this.login === true"><router-link to="/post">投稿</router-link></li>
         <li class="main-title">
           <hr>

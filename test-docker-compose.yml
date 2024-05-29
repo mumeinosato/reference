@@ -1,0 +1,37 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - reference
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - reference
+    depends_on:
+      - script
+      - redis
+
+  script:
+    build: ./run_script
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/usr/src/app
+    working_dir: '/'
+
+  redis:
+    image: "redis"
+    ports:
+      - "6379:6379"
