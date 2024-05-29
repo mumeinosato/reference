@@ -1,4 +1,4 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket as WsWebSocket } from "ws";
 import * as rpc from "vscode-ws-jsonrpc";
 import * as lsp from "vscode-languageserver";
 import * as server from "vscode-ws-jsonrpc/server";
@@ -11,18 +11,19 @@ const wss = new WebSocketServer({
     port: port,
 });
 
-wss.on("connection", (ws, req) => {
+wss.on("connection", (ws: WsWebSocket, req: any) => {
     console.log("connected");
 
     ws.on("close", () => {
         console.log("disconnected");
     });
 
-    ws.on("error", (err) => {
+    ws.on("error", (err: Error) => {
         console.error(err);
     });
 
-    launch(rpc.toSocket(ws));
+    // 型アサーションを追加
+    launch(rpc.toSocket(ws as unknown as WebSocket));
 });
 
 /**
@@ -50,8 +51,8 @@ function launch(socket: rpc.IWebSocket): void {
             return message;
         });
     } else {
-        console.error("Failed to create server process.");
+        console.error("サーバープロセスの作成に失敗しました。");
     }
 }
 
-console.log(`launched server on ${port}`);
+console.log(`ポート${port}でサーバーを起動しました。`);
