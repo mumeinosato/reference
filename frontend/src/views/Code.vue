@@ -1,4 +1,4 @@
-<template>
+<!--<template>
     <div ref="editor" class="editor-container"></div>
   </template>
   
@@ -38,4 +38,71 @@
     height: 400px;
   }
   
-  </style>
+  </style>-->
+
+<template>
+  <div id ="app">
+    <div id="editor"></div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref, onMounted } from 'vue';
+import * as monaco from 'monaco-editor';
+
+export default defineComponent({
+  setup() {
+    const editor = ref<monaco.editor.IStandaloneCodeEditor | null>(null);
+    const ws = new WebSocket('ws://192.168.0.37:3000');
+
+    onMounted(() =>{
+      initMonaco();
+      initWebSocket();
+    });
+
+    function initMonaco() {
+      editor.value = monaco.editor.create(document.getElementById('editor')!, {
+        value:`#include <iostream>\n\nint main() {\n    std::cout << "Hello, world!" << std::endl;\n    return 0;\n}`,
+        language: 'cpp',
+        theme: 'vs-dark',
+      });
+
+      editor.value.onDidChangeModelContent(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          const code = editor.value.getValue();
+          ws.send(code);
+        }
+      });
+    }
+
+    function initWebSocket() {
+      ws.onopen = () => {
+        console.log('WebSocket connected');
+      };
+      
+      ws.onmessage = (event) => {
+        console.log('Message from server:', event.data);
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+      };
+
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+    }
+
+    return {
+      editor,
+    };
+  }
+})
+</script>
+
+<style>
+#editor {
+  width: 100%;
+  height: 90vh;
+}
+</style>

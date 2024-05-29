@@ -41,6 +41,24 @@ self.MonacoEnvironment = {
     },
   };
 
+/*const ws = new WebSocket('ws://192.168.0.37:3000')
+
+ws.onopen = () => {
+  console.log('Connected to the WS server')
+};
+
+ws.onmessage = (event) => {
+  console.log('Message from server:', event.data);
+}
+
+ws.onclose = () => {
+  console.log('Disconnected from the WS server')
+};
+
+ws.onerror = (error) => {
+  console.log('Error:', error)
+};*/
+
 const app = createApp(App)
 
 const vuetify = createVuetify({
