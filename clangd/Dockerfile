@@ -1,19 +1,16 @@
 FROM node:18.12
 
-RUN apt-get update && \
-    apt-get install -y clangd-11 build-essential && \
-    apt-get clean
-
-RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-11 100
+RUN apt-get update && apt-get install -y clangd
 
 WORKDIR /work
 
 COPY package*.json ./
 RUN npm install
 
-COPY . .
-RUN npm run build
+COPY main.ts .
+RUN npm install -g typescript 
+RUN tsc main.ts 
 
-EXPOSE 3000
+EXPOSE 3030
 
-CMD ["node", "dist/main.js"]
+CMD ["node", "main.js"]
