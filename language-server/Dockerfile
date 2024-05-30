@@ -9,7 +9,6 @@ RUN apt-get -y install clang-format
 RUN apt-get -y install vim
 
 RUN mkdir -p /ssl
-COPY ssl /ssl
 
 WORKDIR /app
 COPY requirements.txt requirements.txt
