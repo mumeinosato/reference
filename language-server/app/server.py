@@ -209,7 +209,7 @@ if __name__ == "__main__":
 
     debug = False
     passwd = None
-    if "debug" in config and config["debug"]["enable"]:
+    if "debug" in config and (config["debug"] == "yes" or config["debug"] is True):
         debug = True
         if "passwd" in config["debug"]:
             passwd = config["debug"]["passwd"]
