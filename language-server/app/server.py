@@ -99,7 +99,7 @@ class FileServerWebSocketHandler(websocket.WebSocketHandler):
         message = json.loads(message)
         if message['type'] == 'get_rootUri':
             self.write_message(json.dumps(
-                {'result': 'ok', 'data': rootUri}))
+                {'result': 'ok', 'data': self.rootUri}))
         elif message['type'] == 'update':
             if 'filename' not in message or 'code' not in message:
                 self.write_message(json.dumps(
@@ -107,7 +107,7 @@ class FileServerWebSocketHandler(websocket.WebSocketHandler):
             else:
                 filename = message['filename']
                 code = message['code']
-                with open(os.path.join(rootUri, filename), 'w') as f:
+                with open(os.path.join(self.rootUri, filename), 'w') as f:
                     f.write(code)
                 log.info("update file {} with {} characters".format(
                     filename, len(code)))
@@ -209,10 +209,10 @@ if __name__ == "__main__":
 
     debug = False
     passwd = None
-    if "debug" in config and config["debug"]["enable"]:
+    if "debug" in config and (config["debug"] == "yes" or config["debug"] is True):
         debug = True
-        if "passwd" in config["debug"]:
-            passwd = config["debug"]["passwd"]
+        if "passwd" in config:
+            passwd = config["passwd"]
             if len(passwd) <= 4:
                 print("invalid password for log")
                 exit(1)
