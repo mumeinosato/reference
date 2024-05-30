@@ -1,17 +1,18 @@
-FROM node:18.12
-
-RUN apt-get update && apt-get install -y clangd
-
-WORKDIR /work
-
-COPY package*.json ./
-RUN npm install
-
-COPY tsconfig.json ./
-COPY src ./src
-RUN npm install -g typescript 
-RUN tsc
-
+FROM python:3.9-slim-bullseye
 EXPOSE 3030
 
-CMD ["node", "dist/main.js"]
+RUN apt-get update
+RUN apt-get -y install ccls
+RUN apt-get -y install clang
+RUN apt-grt -y install clangd
+RUN apt-get -y install clang-format
+RUN apt-get -y install vim
+
+RUN mkdir -p /ssl
+COPY ssl /ssl
+
+WORKDIR /app
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+COPY ./app .
+CMD ["python3", "server.py"]
