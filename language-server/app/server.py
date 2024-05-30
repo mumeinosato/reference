@@ -211,8 +211,8 @@ if __name__ == "__main__":
     passwd = None
     if "debug" in config and (config["debug"] == "yes" or config["debug"] is True):
         debug = True
-        if "passwd" in config["debug"]:
-            passwd = config["debug"]["passwd"]
+        if "passwd" in config:
+            passwd = config["passwd"]
             if len(passwd) <= 4:
                 print("invalid password for log")
                 exit(1)
