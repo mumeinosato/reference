@@ -38,7 +38,7 @@
     height: 400px;
   }
   
-  </style>-->
+  </style>
 
 <template>
   <div id ="app">
@@ -106,3 +106,162 @@ export default defineComponent({
   height: 90vh;
 }
 </style>
+
+<template>
+  <div>
+  <div v-if="isConnected">
+    <div>
+      <p v-if="rootUri">{{ rootUri }}</p>
+      <button @click="getFileRootUri">Get Root URI</button>
+    </div>
+    <div>
+      <textarea v-model="editorContent" @input="updateFile"></textarea>
+    </div>
+  </div>
+  <div v-else>
+    <p>Connecting to server...</p>
+  </div>
+</div>
+</template>
+
+<script>
+import { MonacoServices } from "monaco-languageclient";
+
+export default {
+  data() {
+    return {
+      isConnected: false,
+      rootUri: null,
+      fileWebSocket: null,
+    };
+  },
+  mounted() {
+    this.connectToFileWebSocket();
+  },
+  methods: {
+    connectToFileWebSocket() {
+      const fileWebSocket = new WebSocket("ws://192.168.0.37:3030/file");
+      fileWebSocket.onopen = () => {
+        fileWebSocket.send(JSON.stringify({type: "get_rootUri"}));
+      };
+      fileWebSocket.onmessage = (ev) => {
+        const message = JSON.parse(ev.data);
+        if (message.result === "ok") {
+          this.rootUri = message.data;
+        } else {
+          console.error("Error: ", message.error);
+        }
+        fileWebSocket.close();
+        MonacoServices.install(monaco, {rootUri: this.rootUri});
+        this.isConnected = true;
+      };
+    },
+    getFileRootUri() {
+      if(this.fileWebSocket && this.fileWebSocket.readyState === WebSocket.OPEN) {
+        this.fileWebSocket.send(JSON.stringify({type: "get_rootUri"}));
+      }
+    },
+    updateFile(filename, code) {
+      const url = "ws://192.168.0.37:3030/file";
+      if(!!this.fileWebSocket && this.fileWebSocket.readyState === WebSocket.OPEN) {
+        this.fileWebSocket.send(JSON.stringify({type: "update", filename, code}));
+      }else {
+        this.fileWebSocket = new WebSocket(url);
+        this.fileWebSocket.onopen = () => {
+          this.fileWebSocket.send(JSON.stringify({type: "update", filename, code}));
+        };
+        this.fileWebSocket.onmessage = (ev) => {
+          const message = JSON.parse(ev.data);
+          if (message.result === "ok") {
+            console.log("File updated successfully", filename);
+          } else {
+            console.error("Error: ", ev);
+          }
+        }
+      }
+    }
+  }
+}
+</script>-->
+
+<template>
+  <div ref="editorContainer" style="width: 800px; height: 600px;"></div>
+</template>
+
+<script>
+import { listen } from "@codingame/monaco-jsonrpc";
+import { MonacoLanguageClient } from "monaco-languageclient";
+import * as monaco from "monaco-editor";
+
+export default {
+  data() {
+    return {
+      monacoModel: null,
+      fileWebSocket: null,
+      rootUri: null,
+      serverHost: "ws://192.168.0.37:3030",
+      filename: "your-filename",
+      language: "cpp", // or whatever language you're using
+    };
+  },
+  mounted() {
+    // Connect to WebSocket server
+    this.connectToFileWebSocket();
+    
+    // Initialize Monaco Editor
+    this.initMonacoEditor();
+  },
+  methods: {
+    connectToFileWebSocket() {
+      this.fileWebSocket = new WebSocket(`${this.serverHost}/file`);
+      this.fileWebSocket.onopen = () => {
+        this.fileWebSocket.send(JSON.stringify({ type: "get_rootUri" }));
+      };
+      this.fileWebSocket.onmessage = (ev) => {
+        let message = JSON.parse(ev.data);
+        if (message.result === "ok") {
+          this.rootUri = message.data;
+        } else {
+          // handle error
+        }
+        this.fileWebSocket.close();
+      };
+    },
+    initMonacoEditor() {
+      monaco.editor.create(this.$refs.editorContainer, {
+        value: "", // initial code value
+        language: this.language,
+        theme: "vs-dark", // or whatever theme you prefer
+      });
+
+      // Listen for model changes
+      monaco.editor.getModels()[0].onDidChangeContent((e) => {
+        if (this.language === "cpp") {
+          console.log("Try to update file");
+          this.updateFile(this.filename, monaco.editor.getModels()[0].getValue());
+        }
+      });
+    },
+    updateFile(filename, code) {
+      let url = `${this.serverHost}/file`;
+      if (this.fileWebSocket && this.fileWebSocket.readyState === this.fileWebSocket.OPEN) {
+        this.fileWebSocket.send(JSON.stringify({ type: "update", filename, code }));
+      } else {
+        this.fileWebSocket = new WebSocket(url);
+        this.fileWebSocket.onopen = (ev) => {
+          ev.target.send(JSON.stringify({ type: "update", filename, code }));
+        };
+        this.fileWebSocket.onmessage = (ev) => {
+          let message = JSON.parse(ev.data);
+          if (message.result === "ok") {
+            console.log("Update file success:", filename);
+          } else {
+            console.warn("Update file failed:", ev);
+          }
+        };
+      }
+    },
+  },
+};
+</script>
+
