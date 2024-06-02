@@ -34,6 +34,7 @@
 <script>
 import { re_post, te_post, aoj_post } from "../assets/script/post";
 import { useStore } from "../assets/script/store";
+import { Buffer } from "buffer";
 
 export default {
   data() {
@@ -61,7 +62,8 @@ export default {
         alert("タイトルと内容を入力してください");
         return;
       }
-      const cont = this.content.replace(/\n/g, '<br>');
+      //const cont = this.content.replace(/\n/g, '<br>');
+      const cont = Buffer.from(this.content).toString('base64');
       const store = useStore();
       if (this.type == "Reference") {
         res = await re_post(this.title, cont, lang);

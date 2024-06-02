@@ -37,7 +37,8 @@
   
   <script>
 import { useStore } from "../assets/script/store";
-import { data, run_script } from "../assets/script/api";
+import { data, run_script, edit } from "../assets/script/api";
+import { Buffer } from "buffer";
 import hljs from "highlight.js/lib/core";
 
 import cpp from "highlight.js/lib/languages/cpp";
@@ -66,7 +67,16 @@ export default {
   async mounted() {
     const re = await data(this.$route.params.id, this.$route.params.type);
     this.title = re.title;
-    this.content = re.content.replace(/<br>/g, "\n");
+    
+    if(this.isBase64(re.content)){
+      this.content = Buffer.from(re.content, 'base64').toString();
+    } else {
+      const temp = Buffer.from(re.content.replace(/<br>/g, "\n")).toString('base64');
+      await edit(this.$route.params.id, this.title, temp, this.$route.params.type);
+      location.reload();
+    }
+    //this.content = re.content.replace(/<br>/g, "\n");
+    //this.content = Buffer.from(re.content, 'base64').toString();
     if (re.language === 1) {
       this.lang = "cpp";
     } else if (re.language === 2) {
@@ -100,6 +110,13 @@ export default {
         return;
       }
       this.output = "Time: " + (res.time * 1000).toFixed(2) + "ms\n" + res.output.replace(/<br>/g, "\n");
+    },
+    isBase64(str) {
+      try {
+        return btoa(atob(str)) == str;
+      } catch (err) {
+        return false;
+      }
     },
   },
   watch: {
