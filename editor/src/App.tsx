@@ -1,8 +1,9 @@
 import "./App.css";
 import Landing from "./components/Landing";
 
-function App() {
+const App: React.FC = () => {
   return <Landing />;
 }
+
 
 export default App;
