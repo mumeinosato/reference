@@ -73,10 +73,11 @@ export async function bread(name: string): Promise<any> {
     return response.data;
 }
 
-export async function run_script(id: number, input: string): Promise<any> {
+export async function run_script(input: string, code: string, language: number): Promise<any> {
     const data = {
-        id: id,
-        input: input
+        input: input,
+        code: code,
+        language: language
     }
     const response = await axios.post(`${API_URL}/script/run`, data);
     return response.data;

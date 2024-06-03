@@ -62,6 +62,7 @@ export default {
       type: 0,
       input: "",
       output: "",
+      rlang: "",
     };
   },
   async mounted() {
@@ -75,14 +76,15 @@ export default {
       await edit(this.$route.params.id, this.title, temp, this.$route.params.type);
       location.reload();
     }
-    //this.content = re.content.replace(/<br>/g, "\n");
-    //this.content = Buffer.from(re.content, 'base64').toString();
     if (re.language === 1) {
       this.lang = "cpp";
+      this.rlang = 1;
     } else if (re.language === 2) {
       this.lang = "python";
+      this.rlang = 2;
     } else if (re.language === 3) {
       this.lang = "sql";
+      this.rlang = 3;
     }
 
     this.type = parseInt(this.$route.params.type);
@@ -103,13 +105,15 @@ export default {
       this.clip = "コピーしました";
     },
     async run() {
-      const input = this.input.replace(/\n/g, "<br>");
-      const res = await run_script(this.$route.params.id, input);
+      const input = Buffer.from(this.input).toString('base64');
+      const code = Buffer.from(this.content).toString('base64');
+      const res = await run_script(input, code, this.rlang);
       if (res === false) {
         this.output = "実行に失敗しました";
         return;
       }
-      this.output = "Time: " + (res.time * 1000).toFixed(2) + "ms\n" + res.output.replace(/<br>/g, "\n");
+      const temp = Buffer.from(res.output, 'base64').toString();
+      this.output = "Time: " + (res.time * 1000).toFixed(2) + "ms\n" + temp;
     },
     isBase64(str) {
       try {

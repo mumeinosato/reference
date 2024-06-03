@@ -27,6 +27,7 @@
     "@nestjs/platform-fastify": "^10.3.8",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "buffer": "^6.0.3",
     "cdate": "^0.0.7",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",

@@ -16,7 +16,7 @@
                     <v-select v-model="language" :items="['C++', 'Python']" label="言語"></v-select>
                 </v-col>
                 <v-col>
-                    <v-select v-model="type" :items="['Reference', 'TechFul', 'AOJ']" label="投稿先"></v-select>
+                    <v-select v-model="type" :items="['TechFul', 'AOJ']" label="投稿先"></v-select>
                 </v-col>
                 <v-col v-if="type == 'TechFul'">
                     <v-select v-model="group" :items="['programming-basic', 'algorithm', 'math', 'database', 'ai-basic']" label="種類"></v-select>

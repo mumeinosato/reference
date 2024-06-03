@@ -7,7 +7,6 @@ import Edit from '../views/Edit.vue'
 import List from '../views/List.vue'
 import Login from '../views/Login.vue'
 import Board from '../views/Board.vue'
-import Code from '../views/Code.vue'
 import Issue from '../views/github/Issue.vue'
 import Post_issue from '../views/github/Post_issue.vue'
 import Sign_up from '../views/Sign_up.vue'
@@ -70,11 +69,6 @@ const router = createRouter({
       name: 'post_issue',
       component: Post_issue,
       meta: { requiresAuth: true }
-    },
-    {
-      path: '/code',
-      name: 'code',
-      component: Code
     }
   ]
 })

@@ -22,6 +22,7 @@
 
 <script>
 import { edit, data } from "../assets/script/api";
+import { Buffer } from "buffer";
 
 export default {
   data() {
@@ -33,7 +34,7 @@ export default {
   async mounted() {
     const re = await data(this.$route.params.id, this.$route.params.type);
     this.title = re.title;
-    this.content = re.content.replace(/<br>/g, "\n");
+    this.content = Buffer.from(re.content, 'base64').toString();
   },
   methods: {
     async submit() {
@@ -42,7 +43,7 @@ export default {
         alert("タイトルと内容を入力してください");
         return;
       }
-      const cont = this.content.replace(/\n/g, '<br>');
+      const cont = Buffer.from(this.content).toString('base64');
       res = await edit(this.$route.params.id, this.title, cont, this.$route.params.type);
       if(res === true) {
         alert("編集しました");
