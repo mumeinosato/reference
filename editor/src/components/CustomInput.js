@@ -1,17 +1,12 @@
 import React from "react";
 import { classnames } from "../utils/general";
 
-type CustomInputProps = {
-  customInput: string;
-  setCustomInput: (newValue: string) => void;
-};
-
-const CustomInput: React.FC<CustomInputProps> = ({ customInput, setCustomInput }) => {
+const CustomInput = ({ customInput, setCustomInput }) => {
   return (
     <>
       {" "}
       <textarea
-        rows={parseInt("5")}
+        rows="5"
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
         placeholder={`Custom input`}
