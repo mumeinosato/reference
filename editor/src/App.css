@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+
+.tab{
+  display: flex;
+  flex-wrap: wrap;
+}
+.tab li a{
+  display: block;
+  background:#ddd;
+  margin:0 2px;
+  padding:10px 20px;
+}
+/*liにactiveクラスがついた時の形状*/
+.tab li.active a{
+  background:#fff;
+}
