@@ -15,6 +15,9 @@ import OutputDetails from "./OutputDetails";
 import ThemeDropdown from "./ThemeDropdown";
 import LanguagesDropdown from "./LanguagesDropdown";
 
+import Tab from './Tab';
+import TabContent from './TabContent';
+
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
 */
@@ -52,6 +55,8 @@ const Landing = () => {
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState("cobalt");
   const [language, setLanguage] = useState(languageOptions[0]);
+  const [activeTab, setActiveTab] = useState("input"); // 追加: activeTab の初期値を設定
+
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
@@ -68,6 +73,7 @@ const Landing = () => {
       handleCompile();
     }
   }, [ctrlPress, enterPress]);
+
   const onChange = (action, data) => {
     switch (action) {
       case "code": {
@@ -79,6 +85,7 @@ const Landing = () => {
       }
     }
   };
+
   const handleCompile = () => {
     setProcessing(true);
     const formData = {
@@ -87,6 +94,7 @@ const Landing = () => {
       source_code: btoa(code),
       stdin: btoa(customInput),
     };
+
     const options = {
       method: "POST",
       url: process.env.REACT_APP_RAPID_API_URL,
@@ -170,6 +178,7 @@ const Landing = () => {
       defineTheme(theme.value).then((_) => setTheme(theme));
     }
   }
+
   useEffect(() => {
     defineTheme("oceanic-next").then((_) =>
       setTheme({ value: "oceanic-next", label: "Oceanic Next" })
@@ -187,6 +196,7 @@ const Landing = () => {
       progress: undefined,
     });
   };
+
   const showErrorToast = (msg, timer) => {
     toast.error(msg || `Something went wrong! Please try again.`, {
       position: "top-right",
@@ -212,7 +222,6 @@ const Landing = () => {
         draggable
         pauseOnHover
       />
-
       <div className="flex flex-row">
         <div className="px-4 py-2">
           <LanguagesDropdown onSelectChange={onSelectChange} />
@@ -221,7 +230,6 @@ const Landing = () => {
           <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
         </div>
       </div>
-
       <div className="flex flex-col w-full h-full justify-start items-end">
         <CodeEditorWindow
           code={code}
@@ -230,34 +238,41 @@ const Landing = () => {
           theme={theme.value}
         />
       </div>
-
       <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
-        <div class="wrapper">
-          <ul class="tab">
-            <li><a href="#input">入力</a></li>
-            <li><a href="#output">出力</a></li>
-          </ul>
-        </div>
-        <OutputWindow outputDetails={outputDetails} />
-        <div className="flex flex-col items-end">
-          <CustomInput
-            customInput={customInput}
-            setCustomInput={setCustomInput}
-          />
-          <button
-            onClick={handleCompile}
-            disabled={!code}
-            className={classnames(
-              "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
-              !code ? "opacity-50" : ""
-            )}
-          >
-            {processing ? "Processing..." : "Compile and Execute"}
-          </button>
-        </div>
-        {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+        <Tab
+          tabs={[
+            { id: "input", label: "入力" },
+            { id: "output", label: "出力" },
+          ]}
+          activeTab={activeTab}
+          onTabClick={setActiveTab}
+        >
+          <TabContent id="input" activeTab={activeTab}>
+            <div className="flex flex-col items-end">
+              <CustomInput
+                customInput={customInput}
+                setCustomInput={setCustomInput}
+              />
+              <button
+                onClick={handleCompile}
+                disabled={!code}
+                className={classnames(
+                  "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
+                  !code ? "opacity-50" : ""
+                )}
+              >
+                {processing ? "Processing..." : "Compile and Execute"}
+              </button>
+            </div>
+          </TabContent>
+          <TabContent id="output" activeTab={activeTab}>
+            <OutputWindow outputDetails={outputDetails} />
+            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          </TabContent>
+        </Tab>
       </div>
     </>
   );
 };
+
 export default Landing;
