@@ -5,7 +5,7 @@ export const languageOptions = [
     label: "JavaScript (Node.js 12.14.0)",
     value: "javascript",
   },
-  {
+  /*{
     id: 45,
     name: "Assembly (NASM 2.14.02)",
     label: "Assembly (NASM 2.14.02)",
@@ -58,7 +58,7 @@ export const languageOptions = [
     name: "C++ (GCC 8.3.0)",
     label: "C++ (GCC 8.3.0)",
     value: "cpp",
-  },
+  },*/
   {
     id: 50,
     name: "C (GCC 9.2.0)",
@@ -71,7 +71,7 @@ export const languageOptions = [
     label: "C++ (GCC 9.2.0)",
     value: "cpp",
   },
-  {
+  /*{
     id: 86,
     name: "Clojure (1.10.1)",
     label: "Clojure (1.10.1)",
@@ -222,14 +222,14 @@ export const languageOptions = [
     name: "Python (2.7.17)",
     label: "Python (2.7.17)",
     value: "python",
-  },
+  },*/
   {
     id: 71,
     name: "Python (3.8.1)",
     label: "Python (3.8.1)",
     value: "python",
   },
-  {
+  /*{
     id: 80,
     name: "R (4.0.0)",
     label: "R (4.0.0)",
@@ -264,17 +264,17 @@ export const languageOptions = [
     name: "Swift (5.2.3)",
     label: "Swift (5.2.3)",
     value: "swift",
-  },
+  },*/
   {
     id: 74,
     name: "TypeScript (3.7.4)",
     label: "TypeScript (3.7.4)",
     value: "typescript",
   },
-  {
+  /*{
     id: 84,
     name: "Visual Basic.Net (vbnc 0.0.0.5943)",
     label: "Visual Basic.Net (vbnc 0.0.0.5943)",
     value: "vbnet",
-  },
+  },*/
 ];
