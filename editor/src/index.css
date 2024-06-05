@@ -44,3 +44,25 @@ body {
     transform:rotate(10deg);
   }
 }
+
+.execute-button {
+  padding: 28px 30px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  position: relative; 
+}
+
+.execute-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-left: 24px solid rgba(0, 128, 0, 0.5);
+}

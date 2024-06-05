@@ -16,6 +16,8 @@ import LanguagesDropdown from "./LanguagesDropdown";
 import Tab from './Tab';
 import TabContent from './TabContent';
 
+import RunButton from "./RunButton";
+
 const cppDefault = `#include <bits/stdc++.h>
 using namespace std;
 
@@ -29,7 +31,7 @@ const Landing = () => {
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
-  const [language, setLanguage] = useState(languageOptions[2]);
+  const [language, setLanguage] = useState(languageOptions[1]);
   const [activeTab, setActiveTab] = useState("input"); // 追加: activeTab の初期値を設定
 
 
@@ -180,7 +182,10 @@ const Landing = () => {
         draggable
         pauseOnHover
       />
-      <div className="flex flex-row">
+      <div className="flex flex-row bg-[#1e1e1e] border-b-2 border-[#232323]">
+        <div>
+          <RunButton></RunButton>
+        </div>
         <div className="px-4 py-2">
           <LanguagesDropdown onSelectChange={onSelectChange} />
         </div>
