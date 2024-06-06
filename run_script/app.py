@@ -125,6 +125,49 @@ def run_code():
             delete_file(user_input)
             return jsonify({"success": False, "message": str(e)}), 500
 
+    elif language == 'c':
+        compile_process = subprocess.Popen(['gcc', '-o', out_script, code], stderr=subprocess.PIPE)
+        _, compile_error = compile_process.communicate()
+
+        if compile_process.returncode != 0:
+            error_file = 'error_' + user_input
+            with compile_error:
+                if compile_error:
+                    f.write(compile_error.decode())
+                else:
+                    f.write("Unknown compilation error.")
+
+            bucket.upload_file(error_file, 'output_' + user_input)
+
+            delete_file(error_file)
+            delete_file(code)
+            delete_file(user_input)
+            return jsonify({"success": True, "message": "Compilation and exection successful.", "time": 0}), 200
+
+        elif compile_process.returncode == 0:
+            start = time.process_time()
+            execute_process = subprocess.Popen(['./' + out_script], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+
+            with opne(user_input, 'r') as f:
+                input_data = f.read()
+
+                output_data, _ = execute_process.communicate(input_data.encode())
+
+                output_file = 'output_' + user_input
+
+                with open(output_file, 'w') as f:
+                    f.write(output_file.decode())
+
+                bucket.upload_file(output_file, output_file)
+
+                delete_file(code)
+                delete_file(user_input)
+                delete_file(out_script)
+                delete_file(output_file)
+
+                end = time.process_time()
+                execution_time = end - start
+                return jsonify({"success": True, "message": "Compilation and execution successful.", "time": execution_time}), 200
 
 def delete_file(file_path):
     if os.path.exists(file_path):
