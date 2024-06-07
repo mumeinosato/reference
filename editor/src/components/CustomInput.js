@@ -9,9 +9,9 @@ const CustomInput = ({ customInput, setCustomInput }) => {
         rows="5"
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
-        placeholder={`Custom input`}
+        placeholder={`入力(オプション)`}
         className={classnames(
-          "focus:outline-none w-full border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white mt-2"
+          "w-full border-b-2 border-[#232323] bg-[#1e1e1e] text-[#cccccc] p-2",
         )}
       ></textarea>
     </>
