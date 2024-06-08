@@ -15,4 +15,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+ENV PYTHONUNBUFFERED 1
+
 CMD ["flask", "run"]

@@ -61,7 +61,7 @@ export const languageOptions = [
     value: "cpp",
   },*/
   {
-    id: 4,
+    id: 3,
     name: "C (GCC 9.2.0)",
     label: "C (GCC 9.2.0)",
     value: "c",

@@ -51,6 +51,7 @@ cache/*
 old_backend
 nest.txt
 temp/*
+build.sh
 
 *.tsbuildinfo
 

@@ -50,6 +50,10 @@ class RunScript extends Run {
           codeExtention = 'py';
           codePath = `temp/${uuid}.${codeExtention}`;
           break;
+        case 3:
+          codeExtention = 'c';
+          codePath = `temp/${uuid}.${codeExtention}`;
+          break;
         default:
           throw new Error('Invalid language');
       }
@@ -61,9 +65,24 @@ class RunScript extends Run {
       fs.writeFileSync(inputPath, inputcontent);
       await s3Upload(`${uuid}.txt`);
 
+      let languageName = '';
+      switch (language) {
+        case 1:
+          languageName = 'cpp';
+          break;
+        case 2:
+          languageName = 'python';
+          break;
+        case 3:
+          languageName = 'c';
+          break;
+        default:
+          throw new Error('Invalid language');
+      }
+
       const post = {
         uuid: uuid,
-        language: language === 1 ? 'cpp' : 'python',
+        language: languageName,
       };
 
       const response = await this.httpService

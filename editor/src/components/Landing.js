@@ -125,7 +125,7 @@ const Landing = () => {
                 </div>
               </TabContent>
               <TabContent id="output" activeTab={activeTab}>
-                <div className="w-full border-2 border-[#232323] bg-[#1e1e1e] text-[#cccccc] p-2 h-56">
+                <div className="w-full border-2 border-[#232323] bg-[#1e1e1e] text-[#cccccc] p-2 h-56" style={{ whiteSpace: "pre-wrap" }}>
                   {outputDetails}
                 </div>
               </TabContent>
