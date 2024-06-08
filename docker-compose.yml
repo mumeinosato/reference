@@ -1,9 +1,9 @@
 version: '3'
 services:
-  clangd:
-    build: ./language-server
+  editor:
+    build: ./editor
     ports:
-      - "3030:3030"
+      - "4000:4000"
     volumes:
       - .:/usr/src/app
 
