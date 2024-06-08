@@ -3,8 +3,8 @@
     <h2 class="titile"><router-link to="/">サイドバー</router-link></h2>
     <div class="content">
       <ul>
-        <li class="main-title"><a href="https://example.com">リファレンス</a></li>
-        <!--<ul>
+        <!--<li class="main-title"><a href="https://example.com">リファレンス</a></li>
+        <ul>
           <li class="sub-title"><router-link to="/list/cpp/reference/1">C++</router-link></li>
           <li class="sub-title"><router-link to="/list/python/reference/1">Python</router-link></li>
         </ul>-->
