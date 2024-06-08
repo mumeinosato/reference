@@ -11,7 +11,7 @@ const CustomInput = ({ customInput, setCustomInput }) => {
         onChange={(e) => setCustomInput(e.target.value)}
         placeholder={`入力(オプション)`}
         className={classnames(
-          "w-full border-b-2 border-[#232323] bg-[#1e1e1e] text-[#cccccc] p-2",
+          "w-full border-2 border-[#232323] bg-[#1e1e1e] text-[#cccccc] p-2",
         )}
       ></textarea>
     </>

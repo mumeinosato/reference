@@ -61,13 +61,13 @@ export const languageOptions = [
     value: "cpp",
   },*/
   {
-    id: 50,
+    id: 4,
     name: "C (GCC 9.2.0)",
     label: "C (GCC 9.2.0)",
     value: "c",
   },
   {
-    id: 54,
+    id: 1,
     name: "C++ (GCC 9.2.0)",
     label: "C++ (GCC 9.2.0)",
     value: "cpp",
@@ -225,7 +225,7 @@ export const languageOptions = [
     value: "python",
   },*/
   {
-    id: 71,
+    id: 2,
     name: "Python (3.8.1)",
     label: "Python (3.8.1)",
     value: "python",

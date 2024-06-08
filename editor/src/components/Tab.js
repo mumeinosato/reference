@@ -16,7 +16,7 @@ const Tab = ({ tabs, activeTab, onTabClick, children }) => {
               )}
               onClick={() => {
                 onTabClick(tab.id)
-            }}
+              }}
             >
               {tab.label}
             </button>

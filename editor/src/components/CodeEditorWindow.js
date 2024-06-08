@@ -13,7 +13,7 @@ const CodeEditorWindow = ({ onChange, language, code}) => {
   return (
     <div className="w-full h-full">
       <Editor
-        height="60vh"
+        height="90vh"
         width={`100%`}
         language={language || "cpp"}
         value={value}
