@@ -16,49 +16,6 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import hijsVuePlugin from '@highlightjs/vue-plugin'
 
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
-import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-
-self.MonacoEnvironment = {
-    getWorker(moduleId, label) {
-      if (label === 'json') {
-        return new jsonWorker();
-      }
-      if (label === 'css' || label === 'scss' || label === 'less') {
-        return new cssWorker();
-      }
-      if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return new htmlWorker();
-      }
-      // TypeScript and JavaScript workers
-      if (label === 'typescript' || label === 'javascript') {
-        return new tsWorker();
-      }
-      return new editorWorker();
-    },
-  };
-
-/*const ws = new WebSocket('ws://192.168.0.37:3000')
-
-ws.onopen = () => {
-  console.log('Connected to the WS server')
-};
-
-ws.onmessage = (event) => {
-  console.log('Message from server:', event.data);
-}
-
-ws.onclose = () => {
-  console.log('Disconnected from the WS server')
-};
-
-ws.onerror = (error) => {
-  console.log('Error:', error)
-};*/
-
 const app = createApp(App)
 
 const vuetify = createVuetify({
