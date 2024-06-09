@@ -7,7 +7,7 @@ interface TabContentProps {
     children: React.ReactNode;
 }
 
-const TabcOntent = ({id, activeTab, children}) => {
+const TabcOntent: React.FC<TabContentProps> = ({id, activeTab, children}) => {
     return (
         <div
             id={id}

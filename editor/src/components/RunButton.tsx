@@ -1,9 +1,14 @@
 import React from "react";
 
-const RunButton = ({onClick, children, isRunning }) => {
+interface RunButtonProps {
+    onClick: () => void;
+    isRunning: boolean;
+
+}
+
+const RunButton: React.FC<RunButtonProps> = ({onClick, isRunning }) => {
     return (
         <button className="execute-button" onClick={onClick}  disabled={isRunning}>
-            {children}
         </button>
     );
 };

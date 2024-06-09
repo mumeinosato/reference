@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CodeEditorWindow from "./CodeEditorWindow";
-import { languageOptions } from "../constants/languageOptions";
+import { LanguageOption, languageOptions } from "../constants/languageOptions";
 import Split from "react-split";
 
 import { ToastContainer } from "react-toastify";
@@ -25,20 +25,22 @@ int main(){
 }`;
 
 const Landing = () => {
-  const [code, setCode] = useState(cppDefault);
-  const [customInput, setCustomInput] = useState("");
+  const [code, setCode] = useState<string>(cppDefault);
+  const [customInput, setCustomInput] = useState<string>("");
   const [outputDetails, setOutputDetails] = useState("");
-  const [language, setLanguage] = useState(languageOptions[1]);
-  const [activeTab, setActiveTab] = useState("input");
-  const [isRunning, setIsRunning] = useState(false); 
+  const [language, setLanguage] = useState<LanguageOption>(languageOptions[1]);
+  const [activeTab, setActiveTab] = useState<string>("input");
+  const [isRunning, setIsRunning] = useState<boolean>(false); 
 
 
-  const onSelectChange = (sl) => {
-    console.log("selected Option...", sl);
-    setLanguage(sl);
+  const onSelectChange = (sl: LanguageOption | null) => {
+    if (sl !== null) { // nullでないことを確認
+      console.log("selected Option...", sl);
+      setLanguage(sl);
+    }
   };
 
-  const onChange = (action, data) => {
+  const onChange = (action: string, data: string) => {
     switch (action) {
       case "code": {
         setCode(data);
@@ -50,7 +52,7 @@ const Landing = () => {
     }
   };
 
-  const updateOutput = (output) => {
+  const updateOutput = (output: string) => {
     setOutputDetails(output)
   }
 
@@ -62,7 +64,7 @@ const Landing = () => {
       setIsRunning(true);
       updateOutput("実行中...");
       setActiveTab("output");
-      const res = await handleRunClick(code, language?.id, customInput);
+      const res = await handleRunClick(code, language?.id.toString(), customInput);
       if (res === false) {
         updateOutput("実行に失敗しました");
       } else if (res && res.output) {

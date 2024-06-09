@@ -1,13 +1,19 @@
-import Buffer from 'buffer';
+import { Buffer } from 'buffer';
 import axios from 'axios';
 
 const api_url = process.env.REACT_APP_BACKEND_URL
 
-export const handleRunClick = (code, language, input) => {
-    const codeData = Buffer.Buffer.from(code).toString('base64');
-    const inputData = Buffer.Buffer.from(input).toString('base64');
+interface RunData {
+    input: string,
+    code: string,
+    language: string,
+}
 
-    const data = {
+export const handleRunClick = (code: string, language: string, input: string): Promise<any>  => {
+    const codeData = Buffer.from(code).toString('base64');
+    const inputData = Buffer.from(input).toString('base64');
+
+    const data: RunData = {
         input: inputData,
         code: codeData,
         language: language,

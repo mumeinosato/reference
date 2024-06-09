@@ -1,18 +1,25 @@
-export const languageOptions = [
+export interface LanguageOption {
+    id: number;
+    name: string;
+    label: string;
+    value: string;
+}
+
+export const languageOptions: LanguageOption[] = [
     {
-        id: 50,
+        id: 3,
         name: "C (GCC)",
         label: "C (GCC)",
         value: "c",
     },
     {
-        id: 54, 
+        id: 1, 
         name: "C++ (GCC)",
         label: "C++ (GCC)",
         value: "cpp" 
     },
     {
-        id: 71,
+        id: 2,
         name: "Python (バージョン知らん)",
         label: "Python (バージョンは知らん)",
         value: "python",

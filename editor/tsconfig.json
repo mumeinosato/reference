@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
-    "jsx": "react",
+    "module": "esnext", // 推奨: ESNextに変更
+    "jsx": "react-jsx", // 推奨: 最新のJSX変換
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
