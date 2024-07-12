@@ -8,43 +8,42 @@ export class DataService {
   async Data(id: number, type: number): Promise<any> {
     const idn = parseInt(id.toString());
     const ty = parseInt(type.toString());
-    if (ty === 0) {
-      const data = await prisma.reference.findUnique({
-        where: {
-          id: idn,
-        },
-        select: {
-          title: true,
-          content: true,
-          language: true,
-        },
-      });
-      return data;
+
+    let data;
+
+    switch (ty) {
+      case 0:
+        data = await prisma.reference.findUnique({
+          where: { id: idn },
+          select: {
+            title: true,
+            content: true,
+          },
+        });
+        break;
+      case 1:
+        data = await prisma.techful.findUnique({
+          where: { id: idn },
+          select: {
+            title: true,
+            content: true,
+          },
+        });
+        break;
+      case 2:
+        data = await prisma.aoj.findUnique({
+          where: { id: idn },
+          select: {
+            title: true,
+            content: true,
+          },
+        });
+        break;
+      default:
+        data = null;
+        break;
     }
-    if (ty === 1) {
-      const data = await prisma.techful.findUnique({
-        where: {
-          id: idn,
-        },
-        select: {
-          title: true,
-          content: true,
-          language: true,
-        },
-      });
-      return data;
-    }
-    if (ty === 2) {
-      const data = await prisma.aoj.findUnique({
-        where: {
-          id: idn,
-        },
-        select: {
-          title: true,
-          content: true,
-        },
-      });
-      return data;
-    }
+
+    return data;
   }
 }
