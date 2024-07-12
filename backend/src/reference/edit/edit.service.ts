@@ -1,7 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { Redis } from 'ioredis';
+import { config } from 'dotenv';
+
+config();
 
 const prisma = new PrismaClient();
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT),
+});
 
 @Injectable()
 export class EditService {
@@ -33,6 +41,10 @@ export class EditService {
         } else {
           throw new Error('Invalid type');
         }
+
+        const redisKey = `data:${type}:${idn}`;
+        await redis.del(redisKey);
+
         return true;
       })
       .catch((error) => {

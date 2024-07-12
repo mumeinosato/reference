@@ -1,6 +1,14 @@
 import { PrismaClient } from '@prisma/client';
+import { Redis } from 'ioredis';
+import { config } from 'dotenv';
+
+config();
 
 const prisma = new PrismaClient();
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT),
+});
 
 abstract class List {
   constructor(
@@ -10,11 +18,29 @@ abstract class List {
   ) {}
 
   abstract create(): Promise<any>;
+
+  protected async getCache(key: string): Promise<any> {
+    const cache = await redis.get(key);
+    if (cache) {
+      return JSON.parse(cache);
+    }
+    return null;
+  }
+
+  protected async cacheData(key: string, data: any): Promise<void> {
+    await redis.set(key, JSON.stringify(data));
+  }
 }
 
 class ReferenceList extends List {
   async create(): Promise<any> {
-    return prisma.reference.findMany({
+    const cacheKey = 'reference_list:${this.lang}';
+    const cache = await this.getCache(cacheKey);
+    if (cache) {
+      return cache;
+    }
+
+    const data = await prisma.reference.findMany({
       where: {
         language: this.lang,
       },
@@ -24,12 +50,21 @@ class ReferenceList extends List {
         list: true,
       },
     });
+
+    await this.cacheData(cacheKey, data);
+    return data;
   }
 }
 
 class TechFulList extends List {
   async create(): Promise<any> {
-    return prisma.techful.findMany({
+    const cacheKey = `techful_list:${this.lang}:${this.group}`;
+    const cache = await this.getCache(cacheKey);
+    if (cache) {
+      return cache;
+    }
+
+    const data = await prisma.techful.findMany({
       where: {
         language: this.lang,
         group: this.group,
@@ -40,18 +75,29 @@ class TechFulList extends List {
         list: true,
       },
     });
+    await this.cacheData(cacheKey, data);
+    return data;
   }
 }
 
 class AOJList extends List {
   async create(): Promise<any> {
-    return prisma.aoj.findMany({
+    const cacheKey = 'aoj_list';
+    const cache = await this.getCache(cacheKey);
+    if (cache) {
+      return cache;
+    }
+
+    const data = await prisma.aoj.findMany({
       select: {
         id: true,
         title: true,
         list: true,
       },
     });
+
+    await this.cacheData(cacheKey, data);
+    return data;
   }
 }
 
@@ -63,6 +109,14 @@ abstract class Edit_list {
   ) {}
 
   abstract create(): Promise<boolean>;
+
+  protected async clearCache(): Promise<void> {
+    const cacheKeys = `*list`;
+    const keys = await redis.keys(cacheKeys);
+    if (keys.length > 0) {
+      await redis.del(keys);
+    }
+  }
 }
 
 class ReferenceList_edit extends Edit_list {
@@ -75,6 +129,7 @@ class ReferenceList_edit extends Edit_list {
         list: this.list,
       },
     });
+    await this.clearCache();
     return true;
   }
 }
@@ -89,6 +144,7 @@ class TechFulList_edit extends Edit_list {
         list: this.list,
       },
     });
+    await this.clearCache();
     return true;
   }
 }
@@ -103,6 +159,7 @@ class AOJList_edit extends Edit_list {
         list: this.list,
       },
     });
+    await this.clearCache();
     return true;
   }
 }
