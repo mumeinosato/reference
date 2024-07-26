@@ -5,7 +5,7 @@ import './assets/style/tailwindcss/tailwindcss.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { createPersistedState } from 'pinia-plugin-persistedstate'
-import App from './App.vue'
+import App from '../App.vue'
 import router from './router'
 
 import Alpine from 'alpinejs'

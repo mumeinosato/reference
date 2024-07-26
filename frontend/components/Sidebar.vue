@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { useStore } from "../assets/script/store"
+import { useStore } from "../src/assets/script/store"
 
 export default{
   data() {

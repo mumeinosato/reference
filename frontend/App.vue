@@ -1,15 +1,10 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import Sidebar from './components/Sidebar.vue';
-</script>
-
 <template>
   <div class="container">
     <div class="side">
       <Sidebar />
     </div>
     <div class="main" ref="mainContent">
-      <RouterView />
+      <NuxtPage />
     </div>
   </div>
 </template>
