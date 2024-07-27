@@ -1,40 +1,41 @@
-<template>
-  <div>
-    <div>
-      <p>書くことがないから掲示板にしとく</p>
-    </div>
-    <div v-if="login">
-      <div class="bbox">
-        <div class="btnv">
-          <router-link to="/board" class="btn">書き込む</router-link>
-        </div>
-        <!--<div class="btnv">
-            <router-link to="/issue" class="btn">問題を報告</router-link>
-          </div>-->
-      </div>
-      <section v-for="(post, index) in boardPosts" :key="index">
-        <div class="boardWrapper">
-          <article>
-            <div class="wrapper">
-              <div class="nameArea">
-                <p class="username">{{ post.displayname }}</p>
-                <p class="postInfo">{{ formatDateTime(post.createat) }}</p>
-              </div>
-              <p class="cont" style="white-space: pre-line">
-                {{ replaceContent(post.content) }}
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-    </div>
-    <div v-else>
+ <template>
+  <a-layout style="margin-left: 200px; background-color: white">
+    <a-layout-content class="m-10">
       <div>
-        <p>ログインしないと見れないよ</p>
+        <div>
+          <p>書くことがないから掲示板にしとく</p>
+        </div>
+        <div v-if="login">
+          <div class="bbox">
+            <div class="btnv">
+              <router-link to="/board" class="btn">書き込む</router-link>
+            </div>
+          </div>
+          <section v-for="(post, index) in boardPosts" :key="index">
+            <div class="boardWrapper">
+              <article>
+                <div class="wrapper">
+                  <div class="nameArea">
+                    <p class="username">{{ post.displayname }}</p>
+                    <p class="postInfo">{{ formatDateTime(post.createat) }}</p>
+                  </div>
+                  <p class="cont" style="white-space: pre-line">
+                    {{ replaceContent(post.content) }}
+                  </p>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+        <div v-else>
+          <div>
+            <p>ログインしないと見れないよ</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</template>  
+    </a-layout-content>
+  </a-layout>
+</template>
   
 <script>
 import { useStore } from "../stores/store";

@@ -1,15 +1,21 @@
 <template>
-  <div class="container">
+  <!--<div class="container">
     <div class="side">
       <Sidebar />
     </div>
     <div class="main" ref="mainContent">
       <NuxtPage />
     </div>
+  </div>-->
+  <div>
+    <a-layout hasSider>
+      <Sidebar />
+      <NuxtPage />
+    </a-layout>
   </div>
 </template>
 
-<style>
+<!--<style>
   .container {
     display: flex;
     width: 100%;
@@ -27,4 +33,4 @@
     height: fit-content;
     overflow-y: auto;
   }
-</style>
+</style>-->

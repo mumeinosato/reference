@@ -54,7 +54,7 @@ export default {
                 store.setLogin(false);
             }
         }
-    },
+    }, 
     mounted() {
         const store = useStore();
         if(store.getLogin() === true){

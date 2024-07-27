@@ -2,11 +2,14 @@ import { jsx } from "vue/jsx-runtime";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@ant-design-vue/nuxt',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt'
   ],
+
   build: {
     loaders: {
       scss: {
@@ -23,13 +26,17 @@ export default defineNuxtConfig({
       }
     }
   },
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   router: {
     middleware: ['auth']
   },
+
+  compatibilityDate: '2024-07-27',
 });
