@@ -37,7 +37,7 @@
 </template>  
   
 <script>
-import { useStore } from "../assets/script/store";
+import { useStore } from "../stores/store";
 import { bread } from "../assets/script/api";
 
 export default {

@@ -1,0 +1,5 @@
+const TOKEN = 'TOKEN';
+
+export function getToken() {
+    return TOKEN;
+}

@@ -5,11 +5,12 @@ import CryptoJS from "crypto-js";
 export const useStore = defineStore(
     'main',
     () => {
-        const LoginState = ref(false);
-
-        const NameState = ref('');
-
-        const UserState = ref('');
+        const LoginState = ref<boolean>(false);
+        const NameState = ref<string>('デフォルト名前');
+        const UserState = ref<string>('デフォルトユーザー');
+        const Language = ref<string>('C++');
+        const Type = ref<string>('TechFul');
+        const Group = ref<string>('programming-basic');
 
         const setLogin = (value: boolean) => {
             LoginState.value = value;
@@ -35,7 +36,6 @@ export const useStore = defineStore(
             return NameState.value;
         }
 
-        const Language = ref('C++');
         const setLanguage = (value: string) => {
             Language.value = value;
         }
@@ -43,7 +43,6 @@ export const useStore = defineStore(
             return Language.value;
         }
 
-        const Type = ref('TechFul');
         const setType = (value: string) => {
             Type.value = value;
         }
@@ -51,7 +50,6 @@ export const useStore = defineStore(
             return Type.value;
         }
 
-        const Group = ref('programming-basic');
         const setGroup = (value: string) => {
             Group.value = value;
         }
@@ -59,8 +57,7 @@ export const useStore = defineStore(
             return Group.value;
         }
 
-
-        return { LoginState, setLogin, getLogin, NameState, setName, getName, UserState, setUser, getUser, Language, setLanguage, getLanguage, Type, setType, getType, Group, setGroup, getGroup} 
+        return { LoginState, setLogin, getLogin, NameState, setName, getName, UserState, setUser, getUser, Language, setLanguage, getLanguage, Type, setType, getType, Group, setGroup, getGroup };
     },
     {
         persist: {
@@ -68,7 +65,16 @@ export const useStore = defineStore(
                 deserialize: (value: string) => {
                     const decrypted = CryptoJS.AES.decrypt(value, 'user')
                     const decryptedData = decrypted.toString(CryptoJS.enc.Utf8)
-                    return JSON.parse(decryptedData)
+                    const parsedData = JSON.parse(decryptedData);
+                  
+                    return {
+                        LoginState: parsedData.LoginState ?? false,
+                        NameState: parsedData.NameState ?? 'デフォルト名前',
+                        UserState: parsedData.UserState ?? 'デフォルトユーザー',
+                        Language: parsedData.Language ?? 'C++',
+                        Type: parsedData.Type ?? 'TechFul',
+                        Group: parsedData.Group ?? 'programming-basic',
+                    };
                 },
                 serialize(state) {
                     return CryptoJS.AES.encrypt(JSON.stringify(state), 'user').toString()

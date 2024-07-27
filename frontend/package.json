@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@ant-design-vue/nuxt": "^1.4.2",
-    "@codingame/monaco-jsonrpc": "^0.4.1",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@octokit/rest": "^20.1.0",
+    "@pinia/nuxt": "^0.5.2",
     "@preline/overlay": "^2.0.2",
     "@types/crypto-js": "^4.2.2",
     "@types/highlight.js": "^10.1.0",
@@ -38,6 +38,7 @@
     "vuetify": "^3.5.11"
   },
   "devDependencies": {
+    "@nuxt/types": "^2.18.1",
     "@types/alpinejs": "^3.13.9",
     "@types/node": "^20.11.28",
     "postcss": "^8.4.40",
