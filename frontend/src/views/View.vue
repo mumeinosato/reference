@@ -28,10 +28,6 @@
         <textarea v-model="output" rows="5" cols="50" class="output" readonly></textarea>
       </div>
     </div>
-    <!--</div>
-  <div v-else>
-    <p>ログインしないと見れないよ</p>
-  </div>-->
   </div>
 </template>
   

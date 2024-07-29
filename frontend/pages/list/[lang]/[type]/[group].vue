@@ -18,8 +18,8 @@
 <script lang="ts">
 import { ref, onMounted, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
-import { list, edit_list } from '../assets/script/api';
-import { useStore } from '../stores/store';
+import { list, edit_list } from '../../../../assets/script/api';
+import { useStore } from '../../../../stores/store';
 
 interface ListItem {
   id: number;
@@ -39,7 +39,7 @@ export default defineComponent({
     const edit = ref(false);
 
     onMounted(async () => {
-      re.value = await list(lang, type, route.params.group);
+      re.value = await list(lang, type, Number(route.params.group));
       re.value.sort((a, b) => a.id - b.id);
     });
 

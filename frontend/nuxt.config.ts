@@ -24,7 +24,8 @@ export default defineNuxtConfig({
           javascriptEnabled: true,
         }
       }
-    }
+    },
+    transpile: ['prismjs']
   },
 
   postcss: {
