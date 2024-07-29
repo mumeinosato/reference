@@ -1,12 +1,19 @@
 <template>
   <a-layout style="margin-left: 200px; background-color: white">
     <a-layout-content class="m-10 mt-0">
+      <div v-if="login">
+        <div class="toggle_button">
+          <input id="toggle" class="toggle_input" type='checkbox' v-model="edit" />
+          <label for="toggle" class="toggle_label" />
+        </div>
+      </div>
       <div>
         <div class="box">
           <div v-for="(item, index) in re" :key="index">
             <p>
               <!--<router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>-->
-              <nuxt-link v-bind:to="{name:'view-id-type',params:{id:item.id,type:type}}">{{ item.title }}</nuxt-link>
+              <nuxt-link v-bind:to="{ name: 'view-id-type', params: { id: item.id, type: type } }">{{ item.title
+                }}</nuxt-link>
             </p>
           </div>
         </div>
@@ -35,12 +42,17 @@ export default defineComponent({
 
     let re = await list(lang, type, route.params.group);
     re.sort((a: { list: number }, b: { list: number }) => a.list - b.list);
-  
-    console.log(re);
-    
+
+    const store = useStore();
+    const login = store.getLogin();
+
+    const edit = ref(false);
+
     return {
       re,
       type,
+      login,
+      edit
     };
   }
 })
