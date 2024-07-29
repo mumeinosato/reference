@@ -48,7 +48,7 @@ import { useStore } from "../stores/store";
 import { login } from "../assets/script/api";
 
 export default defineComponent({
-  name: "FormComponent",
+  name: "login",
   setup() {
     interface FormState {
       username: string;
