@@ -18,8 +18,7 @@
 <script lang="ts">
 import { ref, onMounted, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
-import { list, edit_list } from '../assets/script/api'; // adjust the path as per your project structure
-import { VueDraggableNext } from 'vue-draggable-next';
+import { list, edit_list } from '../assets/script/api';
 import { useStore } from '../stores/store';
 
 interface ListItem {
@@ -29,9 +28,6 @@ interface ListItem {
 
 export default defineComponent({
   name: 'List',
-  components: {
-    draggable: VueDraggableNext,
-  },
   setup() {
     const route = useRoute();
     const lang = route.params.lang === 'cpp' ? 1 : route.params.lang === 'python' ? 2 : route.params.lang === 'sql' ? 3 : 0;
