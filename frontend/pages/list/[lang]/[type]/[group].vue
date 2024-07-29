@@ -36,14 +36,18 @@
   </a-layout>
 </template>
 
-<script setup>
-import { ref, onMounted, watch } from 'vue';
+<script lang="ts">
+import { ref, onMounted, watch, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { list, edit_list } from '../assets/script/api';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { useStore } from '../stores/store';
 
-const re = ref([]);
+export default defineComponent({
+  
+})
+
+/*const re = ref([]);
 const type = ref(null);
 const edit = ref(false);
 const login = ref(false);
@@ -82,6 +86,7 @@ async function update() {
 watch(() => route.fullPath, () => {
   location.reload();
 });
+*/
 </script>
 
 <style scoped>
