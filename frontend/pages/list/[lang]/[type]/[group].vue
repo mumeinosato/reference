@@ -1,34 +1,12 @@
 <template>
   <a-layout style="margin-left: 200px; background-color: white">
-    <a-layout-content class="m-10">
-      <!--<div v-if="login">
-        <div class="toggle_button">
-          <input id="toggle" class="toggle_input" type='checkbox' v-model="edit" />
-          <label for="toggle" class="toggle_label" />
-        </div>
-        <div class="box" v-show="edit">
-          <draggable :list="re" @change="update">
-            <div v-for="(item, index) in re" :key="index">
-              <p>
-                <router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>
-              </p>
-            </div>
-          </draggable>
-        </div>
-        <div class="box" v-show="!edit">
-          <div v-for="(item, index) in re" :key="index">
-            <p>
-              <router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div v-else>-->
+    <a-layout-content class="m-10 mt-0">
       <div>
         <div class="box">
           <div v-for="(item, index) in re" :key="index">
             <p>
-              <router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>
+              <!--<router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>-->
+              <nuxt-link v-bind:to="{name:'view-id-type',params:{id:item.id,type:type}}">{{ item.title }}</nuxt-link>
             </p>
           </div>
         </div>
@@ -37,43 +15,35 @@
   </a-layout>
 </template>
 
-<script setup>
-import { ref, onMounted, watch } from 'vue';
+<script lang="ts">
+import { ref, onMounted, watch, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { list, edit_list } from '../assets/script/api';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { useStore } from '../stores/store';
 
-const route = useRoute();
-const store = useStore();
+export default defineComponent({
+  name: 'list',
+  async setup() {
+    const route = useRoute();
 
-const lpram = route.params.lang;
-const lang = lpram === 'cpp' ? 1 : lpram === 'python' ? 2 : lpram === 'sql' ? 3 : 0;
+    const lpram = route.params.lang;
+    const lang = lpram == 'cpp' ? 1 : lpram == 'python' ? 2 : lpram == 'sql' ? 3 : 0;
 
-const tpram = route.params.type;
-const type = tpram === 'techful' ? 1 : tpram === 'aoj' ? 2 : 0;
+    const tpram = route.params.type;
+    const type = tpram == 'techful' ? 1 : tpram == 'aoj' ? 2 : 0;
 
-const re = ref([]);
-const edit = ref(false);
-const login = ref(false);
-
-onMounted(async () => {
-  re.value = await list(lang, type, route.params.group);
-  re.value.sort((a, b) => a.list - b.list);
-
-  login.value = store.getLogin();
-});
-
-async function update() {
-  for (let i = 0; i < re.value.length; i++) {
-    const item = re.value[i];
-    await edit_list(item.id, i + 1, type);
+    let re = await list(lang, type, route.params.group);
+    re.sort((a: { list: number }, b: { list: number }) => a.list - b.list);
+  
+    console.log(re);
+    
+    return {
+      re,
+      type,
+    };
   }
-}
-
-watch(() => route.fullPath, () => {
-  location.reload();
-});
+})
 
 /*const re = ref([]);
 const type = ref(null);
