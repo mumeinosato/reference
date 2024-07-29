@@ -1,17 +1,10 @@
 <template>
   <a-layout style="margin-left: 200px; background-color: white">
     <a-layout-content class="m-10 mt-0">
-      <div v-if="login">
-        <div class="toggle_button">
-          <input id="toggle" class="toggle_input" type='checkbox' v-model="edit" />
-          <label for="toggle" class="toggle_label" />
-        </div>
-      </div>
       <div>
         <div class="box">
           <div v-for="(item, index) in re" :key="index">
             <p>
-              <!--<router-link :to="{ name: 'view', params: { id: item.id, type: type } }">{{ item.title }}</router-link>-->
               <nuxt-link v-bind:to="{ name: 'view-id-type', params: { id: item.id, type: type } }">{{ item.title
                 }}</nuxt-link>
             </p>
@@ -23,81 +16,47 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted, watch, defineComponent } from 'vue';
+import { ref, onMounted, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
-import { list, edit_list } from '../assets/script/api';
+import { list, edit_list } from '../assets/script/api'; // adjust the path as per your project structure
 import { VueDraggableNext } from 'vue-draggable-next';
 import { useStore } from '../stores/store';
 
+interface ListItem {
+  id: number;
+  title: string;
+}
+
 export default defineComponent({
-  name: 'list',
-  async setup() {
+  name: 'List',
+  components: {
+    draggable: VueDraggableNext,
+  },
+  setup() {
     const route = useRoute();
+    const lang = route.params.lang === 'cpp' ? 1 : route.params.lang === 'python' ? 2 : route.params.lang === 'sql' ? 3 : 0;
+    const type = route.params.type === 'techful' ? 1 : route.params.type === 'aoj' ? 2 : 0;
 
-    const lpram = route.params.lang;
-    const lang = lpram == 'cpp' ? 1 : lpram == 'python' ? 2 : lpram == 'sql' ? 3 : 0;
-
-    const tpram = route.params.type;
-    const type = tpram == 'techful' ? 1 : tpram == 'aoj' ? 2 : 0;
-
-    let re = await list(lang, type, route.params.group);
-    re.sort((a: { list: number }, b: { list: number }) => a.list - b.list);
-
+    const re = ref<ListItem[]>([]);
     const store = useStore();
     const login = store.getLogin();
-
     const edit = ref(false);
+
+    onMounted(async () => {
+      re.value = await list(lang, type, route.params.group);
+      re.value.sort((a, b) => a.id - b.id);
+    });
 
     return {
       re,
       type,
       login,
-      edit
+      edit,
     };
   }
-})
-
-/*const re = ref([]);
-const type = ref(null);
-const edit = ref(false);
-const login = ref(false);
-
-const route = useRoute();
-const store = useStore();
-
-onMounted(async () => {
-  let lang = 0;
-  if (route.params.lang === 'cpp') {
-    lang = 1;
-  } else if (route.params.lang === 'python') {
-    lang = 2;
-  } else if (route.params.lang === 'sql') {
-    lang = 3;
-  }
-
-  type.value = route.params.type === 'reference' ? 0
-             : route.params.type === 'techful' ? 1
-             : route.params.type === 'aoj' ? 2
-             : null;
-
-  re.value = await list(lang, type.value, route.params.group);
-  re.value.sort((a, b) => a.list - b.list);
-
-  login.value = store.getLogin();
 });
-
-async function update() {
-  for (let i = 0; i < re.value.length; i++) {
-    const item = re.value[i];
-    await edit_list(item.id, i + 1, type.value);
-  }
-}
-
-watch(() => route.fullPath, () => {
-  location.reload();
-});
-*/
 </script>
+
 
 <style scoped>
 p {
