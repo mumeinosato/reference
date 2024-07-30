@@ -45,6 +45,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+import { message } from 'ant-design-vue';
 import { data, run_script, edit as apiEdit } from "../../../assets/script/api";
 import { useRoute } from "vue-router";
 import { Buffer } from "buffer";
@@ -108,10 +109,16 @@ export default defineComponent({
       login.value = store.getLogin();
     });
 
-    const toggleEdit = () => {
+    const toggleEdit = async () => {
       if (edit.value) {
-        // 編集モードから読み取り専用モードに切り替えたときの処理
-        // 必要に応じて保存処理などを追加してください
+        const cont = Buffer.from(content.value).toString("base64");
+        const res: boolean = await apiEdit(Number(id.value), title.value, cont, Number(type.value));
+        if (res) {
+          message.success("編集しました");
+          location.reload();
+        } else {
+          message.error("編集に失敗しました");
+        }
       }
       edit.value = !edit.value;
     };
