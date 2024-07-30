@@ -1,21 +1,21 @@
 <template>
   <a-layout style="margin-left: 200px; background-color: white">
-    <a-layout-content class="m-10 mt-0">
-      <div>
-        <h1>
-          {{ title }}
-          <span>
-            <p v-if="login">
-              <nuxt-link
-                :to="{ name: 'edit-id-type', params: { id: String(id), type: String(type) } }"
-              >編集</nuxt-link>
-            </p>
-          </span>
-        </h1>
-        <div id="v_code" ref="code" @keydown.ctrl.a="selectText">
-          <highlightjs language="cpp" :code="content" />
-        </div>
-        <p @click="copy">{{ clip }}</p>
+    <a-layout-content class="content">
+      <div class="header">
+        <h1 class="title">{{ title }}</h1>
+        <span class="button-container">
+          <a-button v-if="login" type="primary" @click="toggleEdit">
+            {{ edit ? '保存' : '編集' }}
+          </a-button>
+        </span>
+      </div>
+      <MonacoEditor
+        v-model="content"
+        :lang="lang"
+        class="editor-container"
+        :options="{ readOnly: !edit }"
+      />
+        <!--<p @click="copy">{{ clip }}</p>
         <div v-if="Number(type) === 1">
           <div class="in">
             <textarea
@@ -38,28 +38,17 @@
               readonly
             ></textarea>
           </div>
-        </div>
-      </div>
+        </div>-->
     </a-layout-content>
   </a-layout>
 </template>
 
 <script lang="ts">
-import { ref, onMounted, defineComponent } from "vue";
-import { data, run_script, edit } from "../../../assets/script/api";
+import { defineComponent, ref, onMounted } from "vue";
+import { data, run_script, edit as apiEdit } from "../../../assets/script/api";
 import { useRoute } from "vue-router";
 import { Buffer } from "buffer";
 import { useStore } from "../../../stores/store";
-
-import hljs from "highlight.js/lib/core";
-import cpp from "highlight.js/lib/languages/cpp";
-import python from "highlight.js/lib/languages/python";
-import sql from "highlight.js/lib/languages/sql";
-import "highlight.js/styles/stackoverflow-light.css";
-
-hljs.registerLanguage("cpp", cpp);
-hljs.registerLanguage("python", python);
-hljs.registerLanguage("sql", sql);
 
 export default defineComponent({
   name: "View",
@@ -67,17 +56,17 @@ export default defineComponent({
     const route = useRoute();
     const store = useStore();
 
-    const id = ref(route.params.id);
-    const type = ref(route.params.type);
-    const title = ref("");
-    const content = ref("");
-    const lang = ref("");
-    const login = ref(false);
-    const clip = ref("コピー");
-    const input = ref("");
-    const output = ref("");
-    const rlang = ref(0);
-    const codeElement = ref<HTMLElement | null>(null);
+    const id = ref(route.params.id as string);
+    const type = ref(route.params.type as string);
+    const title = ref<string>("");
+    const content = ref<string>("");
+    const lang = ref<string>("");
+    const login = ref<boolean>(false);
+    const clip = ref<string>("コピー");
+    const input = ref<string>("");
+    const output = ref<string>("");
+    const rlang = ref<number>(0);
+    const edit = ref<boolean>(false);
 
     const isBase64 = (str: string) => {
       try {
@@ -95,7 +84,12 @@ export default defineComponent({
         content.value = Buffer.from(re.content, "base64").toString();
       } else {
         const temp = Buffer.from(re.content.replace(/<br>/g, "\n")).toString("base64");
-        await edit(Number(route.params.id), title.value, temp, Number(route.params.type));
+        await apiEdit(
+          Number(route.params.id),
+          title.value,
+          temp,
+          Number(route.params.type)
+        );
         location.reload();
       }
 
@@ -112,23 +106,14 @@ export default defineComponent({
 
       type.value = String(route.params.type);
       login.value = store.getLogin();
-
-      if (codeElement.value) {
-        hljs.highlightElement(codeElement.value);
-      }
     });
 
-    const selectText = () => {
-      const range = document.createRange();
-      const element = codeElement.value;
-      if (element) {
-        range.selectNodeContents(element);
-        const selection = window.getSelection();
-        if (selection) {
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
+    const toggleEdit = () => {
+      if (edit.value) {
+        // 編集モードから読み取り専用モードに切り替えたときの処理
+        // 必要に応じて保存処理などを追加してください
       }
+      edit.value = !edit.value;
     };
 
     const copy = () => {
@@ -159,10 +144,10 @@ export default defineComponent({
       input,
       output,
       rlang,
-      codeElement,
-      selectText,
+      toggleEdit,
       copy,
       run,
+      edit,
     };
   },
   watch: {
@@ -174,6 +159,24 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.content {
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+}
+
+.button-container {
+  margin-left: auto;
+}
+
 p {
   text-align: right;
 }
@@ -206,5 +209,8 @@ p {
 hr {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.editor-container {
+  height: 90vh;
 }
 </style>

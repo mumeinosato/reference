@@ -1,3 +1,4 @@
+import { componentNames } from "#build/components";
 import { jsx } from "vue/jsx-runtime";
 
 export default defineNuxtConfig({
@@ -7,7 +8,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@ant-design-vue/nuxt',
     '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt'
+    '@pinia-plugin-persistedstate/nuxt',
+    "nuxt-monaco-editor"
   ],
 
   build: {
@@ -38,6 +40,8 @@ export default defineNuxtConfig({
   router: {
     middleware: ['auth']
   },
+
+  monacoEditor: { lang: 'ja' },
 
   compatibilityDate: '2024-07-27',
 });
