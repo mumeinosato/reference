@@ -20,7 +20,7 @@
           <a-button
             v-if="Number(type) === 1"
             type="default"
-            @click="run"
+            @click="showrun"
             class="ml-2"
           >
             実行
@@ -33,30 +33,32 @@
         class="editor-container"
         :options="{ readOnly: !edit }"
       />
-      <!--<p @click="copy">{{ clip }}</p>
-        <div v-if="Number(type) === 1">
-          <div class="in">
-            <textarea
-              v-model="input"
-              rows="5"
-              cols="50"
-              class="input"
-            ></textarea>
-            <div>
-              <v-btn @click="run" class="btn">実行</v-btn>
-            </div>
-          </div>
-          <hr />
-          <div class="out">
-            <textarea
-              v-model="output"
-              rows="5"
-              cols="50"
-              class="output"
-              readonly
-            ></textarea>
-          </div>
-        </div>-->
+      <a-drawer
+        title="実行"
+        width="500"
+        :open="open"
+        :body-style="{ paddingBottom: '80px' }"
+        :footer-style="{ textAlign: 'right' }"
+        @close="onClose"
+      >
+        <a-form>
+          <a-form-item label="入力">
+            <a-textarea v-model:value="input" rows="4" />
+          </a-form-item>
+          <a-form-item>
+            {{ time }}
+          </a-form-item>
+          <a-form-item label="出力">
+            <a-textarea v-model:value="output" rows="4" readonly />
+          </a-form-item>
+        </a-form>
+        <template #extra>
+          <a-space>
+            <a-button @click="onClose">キャンセル</a-button>
+            <a-button type="primary" @click="run">実行</a-button></a-space
+          >
+        </template>
+      </a-drawer>
     </a-layout-content>
   </a-layout>
 </template>
@@ -86,6 +88,8 @@ export default defineComponent({
     const output = ref<string>("");
     const rlang = ref<number>(0);
     const edit = ref<boolean>(false);
+    const open = ref<boolean>(false);
+    const time = ref<string>("");
 
     const isBase64 = (str: string) => {
       try {
@@ -157,8 +161,16 @@ export default defineComponent({
         output.value = "実行に失敗しました";
         return;
       }
-      const temp = Buffer.from(res.output, "base64").toString();
-      output.value = "Time: " + (res.time * 1000).toFixed(2) + "ms\n" + temp;
+      output.value = Buffer.from(res.output, "base64").toString();
+      time.value = "Time: " + (res.time * 1000).toFixed(2) + "ms\n"
+    };
+
+    const showrun = () => {
+      open.value = true;
+    };
+
+    const onClose = () => {
+      open.value = false;
     };
 
     return {
@@ -176,6 +188,10 @@ export default defineComponent({
       copy,
       run,
       edit,
+      showrun,
+      open,
+      onClose,
+      time,
     };
   },
   watch: {
