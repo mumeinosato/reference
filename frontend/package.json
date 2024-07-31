@@ -32,7 +32,7 @@
     "nuxt-monaco-editor": "^1.2.9",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "preline": "^2.0.3",
+    "preline": "^2.4.1",
     "vue": "^3.4.21",
     "vue-draggable-next": "^2.2.1",
     "vue-router": "^4.3.0",
