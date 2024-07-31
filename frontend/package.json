@@ -14,7 +14,7 @@
     "@ant-design-vue/nuxt": "^1.4.2",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@octokit/rest": "^20.1.0",
+    "@octokit/rest": "^21.0.1",
     "@pinia/nuxt": "^0.5.2",
     "@preline/overlay": "^2.0.2",
     "@types/crypto-js": "^4.2.2",
