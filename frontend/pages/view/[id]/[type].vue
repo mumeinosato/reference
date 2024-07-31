@@ -2,13 +2,28 @@
   <a-layout style="margin-left: 200px; background-color: white">
     <a-layout-content class="content">
       <div class="header">
-        <h1 class="title">{{ title }}</h1>
+        <div class="ml-5 mb-2">
+          <h1 class="title text-3xl">{{ title }}</h1>
+        </div>
         <span class="button-container">
-          <a-button v-if="login" type="primary" @click="toggleEdit">
-            {{ edit ? '保存' : '編集' }}
+          <a-button
+            v-if="login"
+            type="default"
+            @click="toggleEdit"
+            class="ml-2"
+          >
+            {{ edit ? "保存" : "編集" }}
           </a-button>
-          <a-button v-if="login" type="primary" @click="copy">
+          <a-button v-if="login" type="default" @click="copy" class="ml-2">
             {{ clip }}
+          </a-button>
+          <a-button
+            v-if="Number(type) === 1"
+            type="default"
+            @click="run"
+            class="ml-2"
+          >
+            実行
           </a-button>
         </span>
       </div>
@@ -18,7 +33,7 @@
         class="editor-container"
         :options="{ readOnly: !edit }"
       />
-        <!--<p @click="copy">{{ clip }}</p>
+      <!--<p @click="copy">{{ clip }}</p>
         <div v-if="Number(type) === 1">
           <div class="in">
             <textarea
@@ -48,7 +63,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import { message } from 'ant-design-vue';
+import { message } from "ant-design-vue";
 import { data, run_script, edit as apiEdit } from "../../../assets/script/api";
 import { useRoute } from "vue-router";
 import { Buffer } from "buffer";
@@ -87,7 +102,9 @@ export default defineComponent({
       if (isBase64(re.content)) {
         content.value = Buffer.from(re.content, "base64").toString();
       } else {
-        const temp = Buffer.from(re.content.replace(/<br>/g, "\n")).toString("base64");
+        const temp = Buffer.from(re.content.replace(/<br>/g, "\n")).toString(
+          "base64"
+        );
         await apiEdit(
           Number(route.params.id),
           title.value,
@@ -97,7 +114,8 @@ export default defineComponent({
         location.reload();
       }
 
-      lang.value = re.language === 1 ? "cpp" : re.language === 2 ? "python" : "sql";
+      lang.value =
+        re.language === 1 ? "cpp" : re.language === 2 ? "python" : "sql";
       rlang.value = re.language;
 
       type.value = String(route.params.type);
@@ -107,7 +125,12 @@ export default defineComponent({
     const toggleEdit = async () => {
       if (edit.value) {
         const cont = Buffer.from(content.value).toString("base64");
-        const res: boolean = await apiEdit(Number(id.value), title.value, cont, Number(type.value));
+        const res: boolean = await apiEdit(
+          Number(id.value),
+          title.value,
+          cont,
+          Number(type.value)
+        );
         if (res) {
           message.success("編集しました");
           location.reload();
@@ -121,6 +144,9 @@ export default defineComponent({
     const copy = () => {
       navigator.clipboard.writeText(content.value);
       clip.value = "コピーしました";
+      setTimeout(() => {
+        clip.value = "コピー";
+      }, 3000);
     };
 
     const run = async () => {
@@ -162,7 +188,7 @@ export default defineComponent({
 
 <style scoped>
 .content {
-  padding: 16px;
+  padding: 10px;
 }
 
 .header {
@@ -177,40 +203,6 @@ export default defineComponent({
 
 .button-container {
   margin-left: auto;
-}
-
-p {
-  text-align: right;
-}
-
-.input {
-  border: 1px solid rgb(204, 204, 204);
-  border-radius: 1px;
-  width: 70%;
-}
-
-.output {
-  border: 1px solid rgb(204, 204, 204);
-  border-radius: 1px;
-  background-color: rgb(238, 238, 238);
-  width: 70%;
-}
-
-.btn {
-  background-color: rgb(51, 122, 183);
-  border: 1px solid rgb(51, 122, 183);
-  border-radius: 3px;
-  color: rgb(255, 255, 255);
-}
-
-.in {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-hr {
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 .editor-container {
   height: 90vh;
