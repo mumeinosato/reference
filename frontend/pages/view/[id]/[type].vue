@@ -94,16 +94,8 @@ export default defineComponent({
         location.reload();
       }
 
-      if (re.language === 1) {
-        lang.value = "cpp";
-        rlang.value = 1;
-      } else if (re.language === 2) {
-        lang.value = "python";
-        rlang.value = 2;
-      } else if (re.language === 3) {
-        lang.value = "sql";
-        rlang.value = 3;
-      }
+      lang.value = re.language === 1 ? "cpp" : re.language === 2 ? "python" : "sql";
+      rlang.value = re.language;
 
       type.value = String(route.params.type);
       login.value = store.getLogin();
