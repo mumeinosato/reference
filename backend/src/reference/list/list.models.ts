@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Redis } from 'ioredis';
 import { config } from 'dotenv';
+import { exportData } from './listdata';
 
 config();
 
@@ -32,30 +33,6 @@ abstract class List {
   }
 }
 
-class ReferenceList extends List {
-  async create(): Promise<any> {
-    const cacheKey = 'reference_list:${this.lang}';
-    const cache = await this.getCache(cacheKey);
-    if (cache) {
-      return cache;
-    }
-
-    const data = await prisma.reference.findMany({
-      where: {
-        language: this.lang,
-      },
-      select: {
-        id: true,
-        title: true,
-        list: true,
-      },
-    });
-
-    await this.cacheData(cacheKey, data);
-    return data;
-  }
-}
-
 class TechFulList extends List {
   async create(): Promise<any> {
     const cacheKey = `techful_list:${this.lang}:${this.group}`;
@@ -64,19 +41,46 @@ class TechFulList extends List {
       return cache;
     }
 
-    const data = await prisma.techful.findMany({
+    const techData = await prisma.techful_data.findMany({
       where: {
         language: this.lang,
-        group: this.group,
       },
       select: {
         id: true,
         title: true,
+      },
+    });
+
+    const titleIdMap = new Map<string, number>();
+    techData.forEach((item) => {
+      titleIdMap.set(item.title, item.id);
+    });
+
+    const techListData = await prisma.techful_list.findMany({
+      where: {
+        group: this.group,
+        title: {
+          in: Array.from(titleIdMap.keys()),
+        },
+      },
+      select: {
+        title: true,
+        group: true,
         list: true,
       },
     });
-    await this.cacheData(cacheKey, data);
-    return data;
+
+    const result = techListData
+      .filter((item) => titleIdMap.has(item.title))
+      .map((item) => ({
+        id: titleIdMap.get(item.title),
+        title: item.title,
+        group: item.group,
+        list: item.list,
+      }));
+
+    await this.cacheData(cacheKey, result);
+    return result;
   }
 }
 
@@ -102,11 +106,7 @@ class AOJList extends List {
 }
 
 abstract class Edit_list {
-  constructor(
-    protected id: number,
-    protected list: number,
-    protected type: number,
-  ) {}
+  constructor(protected csv: string) {}
 
   abstract create(): Promise<boolean>;
 
@@ -119,37 +119,41 @@ abstract class Edit_list {
   }
 }
 
-class ReferenceList_edit extends Edit_list {
-  async create(): Promise<boolean> {
-    await prisma.reference.update({
-      where: {
-        id: this.id,
-      },
-      data: {
-        list: this.list,
-      },
-    });
-    await this.clearCache();
-    return true;
-  }
-}
-
 class TechFulList_edit extends Edit_list {
   async create(): Promise<boolean> {
-    await prisma.techful.update({
-      where: {
-        id: this.id,
-      },
-      data: {
-        list: this.list,
-      },
-    });
+    const list = exportData(this.csv);
+
+    for (let i = 0; i < list.length; i++) {
+      const data = list[i];
+
+      const ed = await prisma.techful.findMany({
+        where: {
+          title: data,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      const ei = ed.map((item) => item.id);
+
+      await prisma.techful.updateMany({
+        where: {
+          id: {
+            in: ei,
+          },
+        },
+        data: {
+          list: i,
+        },
+      });
+    }
     await this.clearCache();
     return true;
   }
 }
 
-class AOJList_edit extends Edit_list {
+/*class AOJList_edit extends Edit_list {
   async create(): Promise<boolean> {
     await prisma.aoj.update({
       where: {
@@ -162,15 +166,13 @@ class AOJList_edit extends Edit_list {
     await this.clearCache();
     return true;
   }
-}
+}*/
 
 export {
   List,
-  ReferenceList,
   TechFulList,
   AOJList,
   Edit_list,
-  ReferenceList_edit,
   TechFulList_edit,
-  AOJList_edit,
+  //AOJList_edit,
 };

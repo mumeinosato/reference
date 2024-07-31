@@ -1,20 +1,13 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ListService } from 'src/reference/list/list.service';
 import {
-  ReferenceList,
   TechFulList,
   AOJList,
-  ReferenceList_edit,
   TechFulList_edit,
-  AOJList_edit,
 } from 'src/reference/list/list.models';
 import { DataService } from 'src/reference/data/data.service';
 import { PostService } from 'src/reference/post/post.service';
-import {
-  ReferencePost,
-  TechFulPost,
-  AOJPost,
-} from 'src/reference/post/post.models';
+import { TechFulPost, AOJPost } from 'src/reference/post/post.models';
 import { EditService } from 'src/reference/edit/edit.service';
 
 @Controller('reference')
@@ -43,9 +36,6 @@ export class ReferenceController {
 
       let list;
       switch (ty) {
-        case 0:
-          list = new ReferenceList(lang, ty, gr);
-          break;
         case 1:
           list = new TechFulList(lang, ty, gr);
           break;
@@ -64,34 +54,9 @@ export class ReferenceController {
   }
 
   @Post('/edit_list')
-  async editList(
-    @Body('id') id: string,
-    @Body('list') list: string,
-    @Body('type') type: string,
-  ): Promise<boolean> {
+  async editList(@Body('csv') csv: string): Promise<boolean> {
     try {
-      const idn = parseInt(id);
-      const listn = parseInt(list);
-      const typen = parseInt(type);
-
-      if (isNaN(idn) || isNaN(listn) || isNaN(typen)) {
-        throw new Error('Invalid parameter');
-      }
-
-      let edit_list;
-      switch (typen) {
-        case 0:
-          edit_list = new ReferenceList_edit(idn, listn, typen);
-          break;
-        case 1:
-          edit_list = new TechFulList_edit(idn, listn, typen);
-          break;
-        case 2:
-          edit_list = new AOJList_edit(idn, listn, typen);
-          break;
-        default:
-          throw new Error('Invalid type');
-      }
+      const edit_list = new TechFulList_edit(csv);
       return this.listService.Edit_list(edit_list);
     } catch (error) {
       console.error(error);
@@ -124,9 +89,6 @@ export class ReferenceController {
     try {
       let post;
       switch (type) {
-        case 0:
-          post = new ReferencePost(title, content, language);
-          break;
         case 1:
           post = new TechFulPost(title, content, language, group);
           break;

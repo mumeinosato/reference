@@ -26,17 +26,8 @@ export class DataService {
     let data;
 
     switch (ty) {
-      case 0:
-        data = await prisma.reference.findUnique({
-          where: { id: idn },
-          select: {
-            title: true,
-            content: true,
-          },
-        });
-        break;
       case 1:
-        data = await prisma.techful.findUnique({
+        data = await prisma.techful_data.findUnique({
           where: { id: idn },
           select: {
             title: true,
