@@ -7,6 +7,9 @@
           <a-button v-if="login" type="primary" @click="toggleEdit">
             {{ edit ? '保存' : '編集' }}
           </a-button>
+          <a-button v-if="login" type="primary" @click="copy">
+            {{ clip }}
+          </a-button>
         </span>
       </div>
       <MonacoEditor
