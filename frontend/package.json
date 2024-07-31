@@ -42,7 +42,7 @@
     "@nuxt/types": "^2.18.1",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@types/alpinejs": "^3.13.9",
-    "@types/node": "^20.11.28",
+    "@types/node": "^22.0.0",
     "postcss": "^8.4.40",
     "sass": "^1.77.8",
     "sass-loader": "^16.0.0",
