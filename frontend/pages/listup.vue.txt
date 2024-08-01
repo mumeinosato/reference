@@ -22,6 +22,7 @@
   import { ref, defineComponent } from "vue";
   import { Buffer } from "buffer";
   import { message, Upload } from "ant-design-vue";
+  import { edit_list } from "../assets/script/api";
   import { UploadOutlined } from "@ant-design/icons-vue";
   import type { UploadChangeParam, UploadFile } from "ant-design-vue";
   
@@ -48,7 +49,11 @@
           reader.onload = (e) => {
             const result = e.target?.result as ArrayBuffer;
             const base64 = Buffer.from(result).toString('base64');
-            console.log(base64);
+            try {
+              edit_list(base64);
+            } catch (error) {
+              console.error(error);
+            }
           };
           reader.readAsArrayBuffer(info.file.originFileObj as Blob);
         } else if (info.file.status === "error") {

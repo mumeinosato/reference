@@ -4,6 +4,7 @@ import {
   TechFulList,
   AOJList,
   TechFulList_edit,
+  TechFulList_Unaffiliated,
 } from 'src/reference/list/list.models';
 import { DataService } from 'src/reference/data/data.service';
 import { PostService } from 'src/reference/post/post.service';
@@ -58,6 +59,17 @@ export class ReferenceController {
     try {
       const edit_list = new TechFulList_edit(csv);
       return this.listService.Edit_list(edit_list);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  @Get('/list_unaffiliated')
+  async getUnaffiliatedList(): Promise<any> {
+    try {
+      const list = new TechFulList_Unaffiliated();
+      return this.listService.Unaffiliated_list(list);
     } catch (error) {
       console.error(error);
       throw error;
