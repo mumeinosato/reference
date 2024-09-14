@@ -28,7 +28,6 @@ export async function list(language: string, type:number): Promise<any> {
         type: type
     }
     const response = await axios.post(`${API_URL}/reference/list`, data);
-    console.log(response.data);
     return response.data;
 }
 
