@@ -13,9 +13,8 @@ const prisma = new PrismaClient();
 
 abstract class List {
   constructor(
-    protected lang: number,
+    protected lang: string,
     protected type: number,
-    protected group: number,
   ) {}
 
   abstract create(): Promise<any>;
@@ -41,9 +40,19 @@ class TechFulList extends List {
       return cache;
     }*/
 
-    const techData = await prisma.techful_data.findMany({
+    const langlist = {
+      cpp: 'cpp',
+      python: 'python',
+      c: 'c',
+      java: 'java',
+      ruby: 'ruby',
+      sql: 'sql',
+    }[this.lang];
+
+    const techData = await prisma.list.findMany({
       where: {
-        language: this.lang,
+        type: this.type,
+        [langlist]: { gt: 0 },
       },
       select: {
         id: true,
@@ -51,36 +60,9 @@ class TechFulList extends List {
       },
     });
 
-    const titleIdMap = new Map<string, number>();
-    techData.forEach((item) => {
-      titleIdMap.set(item.title, item.id);
-    });
-
-    const techListData = await prisma.techful_list.findMany({
-      where: {
-        group: this.group,
-        title: {
-          in: Array.from(titleIdMap.keys()),
-        },
-      },
-      select: {
-        title: true,
-        group: true,
-        list: true,
-      },
-    });
-
-    const result = techListData
-      .filter((item) => titleIdMap.has(item.title))
-      .map((item) => ({
-        id: titleIdMap.get(item.title),
-        title: item.title,
-        group: item.group,
-        list: item.list,
-      }));
+    return techData;
 
     //await this.cacheData(cacheKey, result);
-    return result;
   }
 }
 
@@ -124,9 +106,11 @@ class TechFulList_edit extends Edit_list {
     const list = exportData(this.csv);
 
     for (let i = 0; i < list[0].length; i++) {
-      const al = await prisma.techful_list.findMany({
+      const title = list[0][i].replace(/\[\.\]/g, ',');
+
+      const al = await prisma.list.findMany({
         where: {
-          title: list[0][i],
+          title: title,
         },
         select: {
           id: true,
@@ -134,7 +118,7 @@ class TechFulList_edit extends Edit_list {
       });
 
       if (al.length > 0) {
-        await prisma.techful_list.update({
+        await prisma.list.update({
           where: {
             id: al[0].id,
           },
@@ -143,11 +127,11 @@ class TechFulList_edit extends Edit_list {
           },
         });
       } else {
-        await prisma.techful_list.create({
+        await prisma.list.create({
           data: {
-            title: list[0][i],
+            title: title,
             list: i,
-            group: parseInt(list[1][i]),
+            type: parseInt(list[1][i]),
           },
         });
       }

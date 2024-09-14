@@ -91,3 +91,17 @@ model ProUp {
   output    String @db.VarChar(5000)
   public    Int @default(0)
 }
+
+model List {
+  @@map("list")
+  id        Int      @id @default(autoincrement())
+  title     String
+  type      Int
+  list      Int
+  cpp       Int @default(0)
+  python    Int @default(0)
+  c         Int @default(0)
+  java      Int @default(0)
+  ruby      Int @default(0)
+  sql       Int @default(0)
+}

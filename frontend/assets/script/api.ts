@@ -22,8 +22,12 @@ export async function data(id: number, type: number): Promise<any> {
     return response.data;
 }
 
-export async function list(language: number,type: number ,group: number): Promise<any> {
-    const response = await axios.get(`${API_URL}/reference/list/${language}/${type}/${group}`);
+export async function list(language: string, type:number): Promise<any> {
+    const data = {
+        language: language,
+        type: type
+    }
+    const response = await axios.post(`${API_URL}/reference/list`, data);
     console.log(response.data);
     return response.data;
 }
