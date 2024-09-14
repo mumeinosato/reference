@@ -6,6 +6,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, new FastifyAdapter());
   app.enableCors();
 
-  await app.listen(3000, '0.0.0.0');
+  await app.listen(5000, '0.0.0.0');
 }
 bootstrap();

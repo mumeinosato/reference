@@ -23,13 +23,8 @@ export class EditService {
     const type = parseInt(typ.toString());
     return prisma
       .$transaction(async (prismaClient) => {
-        if (type === 0) {
-          await prismaClient.reference.update({
-            where: { id: idn },
-            data: { title: title, content: content },
-          });
-        } else if (type === 1) {
-          await prismaClient.techful.update({
+        if (type === 1) {
+          await prismaClient.techful_data.update({
             where: { id: idn },
             data: { title: title, content: content },
           });

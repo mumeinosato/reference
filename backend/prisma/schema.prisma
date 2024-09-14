@@ -29,6 +29,33 @@ model Techful {
   list      Int @default(0)
 }
 
+model Techful_list {
+  @@map("tech_list")
+  id        Int      @id @default(autoincrement())
+  title     String
+  group     Int
+  list      Int @default(0)
+  tech_data Techful_Data_List[]
+}
+
+model Techful_data {
+  @@map("tech_data")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  language  Int
+  tech_lists Techful_Data_List[]
+}
+
+model Techful_Data_List {
+  techful_list_id Int
+  techful_data_id Int
+  techful_list    Techful_list @relation(fields: [techful_list_id], references: [id])
+  techful_data    Techful_data @relation(fields: [techful_data_id], references: [id])
+
+  @@id([techful_list_id, techful_data_id])
+}
+
 model Aoj {
   @@map("aoj")
   id        Int      @id @default(autoincrement())
@@ -63,4 +90,18 @@ model ProUp {
   input     String @db.VarChar(5000)
   output    String @db.VarChar(5000)
   public    Int @default(0)
+}
+
+model List {
+  @@map("list")
+  id        Int      @id @default(autoincrement())
+  title     String
+  type      Int
+  list      Int
+  cpp       Int @default(0)
+  python    Int @default(0)
+  c         Int @default(0)
+  java      Int @default(0)
+  ruby      Int @default(0)
+  sql       Int @default(0)
 }

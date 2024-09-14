@@ -12,6 +12,10 @@
           <nuxt-link to="/">ホーム</nuxt-link>
         </a-menu-item>
         <!-- TechFUL (C++) -->
+        <a-menu-item :key="'techful'">
+          
+        </a-menu-item>
+        <!--
         <a-menu-item :key="'techful-cpp'" disabled>
           <span class="main-title">TechFUL(C++)</span>
         </a-menu-item>
@@ -23,9 +27,11 @@
         </a-menu-item>
         <a-menu-item :key="'techful-cpp-3'">
           <nuxt-link to="/list/cpp/techful/3">数学</nuxt-link>
-        </a-menu-item>
+        </a-menu-item> -->
+        
         
         <!-- TechFUL (Python) -->
+         <!--
         <a-menu-item :key="'techful-python'" disabled>
           <span class="main-title">TechFUL(Python)</span>
         </a-menu-item>
@@ -37,9 +43,10 @@
         </a-menu-item>
         <a-menu-item :key="'techful-python-3'">
           <nuxt-link to="/list/python/techful/3">数学</nuxt-link>
-        </a-menu-item>
+        </a-menu-item> -->
         
         <!-- その他の項目 -->
+         <!--
         <a-menu-item :key="'database'">
           <nuxt-link to="/list/sql/techful/4">データベース</nuxt-link>
         </a-menu-item>
@@ -48,7 +55,7 @@
         </a-menu-item>
         <a-menu-item :key="'aoj'">
           <nuxt-link to="/list/cpp/aoj/0">AOJ</nuxt-link>
-        </a-menu-item>
+        </a-menu-item> -->
         
         <a-menu-item :key="'divider-1'" disabled>
           <hr />

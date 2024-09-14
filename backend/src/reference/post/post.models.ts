@@ -16,37 +16,6 @@ abstract class Post {
   abstract create(): Promise<any>;
 }
 
-class ReferencePost extends Post {
-  language?: number;
-
-  constructor(title: string, content: string, language: number) {
-    super(title, content);
-    this.language = language;
-  }
-
-  async create(): Promise<any> {
-    const result = await prisma.reference.create({
-      data: {
-        title: this.title,
-        content: this.content,
-        language: this.language,
-      },
-    });
-
-    await prisma.reference.update({
-      where: {
-        id: result.id,
-      },
-      data: {
-        list: result.id,
-      },
-    });
-
-    console.log('Reference post created:', result);
-    return true;
-  }
-}
-
 class TechFulPost extends Post {
   language?: number;
   group?: string;
@@ -108,4 +77,4 @@ class AOJPost extends Post {
   }
 }
 
-export { Post, ReferencePost, TechFulPost, AOJPost };
+export { Post, TechFulPost, AOJPost };
