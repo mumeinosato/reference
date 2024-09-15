@@ -13,9 +13,8 @@ const prisma = new PrismaClient();
 
 @Injectable()
 export class DataService {
-  async Data(id: number, type: number): Promise<any> {
+  async Data(id: number): Promise<any> {
     const idn = parseInt(id.toString());
-    const ty = parseInt(type.toString());
     /*const redisKey = `data:${ty}:${idn}`;
 
     const cache = await redis.get(redisKey);
@@ -23,32 +22,14 @@ export class DataService {
       return JSON.parse(cache);
     }*/
 
-    let data;
-
-    switch (ty) {
-      case 1:
-        data = await prisma.techful_data.findUnique({
-          where: { id: idn },
-          select: {
-            title: true,
-            content: true,
-          },
-        });
-        break;
-      case 2:
-        data = await prisma.aoj.findUnique({
-          where: { id: idn },
-          select: {
-            title: true,
-            content: true,
-          },
-        });
-        break;
-      default:
-        data = null;
-        break;
-    }
-
+    const data = await prisma.data.findUnique({
+      where: { id: idn },
+      select: {
+        title: true,
+        content: true,
+        language: true,
+      },
+    });
     /*if (data) {
       await redis.set(redisKey, JSON.stringify(data));
     }*/

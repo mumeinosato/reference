@@ -37,14 +37,7 @@
       <div class="box">
         <div v-for="(item, index) in re" :key="index">
           <p>
-            <!--<nuxt-link
-              v-bind:to="{
-                name: 'view-id-type',
-                params: { id: item.id, type: required.type },
-              }"
-              >{{ item.title }}</nuxt-link
-            >-->
-            {{ item.title }}
+            <nuxt-link :to="`/view/${item.dataIds}`">{{ item.title }}</nuxt-link>
           </p>
         </div>
       </div>
@@ -54,7 +47,7 @@
 
 <script lang="ts">
 import { ref, onMounted, defineComponent, reactive } from "vue";
-import { list } from "./../assets/script/api";
+import { list } from "../assets/script/api";
 
 export default defineComponent({
   name: "ListV2",
@@ -70,8 +63,8 @@ export default defineComponent({
     });
 
     interface ListItem {
-      id: number;
       title: string;
+      dataIds: string;
     }
 
     onMounted(async () => {

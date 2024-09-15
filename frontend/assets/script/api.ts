@@ -17,8 +17,11 @@ export async function post(title: string, content: string, language: number, typ
     return response.data;
 }
 
-export async function data(id: number, type: number): Promise<any> {
-    const response = await axios.get(`${API_URL}/reference/data/${id}/${type}`);
+export async function data(id: number): Promise<any> {
+    const data = {
+        id: id
+    }
+    const response = await axios.post(`${API_URL}/reference/data`, data);
     return response.data;
 }
 
@@ -28,6 +31,7 @@ export async function list(language: string, type:number): Promise<any> {
         type: type
     }
     const response = await axios.post(`${API_URL}/reference/list`, data);
+    console.log(response.data);
     return response.data;
 }
 

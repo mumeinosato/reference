@@ -95,13 +95,25 @@ model ProUp {
 model List {
   @@map("list")
   id        Int      @id @default(autoincrement())
-  title     String
+  title     String   @unique
   type      Int
   list      Int
-  cpp       Int @default(0)
-  python    Int @default(0)
-  c         Int @default(0)
-  java      Int @default(0)
-  ruby      Int @default(0)
-  sql       Int @default(0)
+  cpp       Int      @default(0)
+  python    Int      @default(0)
+  c         Int      @default(0)
+  java      Int      @default(0)
+  ruby      Int      @default(0)
+  sql       Int      @default(0)
+
+  data      Data[]   @relation("ListData")
+}
+
+model Data {
+  @@map("data")
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String  @db.VarChar(5000)
+  language  String
+
+  list      List    @relation("ListData", fields: [title], references: [title])
 }

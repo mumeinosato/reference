@@ -40,6 +40,11 @@ class TechFulList extends List {
       return cache;
     }*/
 
+    type TechDataItem = {
+      title: string;
+      dataIds?: number[]; // dataIds プロパティを追加
+    };
+
     const langlist = {
       cpp: 'cpp',
       python: 'python',
@@ -55,11 +60,23 @@ class TechFulList extends List {
         [langlist]: { gt: 0 },
       },
       select: {
-        id: true,
         title: true,
       },
     });
 
+    for (const item of techData as TechDataItem[]) {
+      const matchingData = await prisma.data.findMany({
+        where: {
+          title: item.title,
+          language: this.lang,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      item.dataIds = matchingData.map((data) => data.id);
+    }
     return techData;
 
     //await this.cacheData(cacheKey, result);

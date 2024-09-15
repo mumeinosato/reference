@@ -56,14 +56,10 @@ export class ReferenceController {
     }
   }
 
-  @Get('/data/:id/:type')
-  async getData(
-    @Param('id') id: number,
-    @Param('type') type: number,
-  ): Promise<any> {
+  @Post('/data')
+  async getData(@Body('id') id: number): Promise<any> {
     try {
-      const data = await this.dataService.Data(id, type);
-      return data;
+      return this.dataService.Data(id);
     } catch (error) {
       console.error(error);
       throw error;
