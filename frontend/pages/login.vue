@@ -1,6 +1,6 @@
 <template>
-  <a-layout style="margin-left: 200px">
-    <a-layout-content style="background-color: white">
+  <a-layout class="ml-48 bg-white">
+    <a-layout-content class="content">
       <a-card class="m-10 text-left" style="max-width: 500px">
         <a-form
           :model="formState"
@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { message } from 'ant-design-vue';
+import { message } from "ant-design-vue";
 import { useStore } from "../stores/store";
 import { login } from "../assets/script/api";
 
@@ -68,14 +68,14 @@ export default defineComponent({
           store.setLogin(true);
           store.setUser(formState.username);
           message.success("ログイン成功");
-          window.location.href = '/';
+          window.location.href = "/";
         } catch (error) {
           message.error("ログイン失敗");
           store.setLogin(false);
         }
       } else if (re === 1) {
         message.error("パスワードが設定されていません");
-        window.location.href = '/sign_up';
+        window.location.href = "/sign_up";
         store.setLogin(false);
       } else {
         message.error("ログイン失敗");

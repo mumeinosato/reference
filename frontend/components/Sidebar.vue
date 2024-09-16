@@ -15,8 +15,12 @@
           <nuxt-link to="/list">リスト</nuxt-link>
         </a-menu-item>
         
-        <a-menu-item :key="'divider-1'" disabled>
-          <hr />
+        <a-menu-item>
+          <hr  class="border-black"/>
+        </a-menu-item>
+
+        <a-menu-item key="auth" v-if="!isLoggedIn">
+            <nuxt-link to="/login">ログイン</nuxt-link>
         </a-menu-item>
 
         <!-- ログイン状態に応じた項目 -->
@@ -24,17 +28,8 @@
           <nuxt-link to="/post">投稿</nuxt-link>
         </a-menu-item>
         
-        <a-menu-item :key="'divider-2'" disabled>
-          <hr />
-        </a-menu-item>
-        
-        <a-menu-item :key="'auth'" v-if="!isLoggedIn">
-          <v-btn flat>
-            <nuxt-link to="/login">ログイン</nuxt-link>
-          </v-btn>
-        </a-menu-item>
-        <a-menu-item :key="'logout'" v-else>
-          <v-btn flat @click="logout">ログアウト</v-btn>
+        <a-menu-item :key="'logout'" v-if="isLoggedIn" class="text-left">
+          <a-button type="text" @click="logout" class="text-left">ログアウト</a-button>
         </a-menu-item>
       </a-menu-item-group>
     </a-menu>
@@ -43,6 +38,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { message } from 'ant-design-vue';
 import { useStore } from '../stores/store'
 
 export default defineComponent({
@@ -53,7 +49,7 @@ export default defineComponent({
     const logout = () => {
       store.setLogin(false)
       store.setUser('')
-      alert('ログアウトしました')
+      message.success('ログアウトしました')
       window.location.href = '/'
     }
 

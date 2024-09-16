@@ -31,7 +31,6 @@ export async function list(language: string, type:number): Promise<any> {
         type: type
     }
     const response = await axios.post(`${API_URL}/reference/list`, data);
-    console.log(response.data);
     return response.data;
 }
 
@@ -55,12 +54,20 @@ export async function edit(id: number, title: string, content: string, type: num
 }
 
 export async function login(user: string, pass: string): Promise<number> {
-    const response = await axios.get(`${API_URL}/user/login/${user}/${pass}`);
+    const data = {
+        user: user,
+        pass: pass
+    }
+    const response = await axios.post(`${API_URL}/user/login`, data);
     return response.data; 
 }
 
 export async function register(user: string, pass: string): Promise<number> {
-    const response = await axios.get(`${API_URL}/user/register/${user}/${pass}`);
+    const data = {
+        user: user,
+        pass: pass
+    }
+    const response = await axios.post(`${API_URL}/user/register`, data);
     return response.data;
 }
 

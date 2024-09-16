@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ListService } from 'src/reference/list/list.service';
 import {
   TechFulList,
@@ -99,10 +99,9 @@ export class ReferenceController {
     @Body('id') id: number,
     @Body('title') title: string,
     @Body('content') content: string,
-    @Body('type') type: number,
   ): Promise<any> {
     try {
-      return this.editService.Edit(id, title, content, type);
+      return this.editService.Edit(id, title, content);
     } catch (error) {
       console.error(error);
       throw error;

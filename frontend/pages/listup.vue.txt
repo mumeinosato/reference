@@ -1,5 +1,5 @@
 <template>
-    <a-layout style="margin-left: 200px; background-color: white">
+    <a-layout class="ml-48 bg-white">
       <a-layout-content class="content">
         <a-upload
           v-model:file-list="fileList"

@@ -1,5 +1,5 @@
 <template>
-  <a-layout style="margin-left: 200px; background-color: white">
+  <a-layout class="ml-48 bg-white">
     <a-layout-content class="m-10 mt-0">
       <a-space>
         <a-select
@@ -48,10 +48,13 @@
 <script lang="ts">
 import { ref, onMounted, defineComponent, reactive } from "vue";
 import { list } from "../assets/script/api";
+import { useStore } from "../stores/store";
 
 export default defineComponent({
-  name: "ListV2",
+  name: "List",
   setup() {
+    const store = useStore();
+
     interface required {
       lang: string;
       type: string;
@@ -64,11 +67,13 @@ export default defineComponent({
 
     interface ListItem {
       title: string;
-      dataIds: string;
+      dataIds: number;
     }
 
     onMounted(async () => {
       await getList();
+      required.lang = store.Language;
+      required.type = store.Type;
     });
 
     const langChange = async () => {
@@ -83,10 +88,12 @@ export default defineComponent({
           required.type = "1";
         }
       }
+      store.setLanguage(required.lang);
       await getList();
     };
 
     const typeChange = async () => {
+      store.setType(required.type);
       await getList();
     };
 

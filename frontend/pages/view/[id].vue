@@ -1,5 +1,5 @@
 <template>
-    <a-layout style="margin-left: 200px; background-color: white">
+    <a-layout class="ml-48 bg-white">
       <a-layout-content class="content">
         <div class="header">
           <div class="ml-5 mb-2">
@@ -18,7 +18,7 @@
               {{ clip }}
             </a-button>
             <a-button
-              v-if="Number(type) === 1"
+              v-if="false"
               type="default"
               @click="showrun"
               class="ml-2"
@@ -69,7 +69,7 @@
   import { data, run_script, edit as apiEdit } from "../../assets/script/api";
   import { useRoute } from "vue-router";
   import { Buffer } from "buffer";
-  //import { useStore } from "../../../stores/store";
+  import { useStore } from "../../stores/store";
   
   export default defineComponent({
     name: "View",
@@ -101,7 +101,6 @@
   
       onMounted(async () => {
         const re = await data(Number(route.params.id));
-        console.log(re);
         title.value = re.title;
   
         if (isBase64(re.content)) {
@@ -120,7 +119,18 @@
         }
   
         lang.value = re.language;
-        rlang.value = re.language;
+        let rlang = 1;
+        switch (lang.value) {
+          case "cpp":
+            rlang = 1;
+            break;
+          case "python":
+            rlang = 2;
+            break;
+          case "c":
+            rlang = 3;
+            break;
+        }
   
         type.value = String(route.params.type);
         login.value = store.getLogin();

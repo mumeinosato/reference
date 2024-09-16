@@ -6,11 +6,9 @@ export const useStore = defineStore(
   'main',
   () => {
     const LoginState = ref<boolean>(false);
-    const NameState = ref<string>('デフォルト名前');
-    const UserState = ref<string>('デフォルトユーザー');
-    const Language = ref<string>('C++');
-    const Type = ref<string>('TechFul');
-    const Group = ref<string>('programming-basic');
+    const UserState = ref<string>('user');
+    const Language = ref<string>('cpp');
+    const Type = ref<string>('1');
 
     const setLogin = (value: boolean) => {
       LoginState.value = value;
@@ -28,14 +26,6 @@ export const useStore = defineStore(
       return UserState.value;
     }
 
-    const setName = (value: string) => {
-      NameState.value = value;
-    }
-
-    const getName = () => {
-      return NameState.value;
-    }
-
     const setLanguage = (value: string) => {
       Language.value = value;
     }
@@ -50,14 +40,8 @@ export const useStore = defineStore(
       return Type.value;
     }
 
-    const setGroup = (value: string) => {
-      Group.value = value;
-    }
-    const getGroup = () => {
-      return Group.value;
-    }
 
-    return { LoginState, setLogin, getLogin, NameState, setName, getName, UserState, setUser, getUser, Language, setLanguage, getLanguage, Type, setType, getType, Group, setGroup, getGroup };
+    return { LoginState, setLogin, getLogin, UserState, setUser, getUser, Language, setLanguage, getLanguage, Type, setType, getType };
   },
   {
     persist: {
@@ -69,11 +53,9 @@ export const useStore = defineStore(
         
           return {
             LoginState: parsedData.LoginState ?? false,
-            NameState: parsedData.NameState ?? 'デフォルト名前',
-            UserState: parsedData.UserState ?? 'デフォルトユーザー',
-            Language: parsedData.Language ?? 'C++',
-            Type: parsedData.Type ?? 'TechFul',
-            Group: parsedData.Group ?? 'programming-basic',
+            UserState: parsedData.UserState ?? 'user',
+            Language: parsedData.Language ?? 'cpp',
+            Type: parsedData.Type ?? '1',
           };
         },
         serialize(state) {

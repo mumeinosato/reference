@@ -1,5 +1,5 @@
  <template>
-  <a-layout style="margin-left: 200px; background-color: white">
+  <a-layout class="ml-48 bg-white">
     <a-layout-content class="m-10">
       <div>
         <div>
